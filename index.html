@@ -1,0 +1,5479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Football Atlas — The Complete Football Universe</title>
+
+<meta name="description"
+content="Football Atlas — live football, fixtures, results, competitions, clubs, players, countries, World Cup history, statistics and records.">
+
+<style>
+
+/* =========================================================
+   FOOTBALL ATLAS
+   SINGLE FILE EDITION
+   Everything lives inside this HTML.
+========================================================= */
+
+:root{
+    --bg:#020609;
+    --bg2:#061017;
+    --panel:#09151b;
+    --panel2:#0d1d24;
+    --panel3:#11252d;
+
+    --green:#35ff91;
+    --green2:#00d878;
+    --cyan:#2be6ff;
+    --blue:#5d9cff;
+    --gold:#ffd65a;
+    --red:#ff5264;
+
+    --white:#f3faf9;
+    --text:#dce9e8;
+    --muted:#7f969b;
+
+    --border:rgba(255,255,255,.09);
+    --border-green:rgba(53,255,145,.22);
+
+    --shadow:0 25px 80px rgba(0,0,0,.5);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    color:var(--text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(53,255,145,.12),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(43,230,255,.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 60%,
+            rgba(0,216,120,.05),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #010405 0%,
+            #061017 50%,
+            #020609 100%
+        );
+
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-5;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:55px 55px;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:100;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.018) 0px,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    opacity:.15;
+}
+
+/* =========================================================
+   FLOATING FOOTBALLS
+========================================================= */
+
+.floating-ball{
+    position:fixed;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #fff 0 8%,
+            #111 10% 16%,
+            #fff 18% 100%
+        );
+
+    border:1px solid rgba(255,255,255,.3);
+    opacity:.08;
+    pointer-events:none;
+    z-index:-2;
+
+    animation:
+        ballFloat 18s linear infinite;
+}
+
+.ball-1{
+    left:6%;
+    top:18%;
+    animation-duration:18s;
+}
+
+.ball-2{
+    left:23%;
+    top:72%;
+    animation-duration:24s;
+}
+
+.ball-3{
+    left:47%;
+    top:30%;
+    animation-duration:20s;
+}
+
+.ball-4{
+    left:74%;
+    top:67%;
+    animation-duration:27s;
+}
+
+.ball-5{
+    left:92%;
+    top:20%;
+    animation-duration:22s;
+}
+
+@keyframes ballFloat{
+    0%{
+        transform:
+            translate3d(0,0,0)
+            rotate(0deg);
+    }
+
+    50%{
+        transform:
+            translate3d(20px,-90px,0)
+            rotate(180deg);
+    }
+
+    100%{
+        transform:
+            translate3d(0,0,0)
+            rotate(360deg);
+    }
+}
+
+/* =========================================================
+   TOP NAVIGATION
+========================================================= */
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:80;
+
+    background:rgba(2,7,10,.88);
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.nav{
+    width:min(1500px,94%);
+    min-height:76px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.brand-ball{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    font-size:23px;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            rgba(255,255,255,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #103323,
+            #06110c
+        );
+
+    border:1px solid var(--border-green);
+
+    box-shadow:
+        0 0 25px rgba(53,255,145,.12),
+        inset 0 0 20px rgba(53,255,145,.04);
+}
+
+.brand-name{
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:2.5px;
+    color:white;
+}
+
+.brand-sub{
+    color:var(--green);
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:3px;
+    margin-top:4px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:4px;
+
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.nav-links::-webkit-scrollbar{
+    display:none;
+}
+
+.nav-btn{
+    border:0;
+    background:transparent;
+
+    color:#8ca2a7;
+
+    padding:10px 12px;
+
+    border-radius:8px;
+
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1px;
+
+    cursor:pointer;
+    white-space:nowrap;
+
+    transition:.2s;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    color:white;
+    background:rgba(53,255,145,.08);
+}
+
+.nav-live{
+    color:var(--red)!important;
+}
+
+.nav-live:hover{
+    background:rgba(255,82,100,.08)!important;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+
+    display:inline-block;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    box-shadow:
+        0 0 10px var(--red);
+
+    animation:
+        livePulse 1.2s infinite;
+}
+
+@keyframes livePulse{
+    0%,100%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.3;
+    }
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    width:min(1500px,94%);
+    min-height:700px;
+
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:1.08fr .92fr;
+
+    align-items:center;
+
+    gap:50px;
+
+    position:relative;
+}
+
+.hero-content{
+    position:relative;
+    z-index:5;
+}
+
+.status-line{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:var(--green);
+
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:4px;
+
+    margin-bottom:22px;
+}
+
+.status-line i{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 14px var(--green);
+}
+
+.hero h1{
+    font-size:
+        clamp(58px,8vw,125px);
+
+    line-height:.84;
+
+    letter-spacing:-7px;
+
+    text-transform:uppercase;
+
+    max-width:1000px;
+}
+
+.hero h1 span{
+    display:block;
+
+    color:transparent;
+
+    -webkit-text-stroke:
+        1px rgba(255,255,255,.35);
+}
+
+.hero-description{
+    max-width:680px;
+
+    margin-top:28px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:15px;
+}
+
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+
+    margin-top:30px;
+}
+
+.btn{
+    border:1px solid var(--border);
+
+    padding:14px 19px;
+
+    border-radius:9px;
+
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        background .2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    background:var(--green);
+    color:#031008;
+
+    border-color:var(--green);
+
+    box-shadow:
+        0 0 30px rgba(53,255,145,.12);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.035);
+    color:white;
+}
+
+.btn-secondary:hover{
+    border-color:var(--border-green);
+    background:rgba(53,255,145,.06);
+}
+
+/* =========================================================
+   HERO STADIUM
+========================================================= */
+
+.stadium{
+    position:relative;
+
+    height:510px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.stadium-glow{
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(53,255,145,.13),
+            transparent 68%
+        );
+
+    filter:blur(5px);
+}
+
+.pitch{
+    width:430px;
+    height:270px;
+
+    position:relative;
+
+    border:2px solid rgba(53,255,145,.32);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(53,255,145,.025),
+            rgba(53,255,145,.10),
+            rgba(53,255,145,.025)
+        );
+
+    box-shadow:
+        0 0 70px rgba(53,255,145,.07),
+        inset 0 0 80px rgba(0,0,0,.4);
+
+    transform:
+        perspective(800px)
+        rotateX(55deg)
+        rotateZ(-8deg);
+}
+
+.pitch::before{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    top:0;
+
+    width:1px;
+    height:100%;
+
+    background:rgba(53,255,145,.3);
+}
+
+.pitch::after{
+    content:"";
+
+    position:absolute;
+
+    width:90px;
+    height:90px;
+
+    border:1px solid rgba(53,255,145,.35);
+
+    border-radius:50%;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+}
+
+.penalty{
+    position:absolute;
+
+    width:60px;
+    height:130px;
+
+    border:1px solid rgba(53,255,145,.3);
+
+    top:50%;
+
+    transform:translateY(-50%);
+}
+
+.penalty.left{
+    left:0;
+    border-left:0;
+}
+
+.penalty.right{
+    right:0;
+    border-right:0;
+}
+
+.goal{
+    position:absolute;
+
+    width:85px;
+    height:120px;
+
+    border:3px solid rgba(255,255,255,.5);
+
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        perspective(400px)
+        rotateY(12deg);
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,.08);
+}
+
+.goal.left{
+    left:-70px;
+}
+
+.goal.right{
+    right:-70px;
+
+    transform:
+        translateY(-50%)
+        perspective(400px)
+        rotateY(-12deg);
+}
+
+.goal::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            45deg,
+            transparent 48%,
+            rgba(255,255,255,.12) 49%,
+            transparent 51%
+        );
+
+    background-size:12px 12px;
+}
+
+.hero-ball{
+    position:absolute;
+
+    width:82px;
+    height:82px;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    font-size:45px;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #ffffff,
+            #bfc8c7 55%,
+            #4d5555
+        );
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.5),
+        0 0 35px rgba(255,255,255,.08);
+
+    animation:
+        heroBallFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroBallFloat{
+    0%,100%{
+        transform:translateY(-20px) rotate(0deg);
+    }
+
+    50%{
+        transform:translateY(18px) rotate(180deg);
+    }
+}
+
+.floodlight{
+    position:absolute;
+
+    width:170px;
+    height:170px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.12),
+            transparent 65%
+        );
+
+    filter:blur(3px);
+
+    animation:
+        lightPulse 3s ease-in-out infinite;
+}
+
+.light-a{
+    left:5%;
+    top:4%;
+}
+
+.light-b{
+    right:5%;
+    top:10%;
+
+    animation-delay:1.4s;
+}
+
+@keyframes lightPulse{
+    50%{
+        opacity:.45;
+    }
+}
+
+/* =========================================================
+   SECTION SYSTEM
+========================================================= */
+
+.section{
+    width:min(1500px,94%);
+    margin:0 auto;
+    padding:90px 0;
+}
+
+.section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+
+    gap:30px;
+
+    margin-bottom:35px;
+}
+
+.section-kicker{
+    color:var(--green);
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:4px;
+
+    margin-bottom:9px;
+}
+
+.section-title{
+    font-size:
+        clamp(32px,5vw,62px);
+
+    letter-spacing:-2px;
+
+    text-transform:uppercase;
+
+    color:white;
+}
+
+.section-text{
+    max-width:570px;
+
+    color:var(--muted);
+
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   LIVE SCORE CENTER
+========================================================= */
+
+.live-center{
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(53,255,145,.025),
+            transparent
+        );
+}
+
+.score-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+
+    margin-bottom:20px;
+}
+
+.filter{
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.025);
+
+    color:var(--muted);
+
+    padding:9px 13px;
+
+    border-radius:7px;
+
+    font-size:10px;
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.filter.active,
+.filter:hover{
+    color:white;
+
+    border-color:var(--border-green);
+
+    background:rgba(53,255,145,.07);
+}
+
+.score-layout{
+    display:grid;
+    grid-template-columns:1.45fr .55fr;
+
+    gap:20px;
+}
+
+.score-list{
+    display:grid;
+    gap:10px;
+}
+
+.match-card{
+    border:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.012)
+        );
+
+    border-radius:13px;
+
+    padding:17px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.15);
+
+    transition:.2s;
+}
+
+.match-card:hover{
+    border-color:rgba(53,255,145,.2);
+    transform:translateY(-2px);
+}
+
+.match-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    color:var(--muted);
+
+    font-size:9px;
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    margin-bottom:15px;
+}
+
+.match-status{
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.match-status.final{
+    color:var(--muted);
+}
+
+.match-teams{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.team{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-weight:800;
+    font-size:13px;
+}
+
+.team.away{
+    justify-content:flex-end;
+    text-align:right;
+}
+
+.team-badge{
+    width:35px;
+    height:35px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #16272e,
+            #081014
+        );
+
+    border:1px solid var(--border);
+
+    font-size:17px;
+}
+
+.score{
+    font-size:25px;
+    font-weight:950;
+
+    color:white;
+
+    letter-spacing:2px;
+}
+
+.score em{
+    color:var(--muted);
+    font-style:normal;
+}
+
+.match-bottom{
+    margin-top:15px;
+
+    display:flex;
+    justify-content:space-between;
+
+    color:#60777c;
+
+    font-size:9px;
+}
+
+.match-event{
+    color:var(--green);
+}
+
+.live-sidebar{
+    display:grid;
+    gap:10px;
+}
+
+.status-panel{
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:20px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(53,255,145,.08),
+            transparent 55%
+        ),
+        var(--panel);
+}
+
+.status-panel h3{
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:15px;
+}
+
+.big-number{
+    font-size:42px;
+    font-weight:950;
+    color:white;
+}
+
+.small-label{
+    color:var(--muted);
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+/* =========================================================
+   DATABASE GRID
+========================================================= */
+
+.universe-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+}
+
+.universe-card{
+    min-height:190px;
+
+    padding:24px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.008)
+        );
+
+    position:relative;
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s,
+        border-color .25s;
+}
+
+.universe-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    right:-45px;
+    top:-45px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(53,255,145,.13),
+            transparent 70%
+        );
+}
+
+.universe-card:hover{
+    transform:translateY(-5px);
+
+    border-color:
+        rgba(53,255,145,.25);
+}
+
+.card-icon{
+    font-size:28px;
+    margin-bottom:22px;
+}
+
+.card-label{
+    color:var(--green);
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    margin-bottom:7px;
+}
+
+.universe-card h3{
+    font-size:19px;
+    margin-bottom:9px;
+}
+
+.universe-card p{
+    color:var(--muted);
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* =========================================================
+   FIXTURES
+========================================================= */
+
+.fixture-board{
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.015);
+}
+
+.fixture-header,
+.fixture-row{
+    display:grid;
+    grid-template-columns:
+        90px
+        1fr
+        140px
+        1fr
+        100px;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.fixture-header{
+    padding:14px 18px;
+
+    color:#61777b;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    border-bottom:1px solid var(--border);
+}
+
+.fixture-row{
+    padding:17px 18px;
+
+    border-bottom:1px solid var(--border);
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+.fixture-row:last-child{
+    border-bottom:0;
+}
+
+.fixture-row:hover{
+    background:rgba(53,255,145,.025);
+}
+
+.fixture-time{
+    color:var(--cyan);
+    font-weight:900;
+}
+
+.fixture-team{
+    font-weight:800;
+}
+
+.fixture-team.right{
+    text-align:right;
+}
+
+.competition-name{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.fixture-state{
+    text-align:right;
+}
+
+.state-upcoming{
+    color:var(--gold);
+}
+
+.state-final{
+    color:var(--muted);
+}
+
+/* =========================================================
+   COMPETITIONS
+========================================================= */
+
+.competition-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+.competition-card{
+    min-height:230px;
+
+    padding:25px;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b171e,
+            #061015
+        );
+
+    position:relative;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.competition-card:hover{
+    transform:translateY(-4px);
+
+    border-color:
+        rgba(43,230,255,.25);
+}
+
+.trophy{
+    position:absolute;
+
+    right:22px;
+    top:20px;
+
+    font-size:46px;
+
+    opacity:.7;
+}
+
+.competition-card small{
+    color:var(--cyan);
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:3px;
+}
+
+.competition-card h3{
+    font-size:24px;
+    margin-top:14px;
+    max-width:240px;
+}
+
+.competition-card p{
+    margin-top:12px;
+
+    color:var(--muted);
+
+    font-size:11px;
+    line-height:1.7;
+}
+
+.competition-meta{
+    position:absolute;
+    bottom:20px;
+    left:25px;
+
+    display:flex;
+    gap:15px;
+
+    color:#637a7f;
+
+    font-size:9px;
+}
+
+/* =========================================================
+   CLUBS / PLAYERS
+========================================================= */
+
+.split-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+}
+
+.data-panel{
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    background:var(--panel);
+}
+
+.data-panel-head{
+    padding:20px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.data-panel-head h3{
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+.view-all{
+    color:var(--green);
+
+    border:0;
+    background:none;
+
+    font-size:9px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.entity-row{
+    padding:15px 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid var(--border);
+
+    transition:.2s;
+}
+
+.entity-row:last-child{
+    border-bottom:0;
+}
+
+.entity-row:hover{
+    background:rgba(255,255,255,.025);
+}
+
+.entity-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.entity-icon{
+    width:37px;
+    height:37px;
+
+    border-radius:9px;
+
+    display:grid;
+    place-items:center;
+
+    background:#102028;
+
+    border:1px solid var(--border);
+
+    font-size:17px;
+}
+
+.entity-name{
+    font-weight:800;
+    font-size:12px;
+}
+
+.entity-sub{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.entity-stat{
+    color:var(--green);
+
+    font-size:10px;
+    font-weight:900;
+}
+
+/* =========================================================
+   WORLD CUP
+========================================================= */
+
+.world-cup{
+    position:relative;
+
+    border:1px solid rgba(255,214,90,.15);
+
+    border-radius:20px;
+
+    padding:45px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255,214,90,.08),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #11120d,
+            #08100d
+        );
+}
+
+.world-cup::before{
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    border:1px solid rgba(255,214,90,.06);
+
+    border-radius:50%;
+
+    right:-150px;
+    top:-200px;
+}
+
+.cup-layout{
+    display:grid;
+
+    grid-template-columns:
+        1fr .7fr;
+
+    gap:30px;
+
+    align-items:center;
+}
+
+.cup-eyebrow{
+    color:var(--gold);
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:4px;
+}
+
+.cup-title{
+    font-size:
+        clamp(40px,6vw,75px);
+
+    line-height:.9;
+
+    margin:15px 0;
+
+    text-transform:uppercase;
+
+    letter-spacing:-3px;
+}
+
+.cup-text{
+    color:var(--muted);
+
+    max-width:600px;
+
+    line-height:1.8;
+
+    font-size:12px;
+}
+
+.cup-icon{
+    text-align:center;
+
+    font-size:150px;
+
+    filter:
+        drop-shadow(
+            0 0 35px
+            rgba(255,214,90,.12)
+        );
+
+    animation:
+        trophyFloat 4s ease-in-out infinite;
+}
+
+@keyframes trophyFloat{
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+.cup-years{
+    margin-top:25px;
+
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:7px;
+}
+
+.year{
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.025);
+
+    color:#a5b3b4;
+
+    padding:8px 11px;
+
+    border-radius:6px;
+
+    font-size:9px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.year:hover,
+.year.selected{
+    color:var(--gold);
+
+    border-color:
+        rgba(255,214,90,.3);
+}
+
+/* =========================================================
+   HISTORY TIMELINE
+========================================================= */
+
+.timeline{
+    position:relative;
+
+    margin-top:35px;
+
+    padding-left:35px;
+}
+
+.timeline::before{
+    content:"";
+
+    position:absolute;
+
+    left:8px;
+    top:0;
+    bottom:0;
+
+    width:1px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--green),
+            rgba(53,255,145,.08)
+        );
+}
+
+.timeline-item{
+    position:relative;
+
+    margin-bottom:25px;
+
+    padding:22px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.018);
+
+    transition:.2s;
+}
+
+.timeline-item:hover{
+    border-color:
+        rgba(53,255,145,.2);
+}
+
+.timeline-item::before{
+    content:"";
+
+    position:absolute;
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    left:-33px;
+    top:28px;
+
+    box-shadow:
+        0 0 15px rgba(53,255,145,.6);
+}
+
+.timeline-year{
+    color:var(--green);
+
+    font-size:10px;
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    margin-bottom:8px;
+}
+
+.timeline-item h3{
+    font-size:18px;
+    margin-bottom:7px;
+}
+
+.timeline-item p{
+    color:var(--muted);
+
+    font-size:11px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   COUNTRIES
+========================================================= */
+
+.country-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,1fr);
+
+    gap:9px;
+}
+
+.country{
+    padding:18px 12px;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.018);
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.country:hover{
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(43,230,255,.25);
+
+    background:
+        rgba(43,230,255,.035);
+}
+
+.country-flag{
+    font-size:27px;
+    margin-bottom:9px;
+}
+
+.country-name{
+    font-size:10px;
+    font-weight:900;
+}
+
+.country-region{
+    margin-top:4px;
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stat-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+}
+
+.stat-card{
+    padding:25px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(53,255,145,.035),
+            rgba(255,255,255,.012)
+        );
+}
+
+.stat-value{
+    font-size:38px;
+    font-weight:950;
+
+    color:white;
+
+    letter-spacing:-2px;
+}
+
+.stat-name{
+    color:var(--green);
+
+    margin-top:8px;
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:2px;
+}
+
+.stat-note{
+    color:var(--muted);
+
+    font-size:9px;
+
+    margin-top:8px;
+}
+
+/* =========================================================
+   RECORDS
+========================================================= */
+
+.records-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+.record-card{
+    padding:25px;
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    background:var(--panel);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.record-number{
+    font-size:50px;
+
+    color:rgba(53,255,145,.12);
+
+    font-weight:950;
+
+    position:absolute;
+
+    right:15px;
+    top:3px;
+}
+
+.record-type{
+    color:var(--green);
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:3px;
+}
+
+.record-card h3{
+    margin-top:13px;
+
+    font-size:17px;
+}
+
+.record-card p{
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.7;
+
+    margin-top:9px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-section{
+    padding-bottom:110px;
+}
+
+.search-box{
+    display:flex;
+
+    gap:8px;
+
+    max-width:900px;
+}
+
+.search-input{
+    flex:1;
+
+    min-width:0;
+
+    border:1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:white;
+
+    padding:18px 20px;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:13px;
+}
+
+.search-input:focus{
+    border-color:
+        rgba(53,255,145,.35);
+
+    box-shadow:
+        0 0 25px rgba(53,255,145,.04);
+}
+
+.search-results{
+    margin-top:18px;
+
+    display:grid;
+
+    gap:8px;
+
+    max-width:900px;
+}
+
+.search-result{
+    display:none;
+
+    padding:15px 18px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.018);
+
+    cursor:pointer;
+}
+
+.search-result.show{
+    display:block;
+}
+
+.search-result strong{
+    font-size:12px;
+}
+
+.search-result span{
+    color:var(--muted);
+
+    margin-left:8px;
+
+    font-size:9px;
+}
+
+/* =========================================================
+   ON THIS DAY
+========================================================= */
+
+.today-panel{
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:30px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(43,230,255,.08),
+            transparent 35%
+        ),
+        var(--panel);
+}
+
+.today-date{
+    color:var(--cyan);
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:3px;
+}
+
+.today-title{
+    font-size:28px;
+
+    margin:12px 0 20px;
+}
+
+.today-event{
+    padding:18px 0;
+
+    border-top:1px solid var(--border);
+}
+
+.today-event strong{
+    font-size:13px;
+}
+
+.today-event p{
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.7;
+
+    margin-top:7px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    border-top:1px solid var(--border);
+
+    padding:60px 0;
+
+    background:#010405;
+}
+
+.footer-inner{
+    width:min(1500px,94%);
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        1.5fr
+        1fr
+        1fr
+        1fr;
+
+    gap:35px;
+}
+
+.footer-brand{
+    font-size:20px;
+    font-weight:950;
+
+    letter-spacing:2px;
+}
+
+.footer-description{
+    color:var(--muted);
+
+    max-width:400px;
+
+    font-size:10px;
+
+    line-height:1.8;
+
+    margin-top:12px;
+}
+
+.footer-column h4{
+    color:white;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    margin-bottom:14px;
+}
+
+.footer-column button{
+    display:block;
+
+    border:0;
+    background:none;
+
+    color:#71878c;
+
+    font-size:10px;
+
+    margin-bottom:9px;
+
+    cursor:pointer;
+
+    text-align:left;
+}
+
+.footer-column button:hover{
+    color:var(--green);
+}
+
+.footer-bottom{
+    width:min(1500px,94%);
+    margin:45px auto 0;
+
+    padding-top:20px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    color:#53666a;
+
+    font-size:9px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    max-width:330px;
+
+    padding:15px 18px;
+
+    border:1px solid var(--border-green);
+
+    border-radius:10px;
+
+    background:
+        rgba(5,15,12,.94);
+
+    backdrop-filter:blur(15px);
+
+    color:white;
+
+    font-size:10px;
+
+    transform:
+        translateY(120px);
+
+    opacity:0;
+
+    transition:.3s;
+
+    z-index:200;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding:70px 0;
+    }
+
+    .stadium{
+        order:-1;
+        height:420px;
+    }
+
+    .universe-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .competition-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .country-grid{
+        grid-template-columns:
+            repeat(4,1fr);
+    }
+
+    .stat-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .records-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .score-layout{
+        grid-template-columns:1fr;
+    }
+
+    .footer-inner{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .nav{
+        min-height:65px;
+    }
+
+    .brand-sub{
+        display:none;
+    }
+
+    .nav-links{
+        max-width:48vw;
+    }
+
+    .hero{
+        min-height:auto;
+
+        padding:
+            70px 0
+            80px;
+    }
+
+    .hero h1{
+        font-size:
+            clamp(52px,16vw,90px);
+
+        letter-spacing:-4px;
+    }
+
+    .hero-description{
+        font-size:13px;
+    }
+
+    .stadium{
+        height:310px;
+    }
+
+    .pitch{
+        width:280px;
+        height:180px;
+    }
+
+    .goal{
+        width:55px;
+        height:80px;
+    }
+
+    .goal.left{
+        left:-38px;
+    }
+
+    .goal.right{
+        right:-38px;
+    }
+
+    .hero-ball{
+        width:60px;
+        height:60px;
+        font-size:32px;
+    }
+
+    .section{
+        padding:65px 0;
+    }
+
+    .section-head{
+        display:block;
+    }
+
+    .section-text{
+        margin-top:15px;
+    }
+
+    .universe-grid,
+    .competition-grid,
+    .split-grid,
+    .records-grid{
+        grid-template-columns:1fr;
+    }
+
+    .country-grid{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .stat-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .fixture-board{
+        overflow-x:auto;
+    }
+
+    .fixture-header,
+    .fixture-row{
+        min-width:650px;
+    }
+
+    .match-teams{
+        gap:10px;
+    }
+
+    .team{
+        font-size:11px;
+    }
+
+    .team-badge{
+        width:30px;
+        height:30px;
+    }
+
+    .world-cup{
+        padding:28px;
+    }
+
+    .cup-layout{
+        grid-template-columns:1fr;
+    }
+
+    .cup-icon{
+        font-size:100px;
+    }
+
+    .footer-inner{
+        grid-template-columns:1fr;
+    }
+
+    .footer-bottom{
+        display:block;
+    }
+
+    .footer-bottom span{
+        display:block;
+        margin-bottom:8px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     FLOATING BACKGROUND BALLS
+====================================================== -->
+
+<div class="floating-ball ball-1"></div>
+<div class="floating-ball ball-2"></div>
+<div class="floating-ball ball-3"></div>
+<div class="floating-ball ball-4"></div>
+<div class="floating-ball ball-5"></div>
+
+
+<!-- ======================================================
+     NAVIGATION
+====================================================== -->
+
+<header class="topbar">
+
+    <div class="nav">
+
+        <div
+            class="brand"
+            onclick="scrollToSection('home')"
+        >
+
+            <div class="brand-ball">
+                ⚽
+            </div>
+
+            <div>
+                <div class="brand-name">
+                    FOOTBALL ATLAS
+                </div>
+
+                <div class="brand-sub">
+                    THE COMPLETE FOOTBALL UNIVERSE
+                </div>
+            </div>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <button
+                class="nav-btn active"
+                onclick="scrollToSection('home')"
+            >
+                HOME
+            </button>
+
+            <button
+                class="nav-btn nav-live"
+                onclick="scrollToSection('live')"
+            >
+                <span class="live-dot"></span>
+                LIVE
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('matches')"
+            >
+                MATCHES
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('competitions')"
+            >
+                COMPETITIONS
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('clubs')"
+            >
+                CLUBS
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('players')"
+            >
+                PLAYERS
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('countries')"
+            >
+                COUNTRIES
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('history')"
+            >
+                HISTORY
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('worldcup')"
+            >
+                WORLD CUP
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('statistics')"
+            >
+                STATS
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="scrollToSection('records')"
+            >
+                RECORDS
+            </button>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="status-line">
+            <i></i>
+            FOOTBALL DATABASE // ONLINE
+        </div>
+
+
+        <h1>
+            FOOTBALL
+            <span>ATLAS</span>
+        </h1>
+
+
+        <p class="hero-description">
+            A digital universe for the world's game.
+            Explore live football, fixtures, competitions,
+            clubs, players, countries, World Cup history,
+            statistics, records and the story of football
+            across generations.
+        </p>
+
+
+        <div class="hero-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="scrollToSection('live')"
+            >
+                ⚡ ENTER LIVE CENTER
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="scrollToSection('history')"
+            >
+                📜 EXPLORE HISTORY
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="stadium">
+
+        <div class="stadium-glow"></div>
+
+        <div class="floodlight light-a"></div>
+        <div class="floodlight light-b"></div>
+
+
+        <div class="goal left"></div>
+        <div class="goal right"></div>
+
+
+        <div class="pitch">
+
+            <div class="penalty left"></div>
+            <div class="penalty right"></div>
+
+        </div>
+
+
+        <div class="hero-ball">
+            ⚽
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     LIVE CENTER
+====================================================== -->
+
+<section
+    class="section live-center"
+    id="live"
+>
+
+    <div class="section-head">
+
+        <div>
+            <div class="section-kicker">
+                LIVE FOOTBALL
+            </div>
+
+            <h2 class="section-title">
+                Live Center
+            </h2>
+        </div>
+
+        <p class="section-text">
+            The live center is designed for real-time
+            football data. Once connected to a football
+            data provider, this interface can display
+            live scores, match events, lineups, cards,
+            substitutions and minute-by-minute updates.
+        </p>
+
+    </div>
+
+
+    <div class="score-toolbar">
+
+        <button
+            class="filter active"
+            onclick="filterMatches('all',this)"
+        >
+            ALL
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterMatches('live',this)"
+        >
+            LIVE
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterMatches('upcoming',this)"
+        >
+            UPCOMING
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterMatches('final',this)"
+        >
+            FINISHED
+        </button>
+
+        <button
+            class="filter"
+            onclick="showToast('Real-time API connection will be added here.')"
+        >
+            ⟳ REFRESH
+        </button>
+
+    </div>
+
+
+    <div class="score-layout">
+
+
+        <div class="score-list" id="scoreList">
+
+
+            <!-- LIVE MATCH 1 -->
+
+            <article
+                class="match-card"
+                data-status="live"
+            >
+
+                <div class="match-top">
+
+                    <span>
+                        PREMIER LEAGUE
+                    </span>
+
+                    <span class="match-status">
+                        <span class="live-dot"></span>
+                        LIVE
+                        <strong
+                            class="minute"
+                            data-start="32"
+                        >
+                            32'
+                        </strong>
+                    </span>
+
+                </div>
+
+
+                <div class="match-teams">
+
+                    <div class="team">
+
+                        <div class="team-badge">
+                            🔴
+                        </div>
+
+                        Arsenal
+
+                    </div>
+
+
+                    <div class="score">
+                        1 <em>:</em> 0
+                    </div>
+
+
+                    <div class="team away">
+
+                        Manchester City
+
+                        <div class="team-badge">
+                            🔵
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="match-bottom">
+
+                    <span>
+                        Emirates Stadium
+                    </span>
+
+                    <span class="match-event">
+                        ⚽ 27' Goal
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- LIVE MATCH 2 -->
+
+            <article
+                class="match-card"
+                data-status="live"
+            >
+
+                <div class="match-top">
+
+                    <span>
+                        UEFA CHAMPIONS LEAGUE
+                    </span>
+
+                    <span class="match-status">
+
+                        <span class="live-dot"></span>
+
+                        LIVE
+
+                        <strong
+                            class="minute"
+                            data-start="67"
+                        >
+                            67'
+                        </strong>
+
+                    </span>
+
+                </div>
+
+
+                <div class="match-teams">
+
+                    <div class="team">
+
+                        <div class="team-badge">
+                            ⚪
+                        </div>
+
+                        Real Madrid
+
+                    </div>
+
+
+                    <div class="score">
+                        2 <em>:</em> 1
+                    </div>
+
+
+                    <div class="team away">
+
+                        Bayern Munich
+
+                        <div class="team-badge">
+                            🔴
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="match-bottom">
+
+                    <span>
+                        Santiago Bernabéu
+                    </span>
+
+                    <span class="match-event">
+                        🟨 64' Card
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- UPCOMING -->
+
+            <article
+                class="match-card"
+                data-status="upcoming"
+            >
+
+                <div class="match-top">
+
+                    <span>
+                        LA LIGA
+                    </span>
+
+                    <span
+                        class="match-status"
+                        style="color:var(--gold)"
+                    >
+                        UPCOMING
+                    </span>
+
+                </div>
+
+
+                <div class="match-teams">
+
+                    <div class="team">
+
+                        <div class="team-badge">
+                            🔵🔴
+                        </div>
+
+                        Barcelona
+
+                    </div>
+
+
+                    <div class="score">
+                        <small style="font-size:11px;color:var(--muted)">
+                            20:00
+                        </small>
+                    </div>
+
+
+                    <div class="team away">
+
+                        Atlético Madrid
+
+                        <div class="team-badge">
+                            🔴⚪
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="match-bottom">
+
+                    <span>
+                        Estadi Olímpic
+                    </span>
+
+                    <span>
+                        Kick-off
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- FINAL -->
+
+            <article
+                class="match-card"
+                data-status="final"
+            >
+
+                <div class="match-top">
+
+                    <span>
+                        SERIE A
+                    </span>
+
+                    <span class="match-status final">
+                        FULL TIME
+                    </span>
+
+                </div>
+
+
+                <div class="match-teams">
+
+                    <div class="team">
+
+                        <div class="team-badge">
+                            ⚫🔵
+                        </div>
+
+                        Inter
+
+                    </div>
+
+
+                    <div class="score">
+                        3 <em>:</em> 1
+                    </div>
+
+
+                    <div class="team away">
+
+                        AC Milan
+
+                        <div class="team-badge">
+                            🔴⚫
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="match-bottom">
+
+                    <span>
+                        San Siro
+                    </span>
+
+                    <span>
+                        FT
+                    </span>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <aside class="live-sidebar">
+
+
+            <div class="status-panel">
+
+                <h3>
+                    LIVE MATCHES
+                </h3>
+
+                <div
+                    class="big-number"
+                    id="liveCount"
+                >
+                    02
+                </div>
+
+                <div class="small-label">
+                    CURRENTLY PLAYING
+                </div>
+
+            </div>
+
+
+            <div class="status-panel">
+
+                <h3>
+                    DATA STATUS
+                </h3>
+
+                <div
+                    style="
+                    color:var(--gold);
+                    font-size:12px;
+                    font-weight:900;
+                    "
+                >
+                    API READY
+                </div>
+
+                <p
+                    style="
+                    color:var(--muted);
+                    font-size:10px;
+                    line-height:1.7;
+                    margin-top:9px;
+                    "
+                >
+                    This interface does not pretend that
+                    static demo data is live. Connect a
+                    protected football API to populate
+                    actual matches.
+                </p>
+
+            </div>
+
+
+            <div class="status-panel">
+
+                <h3>
+                    LAST UPDATE
+                </h3>
+
+                <div
+                    id="lastUpdate"
+                    style="
+                    color:white;
+                    font-size:12px;
+                    font-weight:800;
+                    "
+                >
+                    Waiting for live feed
+                </div>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTBALL UNIVERSE
+====================================================== -->
+
+<section
+    class="section"
+    id="universe"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                THE DATABASE
+            </div>
+
+            <h2 class="section-title">
+                Football Universe
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Football Atlas is designed as one connected
+            football database. Every part of the game can
+            eventually connect to every other part.
+        </p>
+
+    </div>
+
+
+    <div class="universe-grid">
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('live')"
+        >
+            <div class="card-icon">⚡</div>
+
+            <div class="card-label">
+                REAL TIME
+            </div>
+
+            <h3>Live Football</h3>
+
+            <p>
+                Live scores, match status, goals,
+                cards, substitutions, lineups and
+                real-time match events.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('matches')"
+        >
+            <div class="card-icon">📅</div>
+
+            <div class="card-label">
+                MATCH DATABASE
+            </div>
+
+            <h3>Matches</h3>
+
+            <p>
+                Fixtures, results, matchdays,
+                venues, competitions and detailed
+                match information.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('competitions')"
+        >
+            <div class="card-icon">🏆</div>
+
+            <div class="card-label">
+                TROPHIES
+            </div>
+
+            <h3>Competitions</h3>
+
+            <p>
+                Domestic leagues, cups, continental
+                tournaments and international
+                competitions.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('clubs')"
+        >
+            <div class="card-icon">🏟️</div>
+
+            <div class="card-label">
+                CLUB DATABASE
+            </div>
+
+            <h3>Clubs</h3>
+
+            <p>
+                Club history, stadiums, managers,
+                trophies, legends, seasons and
+                competitions.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('players')"
+        >
+            <div class="card-icon">⭐</div>
+
+            <div class="card-label">
+                PLAYER DATABASE
+            </div>
+
+            <h3>Players</h3>
+
+            <p>
+                Career timelines, appearances,
+                goals, assists, trophies and
+                international records.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('countries')"
+        >
+            <div class="card-icon">🌍</div>
+
+            <div class="card-label">
+                GLOBAL FOOTBALL
+            </div>
+
+            <h3>Countries</h3>
+
+            <p>
+                National teams, football regions,
+                domestic systems, World Cups and
+                national history.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('history')"
+        >
+            <div class="card-icon">📜</div>
+
+            <div class="card-label">
+                TIMELINE
+            </div>
+
+            <h3>Football History</h3>
+
+            <p>
+                From early ball games to modern
+                professional football and the
+                data-driven era.
+            </p>
+        </div>
+
+
+        <div
+            class="universe-card"
+            onclick="scrollToSection('worldcup')"
+        >
+            <div class="card-icon">🌐</div>
+
+            <div class="card-label">
+                GLOBAL TOURNAMENT
+            </div>
+
+            <h3>World Cup</h3>
+
+            <p>
+                Tournament-by-tournament archive,
+                hosts, finals, teams, records and
+                historical context.
+            </p>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FIXTURES
+====================================================== -->
+
+<section
+    class="section"
+    id="matches"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                MATCH CENTER
+            </div>
+
+            <h2 class="section-title">
+                Fixtures & Results
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            A complete matchday interface for upcoming
+            fixtures, completed results and historical
+            matches.
+        </p>
+
+    </div>
+
+
+    <div class="fixture-board">
+
+        <div class="fixture-header">
+
+            <span>
+                TIME
+            </span>
+
+            <span>
+                HOME
+            </span>
+
+            <span>
+                COMPETITION
+            </span>
+
+            <span>
+                AWAY
+            </span>
+
+            <span>
+                STATUS
+            </span>
+
+        </div>
+
+
+        <div class="fixture-row">
+
+            <span class="fixture-time">
+                17:30
+            </span>
+
+            <span class="fixture-team">
+                Liverpool
+            </span>
+
+            <span class="competition-name">
+                Premier League
+            </span>
+
+            <span class="fixture-team right">
+                Chelsea
+            </span>
+
+            <span class="fixture-state state-upcoming">
+                UPCOMING
+            </span>
+
+        </div>
+
+
+        <div class="fixture-row">
+
+            <span class="fixture-time">
+                20:00
+            </span>
+
+            <span class="fixture-team">
+                Barcelona
+            </span>
+
+            <span class="competition-name">
+                La Liga
+            </span>
+
+            <span class="fixture-team right">
+                Atlético Madrid
+            </span>
+
+            <span class="fixture-state state-upcoming">
+                UPCOMING
+            </span>
+
+        </div>
+
+
+        <div class="fixture-row">
+
+            <span class="fixture-time">
+                20:45
+            </span>
+
+            <span class="fixture-team">
+                Juventus
+            </span>
+
+            <span class="competition-name">
+                Serie A
+            </span>
+
+            <span class="fixture-team right">
+                Napoli
+            </span>
+
+            <span class="fixture-state state-upcoming">
+                UPCOMING
+            </span>
+
+        </div>
+
+
+        <div class="fixture-row">
+
+            <span class="fixture-time">
+                FT
+            </span>
+
+            <span class="fixture-team">
+                Inter
+            </span>
+
+            <span class="competition-name">
+                Serie A
+            </span>
+
+            <span class="fixture-team right">
+                AC Milan
+            </span>
+
+            <span class="fixture-state state-final">
+                3 — 1
+            </span>
+
+        </div>
+
+
+        <div class="fixture-row">
+
+            <span class="fixture-time">
+                FT
+            </span>
+
+            <span class="fixture-team">
+                Real Madrid
+            </span>
+
+            <span class="competition-name">
+                La Liga
+            </span>
+
+            <span class="fixture-team right">
+                Sevilla
+            </span>
+
+            <span class="fixture-state state-final">
+                2 — 0
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     COMPETITIONS
+====================================================== -->
+
+<section
+    class="section"
+    id="competitions"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                GLOBAL COMPETITIONS
+            </div>
+
+            <h2 class="section-title">
+                Competitions
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Major competitions form the backbone of the
+            football universe: leagues, cups, continental
+            tournaments and international championships.
+        </p>
+
+    </div>
+
+
+    <div class="competition-grid">
+
+
+        <div class="competition-card">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <small>
+                ENGLAND
+            </small>
+
+            <h3>
+                Premier League
+            </h3>
+
+            <p>
+                English top-flight football with clubs,
+                seasons, tables, fixtures, results and
+                historical records.
+            </p>
+
+            <div class="competition-meta">
+                <span>LEAGUE</span>
+                <span>ENGLAND</span>
+            </div>
+
+        </div>
+
+
+        <div class="competition-card">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <small>
+                EUROPE
+            </small>
+
+            <h3>
+                UEFA Champions League
+            </h3>
+
+            <p>
+                European club football's premier
+                continental competition and its
+                historical archive.
+            </p>
+
+            <div class="competition-meta">
+                <span>EUROPE</span>
+                <span>CLUBS</span>
+            </div>
+
+        </div>
+
+
+        <div class="competition-card">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <small>
+                SPAIN
+            </small>
+
+            <h3>
+                La Liga
+            </h3>
+
+            <p>
+                Spanish top-flight football covering
+                clubs, seasons, matches and competition
+                history.
+            </p>
+
+            <div class="competition-meta">
+                <span>LEAGUE</span>
+                <span>SPAIN</span>
+            </div>
+
+        </div>
+
+
+        <div class="competition-card">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <small>
+                INTERNATIONAL
+            </small>
+
+            <h3>
+                FIFA World Cup
+            </h3>
+
+            <p>
+                The world's major international football
+                tournament, archived tournament by
+                tournament.
+            </p>
+
+            <div class="competition-meta">
+                <span>WORLD</span>
+                <span>NATIONAL TEAMS</span>
+            </div>
+
+        </div>
+
+
+        <div class="competition-card">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <small>
+                SOUTH AMERICA
+            </small>
+
+            <h3>
+                Copa Libertadores
+            </h3>
+
+            <p>
+                South American club football with
+                tournament history, teams and finals.
+            </p>
+
+            <div class="competition-meta">
+                <span>CONMEBOL</span>
+                <span>CLUBS</span>
+            </div>
+
+        </div>
+
+
+        <div class="competition-card">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <small>
+                ASIA
+            </small>
+
+            <h3>
+                AFC Champions League
+            </h3>
+
+            <p>
+                Asian club football and its expanding
+                continental archive.
+            </p>
+
+            <div class="competition-meta">
+                <span>AFC</span>
+                <span>CLUBS</span>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CLUBS & PLAYERS
+====================================================== -->
+
+<section
+    class="section"
+    id="clubs"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                FOOTBALL ENTITIES
+            </div>
+
+            <h2 class="section-title">
+                Clubs & Players
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Clubs and players are connected through seasons,
+            matches, competitions, trophies and national
+            team careers.
+        </p>
+
+    </div>
+
+
+    <div class="split-grid">
+
+
+        <div class="data-panel">
+
+            <div class="data-panel-head">
+
+                <h3>
+                    FEATURED CLUBS
+                </h3>
+
+                <button
+                    class="view-all"
+                    onclick="showToast('Full club database will live here.')"
+                >
+                    VIEW ALL →
+                </button>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        🔴
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Manchester United
+                        </div>
+
+                        <div class="entity-sub">
+                            England • Old Trafford
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    CLUB
+                </div>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        🔵🔴
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Barcelona
+                        </div>
+
+                        <div class="entity-sub">
+                            Spain • Camp Nou
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    CLUB
+                </div>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        ⚪
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Real Madrid
+                        </div>
+
+                        <div class="entity-sub">
+                            Spain • Santiago Bernabéu
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    CLUB
+                </div>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        🔴
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Bayern Munich
+                        </div>
+
+                        <div class="entity-sub">
+                            Germany • Allianz Arena
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    CLUB
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="data-panel"
+            id="players"
+        >
+
+            <div class="data-panel-head">
+
+                <h3>
+                    PLAYERS
+                </h3>
+
+                <button
+                    class="view-all"
+                    onclick="showToast('Full player database will live here.')"
+                >
+                    VIEW ALL →
+                </button>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        ⭐
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Lionel Messi
+                        </div>
+
+                        <div class="entity-sub">
+                            Argentina • Forward
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    PLAYER
+                </div>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        ⭐
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Cristiano Ronaldo
+                        </div>
+
+                        <div class="entity-sub">
+                            Portugal • Forward
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    PLAYER
+                </div>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        ⭐
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Pelé
+                        </div>
+
+                        <div class="entity-sub">
+                            Brazil • Forward
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    LEGEND
+                </div>
+
+            </div>
+
+
+            <div class="entity-row">
+
+                <div class="entity-left">
+
+                    <div class="entity-icon">
+                        ⭐
+                    </div>
+
+                    <div>
+
+                        <div class="entity-name">
+                            Diego Maradona
+                        </div>
+
+                        <div class="entity-sub">
+                            Argentina • Midfielder
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="entity-stat">
+                    LEGEND
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     COUNTRIES
+====================================================== -->
+
+<section
+    class="section"
+    id="countries"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                GLOBAL FOOTBALL MAP
+            </div>
+
+            <h2 class="section-title">
+                Countries
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Explore football by nation: national teams,
+            domestic football, World Cup appearances,
+            famous players, clubs and football history.
+        </p>
+
+    </div>
+
+
+    <div class="country-grid">
+
+
+        <div class="country">
+            <div class="country-flag">🏴</div>
+            <div class="country-name">England</div>
+            <div class="country-region">Europe</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇫🇷</div>
+            <div class="country-name">France</div>
+            <div class="country-region">Europe</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇩🇪</div>
+            <div class="country-name">Germany</div>
+            <div class="country-region">Europe</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇪🇸</div>
+            <div class="country-name">Spain</div>
+            <div class="country-region">Europe</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇮🇹</div>
+            <div class="country-name">Italy</div>
+            <div class="country-region">Europe</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇵🇹</div>
+            <div class="country-name">Portugal</div>
+            <div class="country-region">Europe</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇧🇷</div>
+            <div class="country-name">Brazil</div>
+            <div class="country-region">South America</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇦🇷</div>
+            <div class="country-name">Argentina</div>
+            <div class="country-region">South America</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇺🇾</div>
+            <div class="country-name">Uruguay</div>
+            <div class="country-region">South America</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇯🇵</div>
+            <div class="country-name">Japan</div>
+            <div class="country-region">Asia</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇧🇩</div>
+            <div class="country-name">Bangladesh</div>
+            <div class="country-region">Asia</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇲🇦</div>
+            <div class="country-name">Morocco</div>
+            <div class="country-region">Africa</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇳🇬</div>
+            <div class="country-name">Nigeria</div>
+            <div class="country-region">Africa</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇺🇸</div>
+            <div class="country-name">United States</div>
+            <div class="country-region">North America</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇲🇽</div>
+            <div class="country-name">Mexico</div>
+            <div class="country-region">North America</div>
+        </div>
+
+
+        <div class="country">
+            <div class="country-flag">🇪🇬</div>
+            <div class="country-name">Egypt</div>
+            <div class="country-region">Africa</div>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTBALL HISTORY
+====================================================== -->
+
+<section
+    class="section"
+    id="history"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                THE ARCHIVE
+            </div>
+
+            <h2 class="section-title">
+                History of Football
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Football did not appear in one single moment.
+            Its story stretches across centuries of ball
+            games, rules, institutions and global expansion.
+        </p>
+
+    </div>
+
+
+    <div class="timeline">
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                ANCIENT ERA
+            </div>
+
+            <h3>
+                Early Ball Games
+            </h3>
+
+            <p>
+                Various civilizations developed games
+                involving balls, feet, teams and territorial
+                competition. These games were not identical
+                to modern association football, but form part
+                of the wider history of football-like games.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                MEDIEVAL PERIOD
+            </div>
+
+            <h3>
+                Folk Football
+            </h3>
+
+            <p>
+                Different forms of community football-like
+                games appeared in Europe. Rules, numbers of
+                players and playing areas varied significantly.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                1800s
+            </div>
+
+            <h3>
+                School & Club Football
+            </h3>
+
+            <p>
+                Football became increasingly organized in
+                British schools and clubs, leading to efforts
+                to establish standardized rules.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                1863
+            </div>
+
+            <h3>
+                The Football Association
+            </h3>
+
+            <p>
+                The Football Association was established in
+                England and helped standardize the laws of
+                association football.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                1904
+            </div>
+
+            <h3>
+                FIFA
+            </h3>
+
+            <p>
+                FIFA was founded in Paris as international
+                football began developing a more formal
+                governing structure.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                1930
+            </div>
+
+            <h3>
+                First FIFA World Cup
+            </h3>
+
+            <p>
+                Uruguay hosted the inaugural FIFA World Cup.
+                The tournament became a central event in the
+                international football calendar.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                1950s–1990s
+            </div>
+
+            <h3>
+                Global Expansion
+            </h3>
+
+            <p>
+                International competitions, continental club
+                tournaments, television broadcasting and
+                professional leagues expanded football's
+                worldwide reach.
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-year">
+                2000s–PRESENT
+            </div>
+
+            <h3>
+                Data, Technology & VAR
+            </h3>
+
+            <p>
+                Modern football increasingly incorporates
+                tracking data, analytics, goal-line technology,
+                video review systems and large-scale digital
+                football databases.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     WORLD CUP
+====================================================== -->
+
+<section
+    class="section"
+    id="worldcup"
+>
+
+    <div class="world-cup">
+
+
+        <div class="cup-layout">
+
+
+            <div>
+
+                <div class="cup-eyebrow">
+                    FIFA WORLD CUP ARCHIVE
+                </div>
+
+                <h2 class="cup-title">
+                    Every Tournament.
+                    Every Era.
+                </h2>
+
+                <p class="cup-text">
+                    Football Atlas is designed to eventually
+                    contain a tournament-by-tournament World
+                    Cup archive covering hosts, teams, groups,
+                    knockout rounds, finals, players, scorers,
+                    records and historical context.
+                </p>
+
+
+                <div class="cup-years">
+
+                    <button class="year">1930</button>
+                    <button class="year">1934</button>
+                    <button class="year">1938</button>
+                    <button class="year">1950</button>
+                    <button class="year">1954</button>
+                    <button class="year">1958</button>
+                    <button class="year">1962</button>
+                    <button class="year">1966</button>
+                    <button class="year">1970</button>
+                    <button class="year">1974</button>
+                    <button class="year">1978</button>
+                    <button class="year">1982</button>
+                    <button class="year">1986</button>
+                    <button class="year">1990</button>
+                    <button class="year">1994</button>
+                    <button class="year">1998</button>
+                    <button class="year">2002</button>
+                    <button class="year">2006</button>
+                    <button class="year">2010</button>
+                    <button class="year">2014</button>
+                    <button class="year">2018</button>
+                    <button class="year">2022</button>
+                    <button class="year">2026</button>
+
+                </div>
+
+            </div>
+
+
+            <div class="cup-icon">
+                🏆
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     STATISTICS
+====================================================== -->
+
+<section
+    class="section"
+    id="statistics"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                NUMBERS OF THE GAME
+            </div>
+
+            <h2 class="section-title">
+                Statistics
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            A future statistical engine connecting matches,
+            seasons, clubs, players and competitions.
+        </p>
+
+    </div>
+
+
+    <div class="stat-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-value">
+                90
+            </div>
+
+            <div class="stat-name">
+                MATCH MINUTES
+            </div>
+
+            <div class="stat-note">
+                Standard regulation match duration.
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-value">
+                11
+            </div>
+
+            <div class="stat-name">
+                PLAYERS
+            </div>
+
+            <div class="stat-note">
+                Standard starting players per side.
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-value">
+                22
+            </div>
+
+            <div class="stat-name">
+                PLAYERS ON PITCH
+            </div>
+
+            <div class="stat-note">
+                Starting players across both teams.
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-value">
+                1930
+            </div>
+
+            <div class="stat-name">
+                WORLD CUP ERA
+            </div>
+
+            <div class="stat-note">
+                Year of the inaugural FIFA World Cup.
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     RECORDS
+====================================================== -->
+
+<section
+    class="section"
+    id="records"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                THE RECORD BOOK
+            </div>
+
+            <h2 class="section-title">
+                Football Records
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Record categories can connect to verified
+            historical datasets as the archive expands.
+        </p>
+
+    </div>
+
+
+    <div class="records-grid">
+
+
+        <div class="record-card">
+
+            <div class="record-number">
+                01
+            </div>
+
+            <div class="record-type">
+                WORLD CUP
+            </div>
+
+            <h3>
+                Tournament Records
+            </h3>
+
+            <p>
+                Champions, appearances, goals, clean sheets,
+                match records and tournament milestones.
+            </p>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <div class="record-number">
+                02
+            </div>
+
+            <div class="record-type">
+                PLAYER
+            </div>
+
+            <h3>
+                Player Records
+            </h3>
+
+            <p>
+                Goals, appearances, trophies, international
+                records and age-based milestones.
+            </p>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <div class="record-number">
+                03
+            </div>
+
+            <div class="record-type">
+                CLUB
+            </div>
+
+            <h3>
+                Club Records
+            </h3>
+
+            <p>
+                Domestic titles, continental achievements,
+                unbeaten runs and historical milestones.
+            </p>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <div class="record-number">
+                04
+            </div>
+
+            <div class="record-type">
+                MATCH
+            </div>
+
+            <h3>
+                Match Records
+            </h3>
+
+            <p>
+                Biggest scorelines, fastest goals,
+                comebacks and notable match events.
+            </p>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <div class="record-number">
+                05
+            </div>
+
+            <div class="record-type">
+                ATTENDANCE
+            </div>
+
+            <h3>
+                Attendance Records
+            </h3>
+
+            <p>
+                Major crowds and historically significant
+                football attendances.
+            </p>
+
+        </div>
+
+
+        <div class="record-card">
+
+            <div class="record-number">
+                06
+            </div>
+
+            <div class="record-type">
+                GOALKEEPING
+            </div>
+
+            <h3>
+                Goalkeeping Records
+            </h3>
+
+            <p>
+                Clean sheets, appearances, saves and
+                other goalkeeper milestones.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     ON THIS DAY
+====================================================== -->
+
+<section
+    class="section"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                HISTORICAL CALENDAR
+            </div>
+
+            <h2 class="section-title">
+                On This Day
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Football history becomes personal when every
+            calendar day can reveal what happened before.
+        </p>
+
+    </div>
+
+
+    <div class="today-panel">
+
+        <div
+            class="today-date"
+            id="todayDate"
+        >
+            FOOTBALL HISTORY
+        </div>
+
+        <h3 class="today-title">
+            Moments from the football archive
+        </h3>
+
+
+        <div class="today-event">
+
+            <strong>
+                Historic matches
+            </strong>
+
+            <p>
+                Discover famous matches played on this date
+                across different competitions and eras.
+            </p>
+
+        </div>
+
+
+        <div class="today-event">
+
+            <strong>
+                Player milestones
+            </strong>
+
+            <p>
+                Birthdays, debut matches, goals, records and
+                other documented player milestones.
+            </p>
+
+        </div>
+
+
+        <div class="today-event">
+
+            <strong>
+                Football events
+            </strong>
+
+            <p>
+                Discover important moments in the development
+                of clubs, competitions, governing bodies and
+                the international game.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     GLOBAL SEARCH
+====================================================== -->
+
+<section
+    class="section search-section"
+    id="search"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="section-kicker">
+                FOOTBALL DATABASE
+            </div>
+
+            <h2 class="section-title">
+                Search Football
+            </h2>
+
+        </div>
+
+        <p class="section-text">
+            Search across the future Football Atlas database:
+            players, clubs, countries, competitions, matches
+            and historical events.
+        </p>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            class="search-input"
+            id="searchInput"
+            type="search"
+            placeholder="Search player, club, country, competition..."
+            autocomplete="off"
+        >
+
+        <button
+            class="btn btn-primary"
+            onclick="performSearch()"
+        >
+            SEARCH
+        </button>
+
+    </div>
+
+
+    <div
+        class="search-results"
+        id="searchResults"
+    >
+
+        <div
+            class="search-result"
+            data-search="lionel messi argentina player"
+        >
+            <strong>
+                Lionel Messi
+            </strong>
+
+            <span>
+                PLAYER • ARGENTINA
+            </span>
+        </div>
+
+
+        <div
+            class="search-result"
+            data-search="cristiano ronaldo portugal player"
+        >
+            <strong>
+                Cristiano Ronaldo
+            </strong>
+
+            <span>
+                PLAYER • PORTUGAL
+            </span>
+        </div>
+
+
+        <div
+            class="search-result"
+            data-search="real madrid spain club"
+        >
+            <strong>
+                Real Madrid
+            </strong>
+
+            <span>
+                CLUB • SPAIN
+            </span>
+        </div>
+
+
+        <div
+            class="search-result"
+            data-search="barcelona spain club"
+        >
+            <strong>
+                Barcelona
+            </strong>
+
+            <span>
+                CLUB • SPAIN
+            </span>
+        </div>
+
+
+        <div
+            class="search-result"
+            data-search="world cup fifa competition international"
+        >
+            <strong>
+                FIFA World Cup
+            </strong>
+
+            <span>
+                COMPETITION • INTERNATIONAL
+            </span>
+        </div>
+
+
+        <div
+            class="search-result"
+            data-search="premier league england competition"
+        >
+            <strong>
+                Premier League
+            </strong>
+
+            <span>
+                COMPETITION • ENGLAND
+            </span>
+        </div>
+
+
+        <div
+            class="search-result"
+            data-search="football history 1863 association football"
+        >
+            <strong>
+                1863 — Football Association
+            </strong>
+
+            <span>
+                HISTORY • 19TH CENTURY
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="footer-inner">
+
+
+        <div>
+
+            <div class="footer-brand">
+                ⚽ FOOTBALL ATLAS
+            </div>
+
+            <p class="footer-description">
+                A long-term digital football archive combining
+                live football, historical records, competitions,
+                clubs, players, countries and statistics into
+                one connected football universe.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                EXPLORE
+            </h4>
+
+            <button onclick="scrollToSection('live')">
+                Live Scores
+            </button>
+
+            <button onclick="scrollToSection('matches')">
+                Fixtures
+            </button>
+
+            <button onclick="scrollToSection('competitions')">
+                Competitions
+            </button>
+
+            <button onclick="scrollToSection('worldcup')">
+                World Cup
+            </button>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                DATABASE
+            </h4>
+
+            <button onclick="scrollToSection('clubs')">
+                Clubs
+            </button>
+
+            <button onclick="scrollToSection('players')">
+                Players
+            </button>
+
+            <button onclick="scrollToSection('countries')">
+                Countries
+            </button>
+
+            <button onclick="scrollToSection('statistics')">
+                Statistics
+            </button>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                ARCHIVE
+            </h4>
+
+            <button onclick="scrollToSection('history')">
+                Football History
+            </button>
+
+            <button onclick="scrollToSection('records')">
+                Records
+            </button>
+
+            <button onclick="scrollToSection('search')">
+                Search
+            </button>
+
+            <button
+                onclick="
+                showToast(
+                    'Football Atlas is being built as a connected football archive.'
+                )
+                "
+            >
+                About
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Football Atlas
+        </span>
+
+        <span>
+            THE COMPLETE FOOTBALL UNIVERSE
+        </span>
+
+        <span>
+            LIVE DATA • HISTORY • DATABASE
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- ======================================================
+     TOAST
+====================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Football Atlas
+</div>
+
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+/* =========================================================
+   FOOTBALL ATLAS ENGINE
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   SMOOTH NAVIGATION
+--------------------------------------------------------- */
+
+function scrollToSection(id){
+
+    const element =
+        document.getElementById(id);
+
+    if(!element){
+        return;
+    }
+
+    element.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* ---------------------------------------------------------
+   TOAST
+--------------------------------------------------------- */
+
+let toastTimer;
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(function(){
+
+            toast.classList.remove("show");
+
+        },3200);
+
+}
+
+
+/* ---------------------------------------------------------
+   LIVE MATCH FILTER
+--------------------------------------------------------- */
+
+function filterMatches(status,button){
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(function(item){
+
+            item.classList.remove("active");
+
+        });
+
+    button.classList.add("active");
+
+
+    document
+        .querySelectorAll(".match-card")
+        .forEach(function(card){
+
+            const cardStatus =
+                card.dataset.status;
+
+            if(status === "all"){
+                card.style.display = "";
+                return;
+            }
+
+            if(cardStatus === status){
+                card.style.display = "";
+            }else{
+                card.style.display = "none";
+            }
+
+        });
+
+}
+
+
+/* ---------------------------------------------------------
+   LIVE MINUTE DEMONSTRATION
+---------------------------------------------------------
+
+   IMPORTANT:
+   This does NOT claim to be a real match clock.
+
+   Real API integration will replace this section with
+   actual provider timestamps/statuses.
+--------------------------------------------------------- */
+
+function updateDemoMinutes(){
+
+    const minutes =
+        document.querySelectorAll(".minute");
+
+    minutes.forEach(function(element){
+
+        let current =
+            parseInt(
+                element.dataset.start || "1",
+                10
+            );
+
+        if(
+            current < 90 &&
+            Math.random() > .80
+        ){
+
+            current++;
+
+            element.dataset.start =
+                current;
+
+            element.textContent =
+                current + "'";
+
+        }
+
+    });
+
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE STATUS TIME
+--------------------------------------------------------- */
+
+function updateStatusTime(){
+
+    const target =
+        document.getElementById("lastUpdate");
+
+    if(!target){
+        return;
+    }
+
+    const now =
+        new Date();
+
+    target.textContent =
+        "Interface check • " +
+        now.toLocaleTimeString();
+
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH
+--------------------------------------------------------- */
+
+function performSearch(){
+
+    const input =
+        document.getElementById("searchInput");
+
+    const query =
+        input.value
+            .trim()
+            .toLowerCase();
+
+    const results =
+        document.querySelectorAll(".search-result");
+
+
+    if(!query){
+
+        results.forEach(function(result){
+
+            result.classList.remove("show");
+
+        });
+
+        showToast(
+            "Type something to search Football Atlas."
+        );
+
+        return;
+
+    }
+
+
+    let found = 0;
+
+
+    results.forEach(function(result){
+
+        const searchable =
+            result.dataset.search
+                .toLowerCase();
+
+        if(
+            searchable.includes(query)
+        ){
+
+            result.classList.add("show");
+
+            found++;
+
+        }else{
+
+            result.classList.remove("show");
+
+        }
+
+    });
+
+
+    if(found === 0){
+
+        showToast(
+            "No indexed result found for: " +
+            query
+        );
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   LIVE SEARCH WHILE TYPING
+--------------------------------------------------------- */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        function(){
+
+            const query =
+                this.value
+                    .trim()
+                    .toLowerCase();
+
+            const results =
+                document.querySelectorAll(
+                    ".search-result"
+                );
+
+            if(!query){
+
+                results.forEach(function(result){
+
+                    result.classList.remove("show");
+
+                });
+
+                return;
+
+            }
+
+
+            results.forEach(function(result){
+
+                const searchable =
+                    result.dataset.search
+                        .toLowerCase();
+
+                result.classList.toggle(
+                    "show",
+                    searchable.includes(query)
+                );
+
+            });
+
+        }
+    );
+
+
+/* ---------------------------------------------------------
+   ENTER TO SEARCH
+--------------------------------------------------------- */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+
+                performSearch();
+
+            }
+
+        }
+    );
+
+
+/* ---------------------------------------------------------
+   WORLD CUP YEAR BUTTONS
+--------------------------------------------------------- */
+
+document
+    .querySelectorAll(".year")
+    .forEach(function(yearButton){
+
+        yearButton.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(".year")
+                    .forEach(function(item){
+
+                        item.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+                this.classList.add("selected");
+
+                showToast(
+                    "World Cup archive selected: " +
+                    this.textContent
+                );
+
+            }
+        );
+
+    });
+
+
+/* ---------------------------------------------------------
+   CURRENT DATE
+--------------------------------------------------------- */
+
+function updateToday(){
+
+    const target =
+        document.getElementById("todayDate");
+
+    if(!target){
+        return;
+    }
+
+    const now =
+        new Date();
+
+    const formatted =
+        now.toLocaleDateString(
+            undefined,
+            {
+                weekday:"long",
+                month:"long",
+                day:"numeric",
+                year:"numeric"
+            }
+        );
+
+    target.textContent =
+        "ON THIS DAY • " +
+        formatted.toUpperCase();
+
+}
+
+
+/* ---------------------------------------------------------
+   NAV ACTIVE STATE
+--------------------------------------------------------- */
+
+const sections =
+    document.querySelectorAll(
+        "main section[id]"
+    );
+
+const navButtons =
+    document.querySelectorAll(
+        ".nav-btn"
+    );
+
+const sectionNames = [
+    "home",
+    "live",
+    "matches",
+    "competitions",
+    "clubs",
+    "players",
+    "countries",
+    "history",
+    "worldcup",
+    "statistics",
+    "records"
+];
+
+
+const observer =
+    new IntersectionObserver(
+        function(entries){
+
+            entries.forEach(function(entry){
+
+                if(!entry.isIntersecting){
+                    return;
+                }
+
+                const id =
+                    entry.target.id;
+
+                navButtons.forEach(
+                    function(button){
+
+                        button.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                const index =
+                    sectionNames.indexOf(id);
+
+                if(
+                    index >= 0 &&
+                    navButtons[index]
+                ){
+
+                    navButtons[index]
+                        .classList.add("active");
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.35
+        }
+    );
+
+
+sections.forEach(function(section){
+
+    observer.observe(section);
+
+});
+
+
+/* ---------------------------------------------------------
+   START ENGINE
+--------------------------------------------------------- */
+
+updateToday();
+
+updateStatusTime();
+
+
+/*
+    Demo interface clock.
+
+    This is deliberately lightweight.
+    It is NOT presented as a real football feed.
+*/
+
+setInterval(
+    updateDemoMinutes,
+    60000
+);
+
+setInterval(
+    updateStatusTime,
+    30000
+);
+
+
+/* ---------------------------------------------------------
+   API READY ARCHITECTURE
+---------------------------------------------------------
+
+   Future live API data should eventually populate objects
+   using a structure similar to:
+
+   {
+       id: "...",
+       competition: "...",
+       homeTeam: "...",
+       awayTeam: "...",
+       homeScore: 0,
+       awayScore: 0,
+       status: "LIVE",
+       minute: 34,
+       venue: "...",
+       events: [...]
+   }
+
+   The API key should NOT be placed in this HTML.
+
+   Recommended production architecture:
+
+   Football API
+        ↓
+   Server / Serverless Function
+        ↓
+   Protected API key
+        ↓
+   Football Atlas frontend
+        ↓
+   Live UI
+
+--------------------------------------------------------- */
+
+</script>
+
+</body>
+</html>

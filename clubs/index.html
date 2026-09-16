@@ -1,0 +1,2526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clubs | Football Chronicle</title>
+
+    <meta name="description"
+        content="Explore football clubs, their histories, honours, players, stadiums, seasons and records with Football Chronicle.">
+
+    <meta name="theme-color" content="#05080d">
+
+    <style>
+
+        /* =========================================================
+           FOOTBALL CHRONICLE
+           FILE 05 — CLUBS
+           SELF-CONTAINED PAGE
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #eef7f3;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% -15%,
+                    rgba(0,255,170,0.13),
+                    transparent 38%
+                ),
+                radial-gradient(
+                    circle at 90% 55%,
+                    rgba(0,120,255,0.055),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    180deg,
+                    #04070b 0%,
+                    #07100f 48%,
+                    #030507 100%
+                );
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.012) 1px,
+                    transparent 1px
+                );
+
+            background-size: 100% 4px;
+            opacity: 0.28;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
+
+        .stadium-glow {
+            position: fixed;
+
+            width: 750px;
+            height: 750px;
+
+            left: 50%;
+            top: -480px;
+
+            transform: translateX(-50%);
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0,255,170,0.16),
+                    rgba(0,255,170,0.025) 40%,
+                    transparent 70%
+                );
+
+            filter: blur(14px);
+
+            pointer-events: none;
+            z-index: -5;
+        }
+
+        .stadium-lines {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: -4;
+
+            opacity: 0.12;
+
+            background-image:
+                linear-gradient(
+                    rgba(0,255,170,0.08) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(0,255,170,0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size: 90px 90px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 82%
+                );
+        }
+
+        .light {
+            position: fixed;
+
+            width: 2px;
+            height: 70%;
+
+            top: -10%;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    rgba(0,255,170,0.18),
+                    transparent
+                );
+
+            filter: blur(1px);
+
+            pointer-events: none;
+            z-index: -3;
+        }
+
+        .light-left {
+            left: 15%;
+            transform: rotate(18deg);
+        }
+
+        .light-right {
+            right: 15%;
+            transform: rotate(-18deg);
+        }
+
+        .floating-ball {
+            position: fixed;
+
+            opacity: 0.055;
+
+            font-size: 42px;
+
+            pointer-events: none;
+            z-index: -1;
+
+            animation:
+                floatingBall 13s ease-in-out infinite;
+        }
+
+        .ball-one {
+            left: 5%;
+            top: 35%;
+        }
+
+        .ball-two {
+            right: 6%;
+            top: 72%;
+
+            animation-delay: -5s;
+        }
+
+        @keyframes floatingBall {
+
+            0%,100% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-45px)
+                    rotate(180deg);
+            }
+        }
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.07);
+
+            background:
+                rgba(3,7,10,0.84);
+
+            backdrop-filter: blur(18px);
+        }
+
+        .nav {
+            width: min(1400px,94%);
+            min-height: 76px;
+
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            white-space: nowrap;
+
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+        }
+
+        .brand-ball {
+            width: 36px;
+            height: 36px;
+
+            display: grid;
+            place-items: center;
+
+            border:
+                1px solid rgba(0,255,170,0.45);
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,255,170,0.04);
+
+            box-shadow:
+                0 0 25px
+                rgba(0,255,170,0.1);
+        }
+
+        .brand span {
+            color: #5effc8;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            flex: 1;
+
+            overflow-x: auto;
+
+            scrollbar-width: none;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links a {
+            padding: 10px 11px;
+
+            color: #899793;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+
+            white-space: nowrap;
+
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background:
+                rgba(255,255,255,0.05);
+        }
+
+        .nav-links a.active {
+            color: #5effc8;
+            background:
+                rgba(0,255,170,0.08);
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #65736f;
+
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #5effc8;
+
+            box-shadow:
+                0 0 12px #5effc8;
+
+            animation:
+                statusPulse 1.8s infinite;
+        }
+
+        @keyframes statusPulse {
+
+            50% {
+                opacity: 0.3;
+            }
+
+        }
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        main {
+            width: min(1400px,94%);
+
+            margin: auto;
+
+            padding: 65px 0 100px;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            position: relative;
+
+            min-height: 430px;
+
+            display: flex;
+            align-items: center;
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,255,170,0.075),
+                    rgba(255,255,255,0.012)
+                ),
+                rgba(4,9,11,0.8);
+
+            box-shadow:
+                inset 0 0 100px
+                rgba(0,255,170,0.025),
+
+                0 35px 100px
+                rgba(0,0,0,0.4);
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: -100px;
+
+            height: 280px;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(0,255,170,0.07) 0 2px,
+                    transparent 2px 90px
+                );
+
+            transform:
+                perspective(500px)
+                rotateX(60deg);
+
+            transform-origin: bottom;
+
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+
+            max-width: 850px;
+
+            padding: 60px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 21px;
+            padding: 8px 12px;
+
+            color: #5effc8;
+
+            border:
+                1px solid rgba(0,255,170,0.22);
+
+            border-radius: 5px;
+
+            background:
+                rgba(0,255,170,0.04);
+
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .eyebrow::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #5effc8;
+
+            box-shadow:
+                0 0 12px #5effc8;
+        }
+
+        h1 {
+            font-size:
+                clamp(50px,8vw,95px);
+
+            line-height: 0.88;
+
+            letter-spacing: -5px;
+
+            font-weight: 950;
+
+            text-transform: uppercase;
+        }
+
+        h1 span {
+            color: #5effc8;
+
+            text-shadow:
+                0 0 35px
+                rgba(0,255,170,0.18);
+        }
+
+        .hero-text {
+            max-width: 680px;
+
+            margin-top: 26px;
+
+            color: #96a49f;
+
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        /* =========================================================
+           STADIUM / CLUB TUNNEL VISUAL
+        ========================================================= */
+
+        .tunnel {
+            position: absolute;
+
+            right: 5%;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 370px;
+            height: 300px;
+
+            perspective: 600px;
+        }
+
+        .tunnel-frame {
+            position: absolute;
+
+            inset: 25px;
+
+            border:
+                2px solid rgba(0,255,170,0.12);
+
+            transform:
+                perspective(500px)
+                rotateY(-10deg);
+
+            box-shadow:
+                inset 0 0 50px
+                rgba(0,255,170,0.025);
+        }
+
+        .tunnel-frame::before,
+        .tunnel-frame::after {
+            content: "";
+
+            position: absolute;
+
+            top: 50%;
+
+            width: 80px;
+            height: 80px;
+
+            border:
+                1px solid rgba(0,255,170,0.12);
+
+            transform:
+                translateY(-50%)
+                rotate(45deg);
+        }
+
+        .tunnel-frame::before {
+            left: -40px;
+        }
+
+        .tunnel-frame::after {
+            right: -40px;
+        }
+
+        .tunnel-light {
+            position: absolute;
+
+            left: 50%;
+            top: 10px;
+
+            transform:
+                translateX(-50%);
+
+            width: 150px;
+            height: 3px;
+
+            background: #5effc8;
+
+            box-shadow:
+                0 0 30px
+                rgba(0,255,170,0.6);
+
+            animation:
+                tunnelPulse 2.5s infinite;
+        }
+
+        @keyframes tunnelPulse {
+
+            50% {
+                opacity: 0.35;
+            }
+
+        }
+
+        .club-symbol {
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%,-50%);
+
+            font-size: 100px;
+
+            filter:
+                drop-shadow(
+                    0 0 30px
+                    rgba(0,255,170,0.16)
+                );
+
+            animation:
+                clubFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes clubFloat {
+
+            0%,100% {
+                transform:
+                    translate(-50%,-50%);
+            }
+
+            50% {
+                transform:
+                    translate(-50%,-56%);
+            }
+        }
+
+        .tunnel-label {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            text-align: center;
+
+            color: #52605c;
+
+            font-family: monospace;
+
+            font-size: 8px;
+            letter-spacing: 2px;
+        }
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .section {
+            margin-top: 55px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+        }
+
+        .section-title h2 {
+            font-size: 27px;
+            font-weight: 950;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .section-title p {
+            margin-top: 7px;
+
+            color: #5e6c68;
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .database-label {
+            color: #52605c;
+
+            font-family: monospace;
+
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        .club-search {
+            display: flex;
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .club-search input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 16px 18px;
+
+            color: #e5efeb;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            outline: none;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            font-size: 11px;
+        }
+
+        .club-search input:focus {
+            border-color:
+                rgba(0,255,170,0.3);
+
+            box-shadow:
+                0 0 25px
+                rgba(0,255,170,0.03);
+        }
+
+        .club-search input::placeholder {
+            color: #4f5c58;
+        }
+
+        .search-button {
+            padding: 0 22px;
+
+            border:
+                1px solid rgba(0,255,170,0.25);
+
+            background:
+                rgba(0,255,170,0.06);
+
+            color: #5effc8;
+
+            cursor: pointer;
+
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .search-button:hover {
+            background:
+                rgba(0,255,170,0.12);
+        }
+
+        /* =========================================================
+           REGION FILTER
+        ========================================================= */
+
+        .region-bar {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+        }
+
+        .region-button {
+            padding: 10px 15px;
+
+            color: #778580;
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            border-radius: 5px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            cursor: pointer;
+
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            transition: 0.25s;
+        }
+
+        .region-button:hover {
+            color: white;
+        }
+
+        .region-button.active {
+            color: #5effc8;
+
+            border-color:
+                rgba(0,255,170,0.3);
+
+            background:
+                rgba(0,255,170,0.065);
+        }
+
+        /* =========================================================
+           CLUB GRID
+        ========================================================= */
+
+        .club-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 15px;
+        }
+
+        .club-card {
+            position: relative;
+
+            min-height: 270px;
+
+            padding: 24px;
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(255,255,255,0.075);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.035),
+                    rgba(255,255,255,0.012)
+                );
+
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .club-card:hover {
+            transform:
+                translateY(-6px);
+
+            border-color:
+                rgba(0,255,170,0.22);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0,255,170,0.045),
+                    rgba(255,255,255,0.015)
+                );
+        }
+
+        .club-card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #5effc8,
+                    transparent
+                );
+
+            opacity: 0;
+
+            transition: 0.3s;
+        }
+
+        .club-card:hover::before {
+            opacity: 0.8;
+        }
+
+        .club-index {
+            position: absolute;
+
+            top: 16px;
+            right: 17px;
+
+            color:
+                rgba(255,255,255,0.065);
+
+            font-family: monospace;
+
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .club-badge {
+            width: 65px;
+            height: 65px;
+
+            display: grid;
+            place-items: center;
+
+            margin-bottom: 20px;
+
+            border:
+                1px solid rgba(0,255,170,0.17);
+
+            border-radius: 16px;
+
+            background:
+                rgba(0,255,170,0.04);
+
+            font-size: 28px;
+
+            box-shadow:
+                inset 0 0 25px
+                rgba(0,255,170,0.025);
+        }
+
+        .club-card h3 {
+            font-size: 15px;
+            font-weight: 900;
+
+            line-height: 1.25;
+        }
+
+        .club-country {
+            margin-top: 6px;
+
+            color: #5effc8;
+
+            font-family: monospace;
+
+            font-size: 8px;
+            letter-spacing: 1px;
+        }
+
+        .club-description {
+            margin-top: 12px;
+
+            color: #64726e;
+
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .club-meta {
+            position: absolute;
+
+            left: 24px;
+            right: 24px;
+            bottom: 17px;
+
+            display: flex;
+            justify-content: space-between;
+
+            padding-top: 12px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.055);
+
+            color: #4d5a56;
+
+            font-family: monospace;
+
+            font-size: 7px;
+            letter-spacing: 0.8px;
+        }
+
+        /* =========================================================
+           CLUB UNIVERSE PANEL
+        ========================================================= */
+
+        .club-universe {
+            margin-top: 30px;
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,255,170,0.06),
+                    rgba(255,255,255,0.015)
+                );
+        }
+
+        .universe-main {
+            padding: 38px;
+        }
+
+        .universe-tag {
+            color: #5effc8;
+
+            font-family: monospace;
+
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .universe-main h3 {
+            margin-top: 15px;
+
+            font-size: 37px;
+            line-height: 1;
+
+            letter-spacing: -2px;
+
+            text-transform: uppercase;
+        }
+
+        .universe-main h3 span {
+            color: #5effc8;
+        }
+
+        .universe-main p {
+            max-width: 600px;
+
+            margin-top: 18px;
+
+            color: #71807b;
+
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .universe-side {
+            padding: 30px;
+
+            border-left:
+                1px solid rgba(255,255,255,0.07);
+
+            background:
+                rgba(0,0,0,0.15);
+        }
+
+        .universe-stat {
+            padding: 15px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.055);
+        }
+
+        .universe-stat:last-child {
+            border-bottom: none;
+        }
+
+        .universe-stat label {
+            display: block;
+
+            color: #53605c;
+
+            font-size: 7px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+        }
+
+        .universe-stat strong {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #dce8e4;
+
+            font-family: monospace;
+
+            font-size: 18px;
+        }
+
+        /* =========================================================
+           API ARCHITECTURE
+        ========================================================= */
+
+        .api-panel {
+            margin-top: 30px;
+
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            padding: 24px;
+
+            border:
+                1px dashed rgba(0,255,170,0.16);
+
+            background:
+                rgba(0,255,170,0.02);
+        }
+
+        .api-icon {
+            width: 46px;
+            height: 46px;
+
+            flex-shrink: 0;
+
+            display: grid;
+            place-items: center;
+
+            color: #5effc8;
+
+            border:
+                1px solid rgba(0,255,170,0.18);
+
+            font-size: 18px;
+        }
+
+        .api-panel h3 {
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .api-panel p {
+            margin-top: 6px;
+
+            color: #5f6d69;
+
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .api-status {
+            margin-left: auto;
+
+            color: #5effc8;
+
+            font-family: monospace;
+
+            font-size: 8px;
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+        }
+
+        .footer-inner {
+            width: min(1400px,94%);
+            min-height: 115px;
+
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .footer-brand {
+            color: #5effc8;
+
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .footer-text {
+            color: #4d5956;
+
+            font-size: 9px;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1150px) {
+
+            .club-grid {
+                grid-template-columns:
+                    repeat(3,1fr);
+            }
+
+            .tunnel {
+                right: 0;
+                opacity: 0.35;
+            }
+
+        }
+
+        @media (max-width: 850px) {
+
+            .club-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .club-universe {
+                grid-template-columns: 1fr;
+            }
+
+            .universe-side {
+                border-left: none;
+
+                border-top:
+                    1px solid rgba(255,255,255,0.07);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                position: relative;
+            }
+
+            .nav {
+                width: 94%;
+
+                min-height: auto;
+
+                padding: 13px 0;
+
+                flex-wrap: wrap;
+            }
+
+            .brand {
+                width: 100%;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+            }
+
+            .system-status {
+                position: absolute;
+
+                right: 0;
+                top: 25px;
+            }
+
+            main {
+                width: 92%;
+
+                padding-top: 35px;
+            }
+
+            .hero {
+                min-height: 510px;
+            }
+
+            .hero-content {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 53px;
+                letter-spacing: -3px;
+            }
+
+            .hero-text {
+                font-size: 13px;
+            }
+
+            .tunnel {
+                width: 270px;
+                height: 220px;
+
+                right: 50%;
+                top: auto;
+                bottom: -15px;
+
+                transform:
+                    translateX(50%);
+
+                opacity: 0.25;
+            }
+
+            .club-symbol {
+                font-size: 75px;
+            }
+
+            .section-header {
+                display: block;
+            }
+
+            .database-label {
+                display: block;
+                margin-top: 10px;
+            }
+
+            .club-search {
+                flex-direction: column;
+            }
+
+            .search-button {
+                padding: 14px;
+            }
+
+            .club-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .api-panel {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .api-status {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .footer-inner {
+                display: block;
+                padding: 25px 0;
+            }
+
+            .footer-text {
+                margin-top: 10px;
+            }
+
+        }
+
+        @media (max-width: 430px) {
+
+            h1 {
+                font-size: 45px;
+            }
+
+            .region-button {
+                flex: 1;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================== -->
+
+    <div class="stadium-glow"></div>
+    <div class="stadium-lines"></div>
+
+    <div class="light light-left"></div>
+    <div class="light light-right"></div>
+
+    <div class="floating-ball ball-one">⚽</div>
+    <div class="floating-ball ball-two">⚽</div>
+
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================== -->
+
+    <header>
+
+        <nav class="nav">
+
+            <a href="../index.html" class="brand">
+
+                <div class="brand-ball">
+                    ⚽
+                </div>
+
+                <div>
+                    FOOTBALL
+                    <span>CHRONICLE</span>
+                </div>
+
+            </a>
+
+
+            <div class="nav-links">
+
+                <a href="../live/index.html">
+                    LIVE
+                </a>
+
+                <a href="../matches/index.html">
+                    MATCHES
+                </a>
+
+                <a href="../competitions/index.html">
+                    COMPETITIONS
+                </a>
+
+                <a
+                    href="index.html"
+                    class="active">
+                    CLUBS
+                </a>
+
+                <a href="../players/index.html">
+                    PLAYERS
+                </a>
+
+                <a href="../countries/index.html">
+                    COUNTRIES
+                </a>
+
+                <a href="../history/index.html">
+                    HISTORY
+                </a>
+
+                <a href="../search/index.html">
+                    SEARCH
+                </a>
+
+            </div>
+
+
+            <div class="system-status">
+
+                <div class="status-dot"></div>
+
+                FOOTBALL DATABASE
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main>
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    GLOBAL CLUB ARCHIVE
+                </div>
+
+
+                <h1>
+                    THE<br>
+                    <span>CLUBS</span>
+                </h1>
+
+
+                <p class="hero-text">
+                    Enter the club layer of Football Chronicle.
+                    Discover football institutions across the
+                    world and connect each club to its stadium,
+                    history, competitions, seasons, players,
+                    honours and records.
+                </p>
+
+            </div>
+
+
+            <!-- CLUB TUNNEL -->
+
+            <div class="tunnel">
+
+                <div class="tunnel-frame"></div>
+
+                <div class="tunnel-light"></div>
+
+                <div class="club-symbol">
+                    🏟️
+                </div>
+
+                <div class="tunnel-label">
+                    CLUB DATABASE // FC-05
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CLUB DATABASE
+        ====================================================== -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <div class="section-title">
+
+                    <h2>
+                        Club Database
+                    </h2>
+
+                    <p>
+                        FOOTBALL CLUBS FROM AROUND THE WORLD
+                    </p>
+
+                </div>
+
+                <div class="database-label">
+                    CLUBS // GLOBAL INDEX
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="club-search">
+
+                <input
+                    type="text"
+                    id="clubSearch"
+                    placeholder="Search a club, city or country..."
+                    autocomplete="off">
+
+                <button
+                    class="search-button"
+                    id="searchButton">
+                    SEARCH DATABASE
+                </button>
+
+            </div>
+
+
+            <!-- REGION FILTER -->
+
+            <div class="region-bar">
+
+                <button
+                    class="region-button active"
+                    data-region="all">
+                    ALL
+                </button>
+
+                <button
+                    class="region-button"
+                    data-region="europe">
+                    EUROPE
+                </button>
+
+                <button
+                    class="region-button"
+                    data-region="south-america">
+                    SOUTH AMERICA
+                </button>
+
+                <button
+                    class="region-button"
+                    data-region="asia">
+                    ASIA
+                </button>
+
+                <button
+                    class="region-button"
+                    data-region="africa">
+                    AFRICA
+                </button>
+
+                <button
+                    class="region-button"
+                    data-region="north-america">
+                    NORTH AMERICA
+                </button>
+
+                <button
+                    class="region-button"
+                    data-region="oceania">
+                    OCEANIA
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 CLUB GRID
+            ================================================== -->
+
+            <div class="club-grid" id="clubGrid">
+
+
+                <!-- CLUB 01 -->
+
+                <article
+                    class="club-card"
+                    data-region="europe"
+                    data-search="real madrid madrid spain europe">
+
+                    <div class="club-index">
+                        01
+                    </div>
+
+                    <div class="club-badge">
+                        ⚪
+                    </div>
+
+                    <h3>
+                        Real Madrid
+                    </h3>
+
+                    <div class="club-country">
+                        MADRID • SPAIN
+                    </div>
+
+                    <p class="club-description">
+                        Club archive structure for history,
+                        seasons, honours, matches, players,
+                        stadium and records.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            EUROPE
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 02 -->
+
+                <article
+                    class="club-card"
+                    data-region="europe"
+                    data-search="barcelona barca catalonia spain europe">
+
+                    <div class="club-index">
+                        02
+                    </div>
+
+                    <div class="club-badge">
+                        🔵
+                    </div>
+
+                    <h3>
+                        FC Barcelona
+                    </h3>
+
+                    <div class="club-country">
+                        BARCELONA • SPAIN
+                    </div>
+
+                    <p class="club-description">
+                        A complete club-history destination
+                        connecting teams, eras, competitions,
+                        players and records.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            EUROPE
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 03 -->
+
+                <article
+                    class="club-card"
+                    data-region="europe"
+                    data-search="manchester united man united england europe">
+
+                    <div class="club-index">
+                        03
+                    </div>
+
+                    <div class="club-badge">
+                        🔴
+                    </div>
+
+                    <h3>
+                        Manchester United
+                    </h3>
+
+                    <div class="club-country">
+                        MANCHESTER • ENGLAND
+                    </div>
+
+                    <p class="club-description">
+                        Explore the club through its eras,
+                        competitions, squads, stadium and
+                        historical matches.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            EUROPE
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 04 -->
+
+                <article
+                    class="club-card"
+                    data-region="europe"
+                    data-search="liverpool england europe">
+
+                    <div class="club-index">
+                        04
+                    </div>
+
+                    <div class="club-badge">
+                        🔴
+                    </div>
+
+                    <h3>
+                        Liverpool
+                    </h3>
+
+                    <div class="club-country">
+                        LIVERPOOL • ENGLAND
+                    </div>
+
+                    <p class="club-description">
+                        Club archive connecting historic
+                        seasons, trophies, players and
+                        important matches.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            EUROPE
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 05 -->
+
+                <article
+                    class="club-card"
+                    data-region="europe"
+                    data-search="bayern munich bayern germany europe">
+
+                    <div class="club-index">
+                        05
+                    </div>
+
+                    <div class="club-badge">
+                        🔴
+                    </div>
+
+                    <h3>
+                        Bayern Munich
+                    </h3>
+
+                    <div class="club-country">
+                        MUNICH • GERMANY
+                    </div>
+
+                    <p class="club-description">
+                        German club archive architecture for
+                        seasons, titles, European football,
+                        players and records.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            EUROPE
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 06 -->
+
+                <article
+                    class="club-card"
+                    data-region="europe"
+                    data-search="juventus turin italy europe">
+
+                    <div class="club-index">
+                        06
+                    </div>
+
+                    <div class="club-badge">
+                        ⚫
+                    </div>
+
+                    <h3>
+                        Juventus
+                    </h3>
+
+                    <div class="club-country">
+                        TURIN • ITALY
+                    </div>
+
+                    <p class="club-description">
+                        A structured club profile connecting
+                        domestic football, European competitions,
+                        players and historic seasons.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            EUROPE
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 07 -->
+
+                <article
+                    class="club-card"
+                    data-region="south-america"
+                    data-search="boca juniors buenos aires argentina south america">
+
+                    <div class="club-index">
+                        07
+                    </div>
+
+                    <div class="club-badge">
+                        🔵
+                    </div>
+
+                    <h3>
+                        Boca Juniors
+                    </h3>
+
+                    <div class="club-country">
+                        BUENOS AIRES • ARGENTINA
+                    </div>
+
+                    <p class="club-description">
+                        South American club archive structure
+                        covering competitions, players, eras
+                        and major matches.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            SOUTH AMERICA
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 08 -->
+
+                <article
+                    class="club-card"
+                    data-region="south-america"
+                    data-search="flamengo rio brazil south america">
+
+                    <div class="club-index">
+                        08
+                    </div>
+
+                    <div class="club-badge">
+                        🔴
+                    </div>
+
+                    <h3>
+                        Flamengo
+                    </h3>
+
+                    <div class="club-country">
+                        RIO DE JANEIRO • BRAZIL
+                    </div>
+
+                    <p class="club-description">
+                        Brazilian club history, competitions,
+                        players, stadium and records within
+                        the global archive.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            SOUTH AMERICA
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 09 -->
+
+                <article
+                    class="club-card"
+                    data-region="asia"
+                    data-search="al hilal saudi arabia asia">
+
+                    <div class="club-index">
+                        09
+                    </div>
+
+                    <div class="club-badge">
+                        🔵
+                    </div>
+
+                    <h3>
+                        Al Hilal
+                    </h3>
+
+                    <div class="club-country">
+                        RIYADH • SAUDI ARABIA
+                    </div>
+
+                    <p class="club-description">
+                        Asian club archive connecting domestic
+                        competitions, continental football,
+                        players and records.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            ASIA
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 10 -->
+
+                <article
+                    class="club-card"
+                    data-region="asia"
+                    data-search="kashima antlers japan asia">
+
+                    <div class="club-index">
+                        10
+                    </div>
+
+                    <div class="club-badge">
+                        🔴
+                    </div>
+
+                    <h3>
+                        Kashima Antlers
+                    </h3>
+
+                    <div class="club-country">
+                        KASHIMA • JAPAN
+                    </div>
+
+                    <p class="club-description">
+                        Japanese club archive with a structure
+                        for domestic and continental football.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            ASIA
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 11 -->
+
+                <article
+                    class="club-card"
+                    data-region="africa"
+                    data-search="al ahly cairo egypt africa">
+
+                    <div class="club-index">
+                        11
+                    </div>
+
+                    <div class="club-badge">
+                        🔴
+                    </div>
+
+                    <h3>
+                        Al Ahly
+                    </h3>
+
+                    <div class="club-country">
+                        CAIRO • EGYPT
+                    </div>
+
+                    <p class="club-description">
+                        African club archive architecture
+                        connecting continental competitions,
+                        domestic history and players.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            AFRICA
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+
+                <!-- CLUB 12 -->
+
+                <article
+                    class="club-card"
+                    data-region="north-america"
+                    data-search="club america mexico north america">
+
+                    <div class="club-index">
+                        12
+                    </div>
+
+                    <div class="club-badge">
+                        🟡
+                    </div>
+
+                    <h3>
+                        Club América
+                    </h3>
+
+                    <div class="club-country">
+                        MEXICO CITY • MEXICO
+                    </div>
+
+                    <p class="club-description">
+                        North American club archive connecting
+                        league seasons, continental competitions,
+                        players and records.
+                    </p>
+
+                    <div class="club-meta">
+                        <span>
+                            NORTH AMERICA
+                        </span>
+
+                        <span>
+                            CLUB PROFILE
+                        </span>
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- =================================================
+                 CLUB UNIVERSE
+            ================================================== -->
+
+            <div class="club-universe">
+
+                <div class="universe-main">
+
+                    <div class="universe-tag">
+                        CLUB ARCHITECTURE // FC-05
+                    </div>
+
+                    <h3>
+                        Every Club Has<br>
+                        <span>A Story.</span>
+                    </h3>
+
+                    <p>
+                        Football Chronicle is designed so that a
+                        club isn't just a name on a fixture.
+                        Each club can eventually become a complete
+                        historical node: foundation, stadium,
+                        managers, players, seasons, competitions,
+                        honours, rivalries, records and individual
+                        matches.
+                    </p>
+
+                </div>
+
+
+                <div class="universe-side">
+
+                    <div class="universe-stat">
+
+                        <label>
+                            CLUB PROFILE
+                        </label>
+
+                        <strong>
+                            HISTORY
+                        </strong>
+
+                    </div>
+
+
+                    <div class="universe-stat">
+
+                        <label>
+                            COMPETITIONS
+                        </label>
+
+                        <strong>
+                            LINKED
+                        </strong>
+
+                    </div>
+
+
+                    <div class="universe-stat">
+
+                        <label>
+                            PLAYERS
+                        </label>
+
+                        <strong>
+                            CONNECTED
+                        </strong>
+
+                    </div>
+
+
+                    <div class="universe-stat">
+
+                        <label>
+                            MATCHES
+                        </label>
+
+                        <strong>
+                            INDEXED
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 API PANEL
+            ================================================== -->
+
+            <div class="api-panel">
+
+                <div class="api-icon">
+                    ◈
+                </div>
+
+                <div>
+
+                    <h3>
+                        CLUB DATA PIPELINE READY
+                    </h3>
+
+                    <p>
+                        Club information can later be loaded
+                        dynamically from the Football Chronicle
+                        database and connected to competitions,
+                        matches and player profiles.
+                    </p>
+
+                </div>
+
+                <div
+                    class="api-status"
+                    id="apiStatus">
+                    DATABASE READY
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+                ⚽ FOOTBALL CHRONICLE
+            </div>
+
+            <div class="footer-text">
+                AN INTERACTIVE FOOTBALL ARCHIVE & MATCH PLATFORM
+                <br>
+                CLUBS • PLAYERS • COMPETITIONS • MATCHES • HISTORY
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =====================================================
+           ELEMENTS
+        ====================================================== */
+
+        const searchInput =
+            document.getElementById("clubSearch");
+
+        const searchButton =
+            document.getElementById("searchButton");
+
+        const clubCards =
+            document.querySelectorAll(".club-card");
+
+        const regionButtons =
+            document.querySelectorAll(".region-button");
+
+        let activeRegion = "all";
+
+
+        /* =====================================================
+           CLUB FILTER
+        ====================================================== */
+
+        function filterClubs() {
+
+            const query =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            clubCards.forEach(card => {
+
+                const region =
+                    card.dataset.region;
+
+                const searchable =
+                    card.dataset.search
+                        .toLowerCase();
+
+
+                const matchesRegion =
+                    activeRegion === "all" ||
+                    region === activeRegion;
+
+
+                const matchesSearch =
+                    query === "" ||
+                    searchable.includes(query);
+
+
+                if (
+                    matchesRegion &&
+                    matchesSearch
+                ) {
+
+                    card.style.display = "";
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ====================================================== */
+
+        searchInput.addEventListener(
+            "input",
+            filterClubs
+        );
+
+
+        searchButton.addEventListener(
+            "click",
+            filterClubs
+        );
+
+
+        searchInput.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    filterClubs();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           REGION BUTTONS
+        ====================================================== */
+
+        regionButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    regionButtons.forEach(
+                        item => {
+                            item.classList.remove(
+                                "active"
+                            );
+                        }
+                    );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    activeRegion =
+                        button.dataset.region;
+
+
+                    filterClubs();
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+           CARD INTERACTION
+        ====================================================== */
+
+        clubCards.forEach(card => {
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    const clubName =
+                        card.querySelector(
+                            "h3"
+                        ).textContent.trim();
+
+
+                    /*
+                        Future architecture:
+
+                        Clicking a club will eventually
+                        open:
+
+                        clubs/
+                        └── real-madrid/
+                            └── index.html
+
+                        or dynamically load:
+
+                        /api/clubs/{clubId}
+                    */
+
+
+                    console.log(
+                        "Club selected:",
+                        clubName
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+           DATABASE STATUS
+        ====================================================== */
+
+        const apiStatus =
+            document.getElementById(
+                "apiStatus"
+            );
+
+        let statusDots = 0;
+
+
+        setInterval(() => {
+
+            statusDots =
+                (statusDots + 1) % 4;
+
+            apiStatus.textContent =
+                "DATABASE READY" +
+                ".".repeat(statusDots);
+
+        }, 1200);
+
+
+        /* =====================================================
+           MOUSE PARALLAX
+        ====================================================== */
+
+        const tunnel =
+            document.querySelector(
+                ".tunnel"
+            );
+
+
+        document.addEventListener(
+            "mousemove",
+            event => {
+
+                if (
+                    window.innerWidth < 800
+                ) {
+                    return;
+                }
+
+
+                const x =
+                    (event.clientX /
+                    window.innerWidth -
+                    0.5) * 8;
+
+
+                const y =
+                    (event.clientY /
+                    window.innerHeight -
+                    0.5) * 5;
+
+
+                tunnel.style.transform =
+                    `translateY(-50%)
+                     rotateY(${x}deg)
+                     rotateX(${-y}deg)`;
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

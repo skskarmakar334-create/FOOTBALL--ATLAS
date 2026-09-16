@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Football Atlas — The Encyclopedia of Football</title>
 
 <meta name="description"
-content="Football Atlas — a comprehensive football encyclopedia covering football history, clubs, players, World Cups, competitions, countries, records, stadiums and football culture.">
+content="Football Atlas — an information-first encyclopedia of football history, clubs, players, countries, competitions, records and the evolution of the world's game.">
 
 <meta name="keywords"
-content="football history, football encyclopedia, football clubs, football players, World Cup history, Champions League history, football records">
+content="football history, football encyclopedia, football clubs, football players, World Cup history, Champions League, football records">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -25,18 +27,25 @@ content="football history, football encyclopedia, football clubs, football playe
 
 :root{
     --bg:#05080d;
-    --bg2:#09111b;
-    --panel:#0c1622;
-    --panel2:#101e2d;
-    --line:rgba(255,255,255,.09);
-    --text:#f3f7fb;
-    --muted:#91a1b3;
+    --bg2:#08111a;
+    --panel:#0b141e;
+    --panel2:#0e1924;
+    --line:rgba(255,255,255,.075);
+    --line2:rgba(255,255,255,.12);
+
     --green:#43e97b;
-    --green2:#20c997;
-    --cyan:#38d9ff;
-    --gold:#f4c95d;
-    --red:#ff5f6d;
-    --shadow:0 20px 60px rgba(0,0,0,.35);
+    --green2:#18c964;
+
+    --blue:#42a5ff;
+    --gold:#f2c94c;
+    --red:#ff5c6c;
+
+    --text:#f4f7fa;
+    --muted:#8b9aaa;
+    --muted2:#657586;
+
+    --radius:16px;
+    --max:1250px;
 }
 
 *{
@@ -50,13 +59,17 @@ html{
 }
 
 body{
-    font-family:Inter,Arial,sans-serif;
     background:
-        radial-gradient(circle at 15% 10%,rgba(56,217,255,.07),transparent 25%),
-        radial-gradient(circle at 85% 25%,rgba(67,233,123,.06),transparent 25%),
+        radial-gradient(circle at 10% 0%,rgba(67,233,123,.055),transparent 28%),
+        radial-gradient(circle at 90% 10%,rgba(66,165,255,.045),transparent 25%),
         var(--bg);
+
     color:var(--text);
-    line-height:1.65;
+
+    font-family:"Inter",sans-serif;
+
+    line-height:1.6;
+
     overflow-x:hidden;
 }
 
@@ -64,21 +77,39 @@ body::before{
     content:"";
     position:fixed;
     inset:0;
+
     pointer-events:none;
-    opacity:.025;
-    background-image:
-        linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
-    background-size:55px 55px;
-    z-index:-1;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.012) 1px,
+            transparent 1px
+        );
+
+    background-size:100% 5px;
+
+    opacity:.25;
+
+    z-index:999;
 }
+
+a{
+    color:inherit;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
 
 /* =========================================================
    SCROLLBAR
 ========================================================= */
 
 ::-webkit-scrollbar{
-    width:9px;
+    width:8px;
 }
 
 ::-webkit-scrollbar-track{
@@ -86,59 +117,79 @@ body::before{
 }
 
 ::-webkit-scrollbar-thumb{
-    background:#1b3448;
+    background:#1b2a37;
     border-radius:20px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
-    background:#2b5068;
+    background:#2a3d4e;
 }
 
+
 /* =========================================================
-   NAVBAR
+   NAVIGATION
 ========================================================= */
 
-.navbar{
-    position:fixed;
+.nav{
+    position:sticky;
     top:0;
-    left:0;
-    right:0;
-    height:74px;
-    z-index:1000;
+    z-index:100;
+
+    height:72px;
+
+    display:flex;
+    align-items:center;
+
+    border-bottom:1px solid var(--line);
+
+    background:rgba(5,8,13,.84);
+
+    backdrop-filter:blur(18px);
+}
+
+.nav-inner{
+    width:min(var(--max),92%);
+
+    margin:auto;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 5%;
-    background:rgba(5,8,13,.82);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid var(--line);
+
+    gap:30px;
 }
 
 .logo{
     display:flex;
     align-items:center;
     gap:12px;
+
     text-decoration:none;
-    color:white;
 }
 
 .logo-ball{
-    width:40px;
-    height:40px;
+    width:34px;
+    height:34px;
+
+    border:1px solid rgba(67,233,123,.55);
+
     border-radius:50%;
+
     display:grid;
     place-items:center;
-    font-size:21px;
-    background:linear-gradient(145deg,#17364a,#08131e);
-    border:1px solid rgba(67,233,123,.35);
-    box-shadow:0 0 25px rgba(67,233,123,.12);
+
+    font-size:15px;
+
+    box-shadow:
+        0 0 25px rgba(67,233,123,.12);
 }
 
 .logo-text{
     font-family:"Space Grotesk",sans-serif;
+
     font-weight:700;
-    letter-spacing:.8px;
-    font-size:19px;
+
+    letter-spacing:-.5px;
 }
 
 .logo-text span{
@@ -152,10 +203,13 @@ body::before{
 }
 
 .nav-links a{
-    color:#aab8c7;
     text-decoration:none;
-    font-size:13px;
-    font-weight:600;
+
+    color:#7f90a0;
+
+    font-size:12px;
+    font-weight:700;
+
     transition:.25s;
 }
 
@@ -165,156 +219,255 @@ body::before{
 
 .menu-btn{
     display:none;
+
     background:none;
     border:0;
+
     color:white;
-    font-size:27px;
+
+    font-size:22px;
+
     cursor:pointer;
 }
+
 
 /* =========================================================
    HERO
 ========================================================= */
 
 .hero{
-    min-height:760px;
-    padding:150px 7% 100px;
-    position:relative;
+    min-height:720px;
+
     display:flex;
     align-items:center;
+
+    position:relative;
+
     overflow:hidden;
 }
 
-.hero-glow{
+.hero::before{
+    content:"";
+
     position:absolute;
+
     width:650px;
     height:650px;
+
+    right:-250px;
+    top:-180px;
+
     border-radius:50%;
-    right:-180px;
-    top:50px;
-    background:radial-gradient(circle,
-        rgba(67,233,123,.13),
-        rgba(56,217,255,.04) 40%,
-        transparent 70%);
-    filter:blur(15px);
+
+    border:1px solid rgba(67,233,123,.07);
+
+    box-shadow:
+        0 0 100px rgba(67,233,123,.035),
+        inset 0 0 100px rgba(67,233,123,.02);
 }
 
-.hero-grid{
+.hero::after{
+    content:"";
+
     position:absolute;
-    inset:auto 0 0 0;
-    height:300px;
-    opacity:.17;
-    background:
-        linear-gradient(rgba(67,233,123,.2) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(67,233,123,.2) 1px,transparent 1px);
-    background-size:50px 50px;
-    transform:perspective(500px) rotateX(55deg);
-    transform-origin:bottom;
+
+    width:450px;
+    height:450px;
+
+    right:-100px;
+    top:-80px;
+
+    border-radius:50%;
+
+    border:1px dashed rgba(66,165,255,.08);
+
+    animation:spin 30s linear infinite;
 }
 
-.hero-content{
-    max-width:850px;
+@keyframes spin{
+    from{transform:rotate(0)}
+    to{transform:rotate(360deg)}
+}
+
+.hero-inner{
+    width:min(var(--max),92%);
+
+    margin:auto;
+
     position:relative;
+
     z-index:2;
 }
 
-.eyebrow{
+.hero-label{
     display:inline-flex;
     align-items:center;
-    gap:8px;
-    padding:7px 13px;
-    border:1px solid rgba(67,233,123,.25);
-    border-radius:30px;
+    gap:9px;
+
+    padding:7px 11px;
+
+    border:1px solid rgba(67,233,123,.18);
+
+    border-radius:100px;
+
     color:var(--green);
-    background:rgba(67,233,123,.05);
-    font-size:11px;
+
+    font-size:10px;
+
     font-weight:800;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    margin-bottom:25px;
+
+    letter-spacing:1.6px;
+
+    background:rgba(67,233,123,.025);
 }
 
-.eyebrow::before{
-    content:"";
+.status-dot{
     width:7px;
     height:7px;
-    border-radius:50%;
+
     background:var(--green);
+
+    border-radius:50%;
+
     box-shadow:0 0 12px var(--green);
 }
 
 .hero h1{
-    font-family:"Space Grotesk",sans-serif;
-    font-size:clamp(52px,8vw,105px);
-    line-height:.94;
-    letter-spacing:-5px;
     max-width:900px;
+
+    margin-top:25px;
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:clamp(55px,9vw,115px);
+
+    line-height:.91;
+
+    letter-spacing:-5px;
 }
 
 .hero h1 span{
-    display:block;
-    color:transparent;
-    -webkit-text-stroke:1px rgba(255,255,255,.35);
+    color:var(--green);
 }
 
-.hero-description{
-    max-width:700px;
+.hero-text{
+    max-width:680px;
+
     margin-top:28px;
-    color:#a8b6c5;
-    font-size:17px;
+
+    color:#8494a4;
+
+    font-size:16px;
 }
 
-.hero-buttons{
+.hero-actions{
     display:flex;
-    gap:14px;
-    margin-top:35px;
     flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:35px;
 }
 
 .btn{
-    border:0;
-    text-decoration:none;
-    cursor:pointer;
-    padding:14px 21px;
+    padding:13px 18px;
+
     border-radius:9px;
-    font-size:13px;
+
+    border:1px solid var(--line2);
+
+    text-decoration:none;
+
+    font-size:12px;
+
     font-weight:800;
+
     transition:.25s;
+
+    cursor:pointer;
 }
 
 .btn-primary{
+    color:#031008;
+
     background:var(--green);
-    color:#041009;
+
+    border-color:var(--green);
 }
 
 .btn-primary:hover{
     transform:translateY(-2px);
-    box-shadow:0 10px 30px rgba(67,233,123,.2);
+
+    box-shadow:
+        0 10px 30px rgba(67,233,123,.18);
 }
 
 .btn-secondary{
     color:white;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.035);
+
+    background:rgba(255,255,255,.025);
 }
 
 .btn-secondary:hover{
-    background:rgba(255,255,255,.08);
+    background:rgba(255,255,255,.06);
 }
+
 
 /* =========================================================
-   MAIN
+   HERO STATS
 ========================================================= */
 
-main{
-    position:relative;
-    z-index:2;
+.hero-stats{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:10px;
+
+    margin-top:60px;
+
+    max-width:850px;
 }
 
+.hero-stat{
+    padding:18px;
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.02);
+}
+
+.hero-stat strong{
+    display:block;
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:22px;
+}
+
+.hero-stat span{
+    color:var(--muted2);
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   GLOBAL SECTION
+========================================================= */
+
 .section{
-    padding:105px 7%;
-    max-width:1600px;
-    margin:auto;
+    width:min(var(--max),92%);
+
+    margin:0 auto;
+
+    padding:105px 0 20px;
 }
 
 .section-header{
@@ -323,238 +476,620 @@ main{
 
 .section-label{
     color:var(--green);
-    font-size:11px;
+
+    font-size:10px;
+
     font-weight:800;
-    letter-spacing:2.5px;
+
+    letter-spacing:2px;
+
     text-transform:uppercase;
-    margin-bottom:10px;
 }
 
 .section-title{
+    margin-top:8px;
+
     font-family:"Space Grotesk",sans-serif;
-    font-size:clamp(30px,4vw,52px);
-    line-height:1.05;
+
+    font-size:clamp(32px,5vw,58px);
+
+    line-height:1.02;
+
+    letter-spacing:-2px;
 }
 
 .section-description{
-    max-width:700px;
+    max-width:760px;
+
+    margin-top:17px;
+
     color:var(--muted);
-    margin-top:13px;
+
+    font-size:14px;
 }
+
 
 /* =========================================================
    SEARCH
 ========================================================= */
 
+.search-section{
+    margin-top:30px;
+}
+
 .search-box{
-    margin-top:35px;
-    position:relative;
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:8px;
+
+    border:1px solid var(--line);
+
+    border-radius:13px;
+
+    background:#08111a;
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.2);
 }
 
 .search-box input{
-    width:100%;
-    padding:20px 22px 20px 52px;
-    border-radius:12px;
-    border:1px solid var(--line);
-    outline:none;
-    background:#09121c;
+    flex:1;
+
+    min-width:0;
+
+    padding:14px 15px;
+
+    background:transparent;
+
+    border:0;
+
+    outline:0;
+
     color:white;
-    font-size:15px;
-    transition:.25s;
+
+    font-size:14px;
 }
 
-.search-box input:focus{
-    border-color:rgba(67,233,123,.5);
-    box-shadow:0 0 0 4px rgba(67,233,123,.05);
+.search-box input::placeholder{
+    color:#586878;
 }
 
-.search-icon{
-    position:absolute;
-    left:20px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#6f8192;
-    font-size:20px;
+.search-box button{
+    padding:13px 18px;
+
+    background:var(--green);
+
+    color:#031008;
+
+    border:0;
+
+    border-radius:8px;
+
+    font-weight:800;
+
+    font-size:11px;
+
+    cursor:pointer;
 }
+
+.search-results{
+    display:none;
+
+    margin-top:12px;
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    background:#08111a;
+}
+
+.search-result{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:15px 18px;
+
+    border-bottom:1px solid var(--line);
+
+    cursor:pointer;
+}
+
+.search-result:last-child{
+    border-bottom:0;
+}
+
+.search-result:hover{
+    background:rgba(255,255,255,.03);
+}
+
+.search-result strong{
+    font-size:13px;
+}
+
+.search-result span{
+    color:var(--muted2);
+
+    font-size:10px;
+
+    text-transform:uppercase;
+}
+
 
 /* =========================================================
-   CATEGORY GRID
+   CATEGORY CARDS
 ========================================================= */
 
 .category-grid{
     display:grid;
+
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
+
+    gap:10px;
 }
 
 .category-card{
     min-height:190px;
+
     padding:25px;
+
     border:1px solid var(--line);
-    background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+
     border-radius:15px;
-    cursor:pointer;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    text-decoration:none;
+
     transition:.3s;
+
     position:relative;
+
     overflow:hidden;
 }
 
 .category-card::after{
-    content:"";
+    content:"→";
+
     position:absolute;
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    background:rgba(67,233,123,.05);
-    right:-50px;
-    bottom:-50px;
+
+    right:20px;
+    bottom:17px;
+
+    color:#435464;
+
+    transition:.3s;
 }
 
 .category-card:hover{
-    transform:translateY(-5px);
-    border-color:rgba(67,233,123,.3);
-    background:#0d1a26;
+    transform:translateY(-4px);
+
+    border-color:rgba(67,233,123,.25);
 }
 
-.category-number{
-    font-size:11px;
-    color:#607386;
-    font-weight:800;
+.category-card:hover::after{
+    color:var(--green);
+
+    transform:translateX(5px);
 }
 
 .category-icon{
-    font-size:30px;
-    margin:18px 0 13px;
+    font-size:27px;
+
+    margin-bottom:20px;
 }
 
 .category-card h3{
     font-family:"Space Grotesk",sans-serif;
+
     font-size:20px;
 }
 
 .category-card p{
-    margin-top:6px;
-    color:#8191a2;
-    font-size:12px;
+    color:var(--muted2);
+
+    font-size:11px;
+
+    margin-top:8px;
+
+    max-width:230px;
 }
+
 
 /* =========================================================
-   TIMELINE
+   HISTORY
 ========================================================= */
 
-.timeline{
-    position:relative;
-    margin-top:50px;
+.history-nav{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin-bottom:35px;
 }
 
-.timeline::before{
-    content:"";
-    position:absolute;
-    left:15px;
-    top:0;
-    bottom:0;
-    width:1px;
-    background:linear-gradient(var(--green),rgba(67,233,123,.05));
-}
+.history-nav a{
+    text-decoration:none;
 
-.timeline-item{
-    position:relative;
-    padding-left:60px;
-    margin-bottom:42px;
-}
+    color:#788999;
 
-.timeline-dot{
-    position:absolute;
-    left:8px;
-    top:6px;
-    width:15px;
-    height:15px;
-    border-radius:50%;
-    background:var(--bg);
-    border:2px solid var(--green);
-    box-shadow:0 0 15px rgba(67,233,123,.35);
-}
+    font-size:10px;
 
-.timeline-year{
-    color:var(--green);
-    font-family:"Space Grotesk",sans-serif;
     font-weight:700;
-    font-size:17px;
-}
 
-.timeline-item h3{
-    font-family:"Space Grotesk",sans-serif;
-    font-size:23px;
-    margin:4px 0;
-}
+    padding:8px 11px;
 
-.timeline-item p{
-    max-width:850px;
-    color:var(--muted);
-    font-size:14px;
-}
-
-/* =========================================================
-   DATA PANELS
-========================================================= */
-
-.panel-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.panel{
     border:1px solid var(--line);
+
+    border-radius:7px;
+
+    transition:.25s;
+}
+
+.history-nav a:hover{
+    color:white;
+
+    border-color:rgba(67,233,123,.3);
+
+    background:rgba(67,233,123,.04);
+}
+
+.history-block{
+    position:relative;
+
+    padding:31px;
+
+    margin-bottom:12px;
+
+    border:1px solid var(--line);
+
     border-radius:15px;
-    background:#09121c;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.01)
+        );
+
     overflow:hidden;
 }
 
-.panel-head{
-    padding:20px;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.history-block::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:linear-gradient(
+        var(--green),
+        transparent
+    );
 }
 
-.panel-head h3{
+.history-block.major{
+    border-color:rgba(67,233,123,.17);
+
+    background:
+        radial-gradient(
+            circle at 90% 0,
+            rgba(67,233,123,.07),
+            transparent 35%
+        ),
+        #08111a;
+}
+
+.history-date{
+    color:var(--green);
+
+    font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:1.7px;
+
+    margin-bottom:7px;
+}
+
+.history-block h3{
     font-family:"Space Grotesk",sans-serif;
+
+    font-size:25px;
+
+    margin-bottom:13px;
+}
+
+.history-block p{
+    max-width:900px;
+
+    color:#8494a4;
+
+    font-size:13px;
+
+    margin-bottom:12px;
+}
+
+.history-highlight{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:8px;
+
+    margin-top:22px;
+}
+
+.history-highlight div{
+    padding:15px;
+
+    background:rgba(67,233,123,.025);
+
+    border:1px solid rgba(67,233,123,.1);
+
+    border-radius:9px;
+}
+
+.history-highlight span{
+    display:block;
+
+    color:#5e7181;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    letter-spacing:1.3px;
+}
+
+.history-highlight strong{
+    display:block;
+
+    margin-top:3px;
+
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:14px;
+}
+
+.timeline-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:9px;
+
+    margin-top:12px;
+}
+
+.timeline-card{
+    padding:20px;
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    background:#08111a;
+}
+
+.timeline-card strong{
+    color:var(--green);
+
+    font-family:"Space Grotesk",sans-serif;
+
     font-size:18px;
 }
 
-.panel-head span{
-    color:var(--green);
+.timeline-card h4{
+    margin-top:5px;
+
+    font-size:14px;
+}
+
+.timeline-card p{
+    margin-top:6px;
+
     font-size:11px;
-    font-weight:800;
 }
 
-.panel-body{
-    padding:20px;
+.source-note{
+    color:#526474 !important;
+
+    font-size:10px !important;
+
+    padding-top:10px;
+
+    border-top:1px solid var(--line);
 }
 
-.info-row{
+
+/* =========================================================
+   DATABASE CONTROLS
+========================================================= */
+
+.database-toolbar{
     display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:25px;
+}
+
+.database-toolbar input,
+.database-toolbar select{
+    padding:12px 13px;
+
+    background:#08111a;
+
+    color:white;
+
+    border:1px solid var(--line);
+
+    border-radius:8px;
+
+    outline:none;
+
+    font-size:12px;
+}
+
+.database-toolbar input{
+    flex:1;
+
+    min-width:220px;
+}
+
+.database-toolbar select{
+    min-width:160px;
+}
+
+
+/* =========================================================
+   CLUB DATABASE
+========================================================= */
+
+.club-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+}
+
+.club-card{
+    padding:23px;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.01)
+        );
+
+    transition:.25s;
+}
+
+.club-card:hover{
+    transform:translateY(-3px);
+
+    border-color:rgba(255,255,255,.15);
+}
+
+.club-top{
+    display:flex;
+
+    align-items:flex-start;
+
     justify-content:space-between;
-    gap:20px;
-    padding:11px 0;
-    border-bottom:1px solid rgba(255,255,255,.05);
-    font-size:13px;
+
+    gap:15px;
 }
 
-.info-row:last-child{
-    border-bottom:0;
+.club-badge{
+    width:45px;
+    height:45px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:12px;
+
+    background:#111d29;
+
+    border:1px solid var(--line);
+
+    font-size:20px;
 }
 
-.info-row span:first-child{
-    color:#758698;
+.club-country{
+    color:var(--muted2);
+
+    font-size:9px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
 }
 
-.info-row span:last-child{
-    text-align:right;
-    font-weight:600;
+.club-card h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:19px;
+
+    margin-top:17px;
 }
+
+.club-card p{
+    color:var(--muted2);
+
+    font-size:11px;
+
+    margin-top:6px;
+}
+
+.club-info{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:7px;
+
+    margin-top:17px;
+}
+
+.club-info div{
+    padding:10px;
+
+    background:rgba(255,255,255,.025);
+
+    border-radius:7px;
+}
+
+.club-info span{
+    display:block;
+
+    color:#566878;
+
+    font-size:8px;
+
+    text-transform:uppercase;
+}
+
+.club-info strong{
+    display:block;
+
+    margin-top:2px;
+
+    font-size:11px;
+}
+
 
 /* =========================================================
    WORLD CUP
@@ -562,179 +1097,251 @@ main{
 
 .cup-grid{
     display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:10px;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:9px;
 }
 
 .cup-card{
-    padding:17px;
+    padding:18px;
+
     border:1px solid var(--line);
-    background:#09121c;
-    border-radius:10px;
+
+    border-radius:12px;
+
+    background:#08111a;
+
     transition:.25s;
 }
 
 .cup-card:hover{
-    border-color:rgba(244,201,93,.35);
+    border-color:rgba(67,233,123,.2);
+
     transform:translateY(-2px);
 }
 
 .cup-year{
-    color:var(--gold);
+    color:var(--green);
+
     font-family:"Space Grotesk",sans-serif;
-    font-weight:800;
-}
 
-.cup-host{
-    color:#718293;
-    font-size:11px;
-    margin-top:4px;
-}
+    font-size:22px;
 
-.cup-winner{
-    margin-top:10px;
     font-weight:700;
+}
+
+.cup-card h3{
+    margin-top:5px;
+
     font-size:13px;
 }
 
+.cup-card p{
+    margin-top:4px;
+
+    color:var(--muted2);
+
+    font-size:10px;
+}
+
+.cup-status{
+    display:inline-block;
+
+    margin-top:12px;
+
+    padding:4px 7px;
+
+    border-radius:5px;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    background:rgba(255,255,255,.04);
+
+    color:#718292;
+}
+
+
 /* =========================================================
-   CLUB DATABASE
+   PLAYERS
 ========================================================= */
 
-.club-controls{
-    display:flex;
+.player-grid{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
     gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:25px;
 }
 
-.filter-btn{
-    padding:9px 14px;
+.player-card{
+    padding:23px;
+
     border:1px solid var(--line);
-    background:#09121c;
-    color:#91a1b3;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:12px;
-    font-weight:700;
+
+    border-radius:14px;
+
+    background:#08111a;
 }
 
-.filter-btn.active,
-.filter-btn:hover{
-    color:white;
-    border-color:rgba(67,233,123,.35);
-    background:rgba(67,233,123,.07);
-}
+.player-number{
+    color:var(--green);
 
-.club-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.club-card{
-    padding:22px;
-    border:1px solid var(--line);
-    background:linear-gradient(145deg,#0b1722,#081019);
-    border-radius:13px;
-}
-
-.club-top{
-    display:flex;
-    align-items:center;
-    gap:14px;
-}
-
-.club-badge{
-    width:48px;
-    height:48px;
-    border-radius:10px;
-    display:grid;
-    place-items:center;
-    background:#142433;
-    font-size:22px;
-}
-
-.club-card h3{
     font-family:"Space Grotesk",sans-serif;
-}
 
-.club-card small{
-    color:#718294;
-}
+    font-size:31px;
 
-.club-achievements{
-    margin-top:18px;
-}
-
-.achievement{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    border-bottom:1px solid rgba(255,255,255,.05);
-    font-size:12px;
-}
-
-.achievement span:first-child{
-    color:#8292a2;
-}
-
-.achievement span:last-child{
     font-weight:700;
+
+    opacity:.7;
 }
+
+.player-card h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:18px;
+
+    margin-top:7px;
+}
+
+.player-card p{
+    color:var(--muted2);
+
+    font-size:10px;
+
+    margin-top:4px;
+}
+
+.player-tags{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:5px;
+
+    margin-top:14px;
+}
+
+.player-tags span{
+    padding:5px 7px;
+
+    border:1px solid var(--line);
+
+    border-radius:5px;
+
+    color:#728393;
+
+    font-size:8px;
+}
+
 
 /* =========================================================
-   ACCORDION
+   COUNTRIES
 ========================================================= */
 
-.accordion{
-    border-top:1px solid var(--line);
+.country-grid{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:9px;
 }
 
-.accordion-item{
-    border-bottom:1px solid var(--line);
+.country-card{
+    padding:20px;
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    background:#08111a;
 }
 
-.accordion-button{
-    width:100%;
-    background:none;
-    border:0;
-    color:white;
-    text-align:left;
-    padding:22px 5px;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-family:"Space Grotesk",sans-serif;
-    font-size:18px;
-    font-weight:600;
-}
-
-.accordion-button span{
+.country-code{
     color:var(--green);
-    transition:.25s;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
 }
 
-.accordion-content{
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .35s ease;
+.country-card h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:17px;
+
+    margin-top:6px;
 }
 
-.accordion-content-inner{
-    padding:0 5px 24px;
-    color:#8798a9;
-    font-size:14px;
+.country-card p{
+    color:var(--muted2);
+
+    font-size:10px;
+
+    margin-top:5px;
 }
 
-.accordion-item.open .accordion-button span{
-    transform:rotate(45deg);
+
+/* =========================================================
+   COMPETITIONS
+========================================================= */
+
+.competition-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
 }
 
-.accordion-item.open .accordion-content{
-    max-height:500px;
+.competition-card{
+    padding:25px;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0,
+            rgba(66,165,255,.055),
+            transparent 40%
+        ),
+        #08111a;
 }
+
+.competition-icon{
+    font-size:25px;
+}
+
+.competition-card h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    margin-top:13px;
+
+    font-size:19px;
+}
+
+.competition-card p{
+    color:var(--muted2);
+
+    font-size:11px;
+
+    margin-top:6px;
+}
+
+.competition-meta{
+    margin-top:15px;
+
+    color:#607282;
+
+    font-size:9px;
+}
+
 
 /* =========================================================
    RECORDS
@@ -742,34 +1349,207 @@ main{
 
 .record-grid{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
 }
 
 .record-card{
-    padding:25px;
-    border-radius:14px;
+    padding:24px;
+
     border:1px solid var(--line);
-    background:#09121c;
+
+    border-radius:14px;
+
+    background:#08111a;
 }
 
-.record-value{
+.record-category{
+    color:var(--green);
+
+    font-size:9px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+.record-card h3{
+    margin-top:9px;
+
     font-family:"Space Grotesk",sans-serif;
-    font-size:27px;
-    font-weight:700;
-    margin:13px 0 3px;
+
+    font-size:17px;
 }
 
-.record-label{
-    color:#8191a1;
+.record-card p{
+    margin-top:6px;
+
+    color:var(--muted2);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   ORGANIZATIONS
+========================================================= */
+
+.org-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+}
+
+.org-card{
+    padding:23px;
+
+    border:1px solid var(--line);
+
+    border-radius:13px;
+
+    background:#08111a;
+}
+
+.org-card strong{
+    color:var(--green);
+
+    font-size:10px;
+
+    letter-spacing:1px;
+}
+
+.org-card h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    margin-top:8px;
+
+    font-size:18px;
+}
+
+.org-card p{
+    color:var(--muted2);
+
+    font-size:10px;
+
+    margin-top:6px;
+}
+
+
+/* =========================================================
+   FOOTBALL EVOLUTION
+========================================================= */
+
+.evolution-grid{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:9px;
+}
+
+.evolution-card{
+    padding:22px;
+
+    border:1px solid var(--line);
+
+    border-radius:13px;
+
+    background:#08111a;
+}
+
+.evolution-card span{
+    font-size:22px;
+}
+
+.evolution-card h3{
+    font-family:"Space Grotesk",sans-serif;
+
+    font-size:16px;
+
+    margin-top:12px;
+}
+
+.evolution-card p{
+    color:var(--muted2);
+
+    font-size:10px;
+
+    margin-top:6px;
+}
+
+
+/* =========================================================
+   FAQ / ACCORDION
+========================================================= */
+
+.accordion{
+    display:grid;
+
+    gap:8px;
+}
+
+.accordion-item{
+    border:1px solid var(--line);
+
+    border-radius:11px;
+
+    overflow:hidden;
+
+    background:#08111a;
+}
+
+.accordion-button{
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px;
+
+    color:white;
+
+    background:transparent;
+
+    border:0;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    font-weight:700;
+
     font-size:12px;
 }
 
-.record-note{
-    color:#56687a;
-    font-size:11px;
-    margin-top:12px;
+.accordion-button span{
+    color:var(--green);
+
+    font-size:18px;
 }
+
+.accordion-content{
+    display:none;
+
+    padding:0 18px 18px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.accordion-item.open .accordion-content{
+    display:block;
+}
+
 
 /* =========================================================
    FOOTBALL CULTURE
@@ -777,203 +1557,277 @@ main{
 
 .culture-grid{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:10px;
 }
 
 .culture-card{
-    padding:28px;
+    min-height:180px;
+
+    padding:23px;
+
     border:1px solid var(--line);
-    border-radius:14px;
-    background:#09121c;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.01)
+        );
 }
 
 .culture-card h3{
     font-family:"Space Grotesk",sans-serif;
-    font-size:20px;
+
+    font-size:18px;
+
+    margin-top:30px;
 }
 
 .culture-card p{
-    color:#8191a2;
-    font-size:13px;
-    margin-top:8px;
+    color:var(--muted2);
+
+    font-size:10px;
+
+    margin-top:6px;
 }
+
+
+/* =========================================================
+   SOURCES
+========================================================= */
+
+.sources{
+    padding:28px;
+
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    background:#08111a;
+}
+
+.sources p{
+    color:var(--muted2);
+
+    font-size:11px;
+
+    max-width:800px;
+}
+
+.source-buttons{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-top:18px;
+}
+
+.source-buttons a{
+    padding:9px 12px;
+
+    border:1px solid var(--line);
+
+    border-radius:7px;
+
+    text-decoration:none;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    color:#8595a4;
+}
+
+.source-buttons a:hover{
+    color:white;
+
+    border-color:rgba(67,233,123,.25);
+}
+
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 footer{
-    border-top:1px solid var(--line);
-    padding:65px 7% 35px;
-    background:#03060a;
-}
+    width:min(var(--max),92%);
 
-.footer-main{
+    margin:100px auto 0;
+
+    padding:35px 0 50px;
+
+    border-top:1px solid var(--line);
+
     display:flex;
+
     justify-content:space-between;
-    gap:40px;
-    flex-wrap:wrap;
+
+    gap:30px;
+
+    color:#566777;
+
+    font-size:10px;
 }
 
 .footer-brand{
-    max-width:450px;
-}
+    color:white;
 
-.footer-brand h2{
     font-family:"Space Grotesk",sans-serif;
-    font-size:26px;
+
+    font-size:15px;
 }
 
-.footer-brand p{
-    color:#6f8091;
-    margin-top:10px;
-    font-size:13px;
+.footer-brand span{
+    color:var(--green);
 }
 
-.footer-links{
-    display:flex;
-    gap:70px;
+.footer-note{
+    max-width:500px;
+
+    text-align:right;
 }
 
-.footer-column h4{
-    font-size:12px;
-    color:white;
-    margin-bottom:14px;
-}
-
-.footer-column a{
-    display:block;
-    color:#657587;
-    text-decoration:none;
-    font-size:12px;
-    margin:8px 0;
-}
-
-.footer-column a:hover{
-    color:white;
-}
-
-.footer-bottom{
-    margin-top:55px;
-    padding-top:20px;
-    border-top:1px solid var(--line);
-    color:#526272;
-    font-size:11px;
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    flex-wrap:wrap;
-}
 
 /* =========================================================
-   HIDDEN SEARCH
+   EMPTY STATE
 ========================================================= */
 
-.search-result{
-    display:none;
-    margin-top:15px;
-    border:1px solid var(--line);
-    background:#09121c;
+.empty{
+    padding:40px;
+
+    border:1px dashed var(--line);
+
     border-radius:12px;
-    overflow:hidden;
+
+    text-align:center;
+
+    color:var(--muted2);
+
+    font-size:12px;
 }
 
-.search-result.show{
-    display:block;
-}
-
-.search-result-item{
-    padding:15px 18px;
-    border-bottom:1px solid var(--line);
-    cursor:pointer;
-}
-
-.search-result-item:last-child{
-    border-bottom:0;
-}
-
-.search-result-item:hover{
-    background:#0e1b28;
-}
-
-.search-result-item strong{
-    display:block;
-}
-
-.search-result-item small{
-    color:#718294;
-}
 
 /* =========================================================
-   RESPONSIVE
+   REVEAL
 ========================================================= */
 
-@media(max-width:1100px){
+.reveal{
+    opacity:0;
+
+    transform:translateY(18px);
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+
+    transform:none;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:1000px){
 
     .category-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .panel-grid,
     .club-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .record-grid{
+    .cup-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .player-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .cup-grid{
-        grid-template-columns:repeat(4,1fr);
+    .country-grid{
+        grid-template-columns:repeat(3,1fr);
     }
+
+    .competition-grid,
+    .record-grid,
+    .org-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .evolution-grid,
+    .culture-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .timeline-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
 }
 
-@media(max-width:760px){
+@media(max-width:720px){
 
-    .navbar{
-        padding:0 20px;
+    .nav-links{
+        display:none;
+
+        position:absolute;
+
+        top:72px;
+        left:0;
+        right:0;
+
+        padding:20px;
+
+        background:#071019;
+
+        border-bottom:1px solid var(--line);
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .nav-links.open{
+        display:flex;
     }
 
     .menu-btn{
         display:block;
     }
 
-    .nav-links{
-        position:absolute;
-        top:74px;
-        left:0;
-        right:0;
-        padding:20px;
-        background:#060b11;
-        border-bottom:1px solid var(--line);
-        display:none;
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .nav-links.active{
-        display:flex;
-    }
-
     .hero{
         min-height:650px;
-        padding:130px 6% 80px;
     }
 
     .hero h1{
         letter-spacing:-3px;
     }
 
-    .section{
-        padding:75px 6%;
+    .hero-stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .category-grid,
-    .panel-grid,
+    .history-highlight{
+        grid-template-columns:repeat(2,1fr);
+    }
+
     .club-grid,
+    .competition-grid,
     .record-grid,
-    .culture-grid{
+    .org-grid{
         grid-template-columns:1fr;
     }
 
@@ -981,98 +1835,170 @@ footer{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .footer-links{
-        gap:35px;
+    .country-grid{
+        grid-template-columns:repeat(2,1fr);
     }
+
 }
 
-@media(max-width:430px){
+@media(max-width:520px){
 
-    .hero h1{
-        font-size:48px;
+    .section{
+        padding-top:80px;
+    }
+
+    .category-grid,
+    .player-grid,
+    .evolution-grid,
+    .culture-grid,
+    .timeline-grid{
+        grid-template-columns:1fr;
     }
 
     .cup-grid{
         grid-template-columns:1fr;
     }
 
-    .hero-buttons{
+    .history-highlight{
+        grid-template-columns:1fr;
+    }
+
+    .hero-stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hero-text{
+        font-size:14px;
+    }
+
+    footer{
         flex-direction:column;
     }
 
-    .btn{
-        text-align:center;
+    .footer-note{
+        text-align:left;
     }
+
 }
 
 </style>
 </head>
 
+
 <body>
 
-<!-- =======================================================
+
+<!-- =========================================================
      NAVIGATION
-======================================================= -->
+========================================================= -->
 
-<nav class="navbar">
+<nav class="nav">
 
-    <a href="#top" class="logo">
-        <div class="logo-ball">⚽</div>
-        <div class="logo-text">
-            FOOTBALL <span>ATLAS</span>
+    <div class="nav-inner">
+
+        <a href="#top" class="logo">
+
+            <div class="logo-ball">
+                ⚽
+            </div>
+
+            <div class="logo-text">
+                Football <span>Atlas</span>
+            </div>
+
+        </a>
+
+
+        <div class="nav-links" id="navLinks">
+
+            <a href="#history">History</a>
+
+            <a href="#world-cup">World Cup</a>
+
+            <a href="#clubs">Clubs</a>
+
+            <a href="#players">Players</a>
+
+            <a href="#countries">Countries</a>
+
+            <a href="#competitions">Competitions</a>
+
+            <a href="#records">Records</a>
+
         </div>
-    </a>
 
-    <button class="menu-btn" id="menuBtn">☰</button>
 
-    <div class="nav-links" id="navLinks">
-        <a href="#history">History</a>
-        <a href="#worldcup">World Cup</a>
-        <a href="#clubs">Clubs</a>
-        <a href="#players">Players</a>
-        <a href="#competitions">Competitions</a>
-        <a href="#records">Records</a>
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
+
     </div>
 
 </nav>
 
 
-<!-- =======================================================
+
+<!-- =========================================================
      HERO
-======================================================= -->
+========================================================= -->
 
 <header class="hero" id="top">
 
-    <div class="hero-glow"></div>
-    <div class="hero-grid"></div>
+    <div class="hero-inner">
 
-    <div class="hero-content">
-
-        <div class="eyebrow">
-            Football Knowledge Archive
+        <div class="hero-label">
+            <span class="status-dot"></span>
+            FOOTBALL KNOWLEDGE ARCHIVE
         </div>
 
+
         <h1>
-            FOOTBALL
-            <span>ATLAS</span>
+            The world of<br>
+            <span>football.</span>
         </h1>
 
-        <p class="hero-description">
-            The encyclopedia of football.
-            Explore the history, clubs, players, countries,
-            competitions, World Cups, records, stadiums and
-            stories that shaped the world's game.
+
+        <p class="hero-text">
+            Football Atlas is an information-first encyclopedia
+            dedicated to the history, people, clubs, countries,
+            competitions, records and culture of association football.
         </p>
 
-        <div class="hero-buttons">
 
-            <a href="#explore" class="btn btn-primary">
-                Explore the Atlas
+        <div class="hero-actions">
+
+            <a href="#history" class="btn btn-primary">
+                Explore Football History
             </a>
 
-            <a href="#history" class="btn btn-secondary">
-                Football History
+            <a href="#database" class="btn btn-secondary">
+                Explore Database
             </a>
+
+        </div>
+
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+                <strong>1863</strong>
+                <span>Modern rule era</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>1904</strong>
+                <span>FIFA founded</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>1930</strong>
+                <span>First World Cup</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>GLOBAL</strong>
+                <span>The world's game</span>
+            </div>
 
         </div>
 
@@ -1081,134 +2007,159 @@ footer{
 </header>
 
 
-<main>
 
-
-<!-- =======================================================
+<!-- =========================================================
      SEARCH
-======================================================= -->
+========================================================= -->
 
-<section class="section" id="explore">
+<section class="section search-section" id="search">
 
     <div class="section-header">
 
         <div class="section-label">
-            Football Database
+            Search Atlas
         </div>
 
         <h2 class="section-title">
-            Search the football universe.
+            Find football knowledge.
         </h2>
 
         <p class="section-description">
-            Search for clubs, players, competitions,
-            countries, World Cups, historical eras and records.
+            Search across the Football Atlas database for clubs,
+            players, countries, competitions and historical subjects.
         </p>
 
     </div>
 
+
     <div class="search-box">
 
-        <span class="search-icon">⌕</span>
-
         <input
-            type="text"
-            id="globalSearch"
-            placeholder="Search Real Madrid, Messi, World Cup 1998, Premier League..."
+            id="searchInput"
+            type="search"
+            placeholder="Search Real Madrid, Messi, World Cup, Brazil..."
             autocomplete="off"
         >
 
-        <div class="search-result" id="searchResults"></div>
+        <button id="searchButton">
+            SEARCH
+        </button>
 
     </div>
+
+
+    <div class="search-results" id="searchResults"></div>
 
 </section>
 
 
-<!-- =======================================================
-     MAIN CATEGORIES
-======================================================= -->
 
-<section class="section">
+<!-- =========================================================
+     MAIN CATEGORIES
+========================================================= -->
+
+<section class="section" id="database">
 
     <div class="section-header">
 
         <div class="section-label">
-            Explore
+            Atlas Index
         </div>
 
         <h2 class="section-title">
-            Everything about football.
+            Everything in one archive.
         </h2>
+
+        <p class="section-description">
+            Football Atlas is organized like a digital football
+            reference library rather than a live-score platform.
+        </p>
 
     </div>
 
+
     <div class="category-grid">
 
-        <div class="category-card" onclick="location.href='#history'">
-            <div class="category-number">01</div>
-            <div class="category-icon">📜</div>
-            <h3>Football History</h3>
-            <p>From early ball games to the modern era.</p>
-        </div>
+        <a href="#history" class="category-card reveal">
+            <div class="category-icon">◷</div>
+            <h3>History</h3>
+            <p>
+                From early football traditions to modern football.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#worldcup'">
-            <div class="category-number">02</div>
+
+        <a href="#world-cup" class="category-card reveal">
             <div class="category-icon">🏆</div>
             <h3>World Cup</h3>
-            <p>Tournament-by-tournament historical archive.</p>
-        </div>
+            <p>
+                Tournament history, hosts, winners and eras.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#clubs'">
-            <div class="category-number">03</div>
-            <div class="category-icon">🏟️</div>
+
+        <a href="#clubs" class="category-card reveal">
+            <div class="category-icon">◈</div>
             <h3>Clubs</h3>
-            <p>Founding, history, honours and milestones.</p>
-        </div>
+            <p>
+                Club histories, foundations and major achievements.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#players'">
-            <div class="category-number">04</div>
-            <div class="category-icon">👤</div>
+
+        <a href="#players" class="category-card reveal">
+            <div class="category-icon">◎</div>
             <h3>Players</h3>
-            <p>Careers, records, international football and trophies.</p>
-        </div>
+            <p>
+                Footballers, careers, eras and international records.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#countries'">
-            <div class="category-number">05</div>
-            <div class="category-icon">🌍</div>
+
+        <a href="#countries" class="category-card reveal">
+            <div class="category-icon">⌖</div>
             <h3>Countries</h3>
-            <p>National teams and football development around the world.</p>
-        </div>
+            <p>
+                National teams and football development around the world.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#competitions'">
-            <div class="category-number">06</div>
-            <div class="category-icon">🥇</div>
+
+        <a href="#competitions" class="category-card reveal">
+            <div class="category-icon">◇</div>
             <h3>Competitions</h3>
-            <p>Leagues, cups and international competitions.</p>
-        </div>
+            <p>
+                International, continental and domestic competitions.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#records'">
-            <div class="category-number">07</div>
-            <div class="category-icon">📊</div>
+
+        <a href="#records" class="category-card reveal">
+            <div class="category-icon">#</div>
             <h3>Records</h3>
-            <p>Historic achievements and statistical records.</p>
-        </div>
+            <p>
+                Historic records and statistical milestones.
+            </p>
+        </a>
 
-        <div class="category-card" onclick="location.href='#culture'">
-            <div class="category-number">08</div>
-            <div class="category-icon">⚽</div>
-            <h3>Football Culture</h3>
-            <p>Derbies, tactics, stadiums, rules and traditions.</p>
-        </div>
+
+        <a href="#evolution" class="category-card reveal">
+            <div class="category-icon">↗</div>
+            <h3>Evolution</h3>
+            <p>
+                How football rules, tactics and technology changed.
+            </p>
+        </a>
 
     </div>
 
 </section>
 
 
-<!-- =======================================================
+
+<!-- =========================================================
      FOOTBALL HISTORY
-======================================================= -->
+========================================================= -->
 
 <section class="section" id="history">
 
@@ -1223,112 +2174,559 @@ footer{
         </h2>
 
         <p class="section-description">
-            A chronological journey through the development
-            of association football.
+            Modern association football emerged through a long process
+            of rule-making, organization, competition and international
+            expansion.
         </p>
 
     </div>
 
-    <div class="timeline">
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">Ancient Era</div>
-            <h3>Early Ball Games</h3>
-            <p>
-                Various societies developed games involving
-                kicking, carrying or controlling balls.
-                These games were predecessors or cultural
-                relatives of later football traditions.
-            </p>
+    <div class="history-nav">
+
+        <a href="#history-origins">Origins</a>
+        <a href="#history-1863">1863</a>
+        <a href="#history-ifab">IFAB</a>
+        <a href="#history-fifa">FIFA</a>
+        <a href="#history-worldcup">World Cup</a>
+        <a href="#history-global">Global Era</a>
+        <a href="#history-modern">Modern Era</a>
+
+    </div>
+
+
+    <div class="history-block" id="history-origins">
+
+        <div class="history-date">
+            BEFORE MODERN ASSOCIATION FOOTBALL
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">Medieval Period</div>
-            <h3>Folk Football</h3>
-            <p>
-                Different forms of community football developed
-                in Britain and elsewhere. Rules varied greatly
-                between communities and competitions.
-            </p>
+        <h3>Ball games existed long before modern football.</h3>
+
+        <p>
+            Different societies developed games involving balls,
+            kicking, carrying, passing and competing for territory.
+            These games varied greatly and should not simply be treated
+            as identical versions of modern association football.
+        </p>
+
+        <p>
+            They are nevertheless part of the broader history of
+            organized ball games from which later football traditions
+            emerged.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            MEDIEVAL & EARLY MODERN PERIOD
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">19th Century</div>
-            <h3>Rules Begin to Standardize</h3>
-            <p>
-                British schools and clubs began developing
-                more formal rules, creating a need for
-                standardized football regulations.
-            </p>
+        <h3>Folk football.</h3>
+
+        <p>
+            Various forms of folk football appeared in Britain during
+            the medieval and early modern periods. Local communities
+            often played according to customs rather than a universal
+            written code.
+        </p>
+
+        <p>
+            These games could be very different from the organized
+            11-a-side game that developed centuries later.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1800s
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">1863</div>
-            <h3>The Laws of the Game</h3>
-            <p>
-                The Football Association was established in
-                London and played a major role in standardizing
-                association football's rules.
-            </p>
+        <h3>Schools and clubs begin developing their own codes.</h3>
+
+        <p>
+            During the nineteenth century, football became increasingly
+            organized in British schools and clubs. Different
+            institutions used different rules concerning handling,
+            kicking, physical contact and movement of the ball.
+        </p>
+
+        <p>
+            As teams increasingly wanted to play each other, the
+            differences between local rules created a need for
+            common laws.
+        </p>
+
+    </div>
+
+
+    <div class="history-block major" id="history-1863">
+
+        <div class="history-date">
+            26 OCTOBER 1863
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">1880s–1900s</div>
-            <h3>Professional & International Growth</h3>
-            <p>
-                Organized competitions expanded, professional
-                football developed, and international matches
-                became increasingly important.
-            </p>
+        <h3>The Football Association is founded.</h3>
+
+        <p>
+            The Football Association was formed in London on
+            26 October 1863. The organization worked toward creating
+            a common code of football rules.
+        </p>
+
+        <div class="history-highlight">
+
+            <div>
+                <span>YEAR</span>
+                <strong>1863</strong>
+            </div>
+
+            <div>
+                <span>PLACE</span>
+                <strong>London</strong>
+            </div>
+
+            <div>
+                <span>ORGANIZATION</span>
+                <strong>The FA</strong>
+            </div>
+
+            <div>
+                <span>ROLE</span>
+                <strong>Rule codification</strong>
+            </div>
+
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">1904</div>
-            <h3>FIFA</h3>
-            <p>
-                FIFA was founded in Paris, creating an
-                international governing organization for
-                association football.
-            </p>
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1863 ONWARD
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">1930</div>
-            <h3>First FIFA World Cup</h3>
-            <p>
-                Uruguay hosted the inaugural FIFA World Cup,
-                establishing the tournament as a central event
-                in international football history.
-            </p>
+        <h3>The Laws of the Game evolve.</h3>
+
+        <p>
+            The laws developed through repeated amendments. Rules
+            governing goals, free kicks, corners, penalties,
+            offside, player conduct and many other aspects of football
+            gradually changed over time.
+        </p>
+
+        <p>
+            The modern Laws of the Game are maintained internationally
+            by The IFAB.
+        </p>
+
+    </div>
+
+
+    <div class="history-block major" id="history-ifab">
+
+        <div class="history-date">
+            1886
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">1950s–1990s</div>
-            <h3>Global Expansion</h3>
-            <p>
-                Television, continental competitions,
-                professional leagues and international stars
-                expanded football's global audience.
-            </p>
+        <h3>The International Football Association Board.</h3>
+
+        <p>
+            The International Football Association Board was founded
+            in 1886 by the four British football associations:
+            England, Scotland, Wales and Ireland.
+        </p>
+
+        <p>
+            IFAB became the international guardian of the Laws of the
+            Game. FIFA joined the board in 1913.
+        </p>
+
+        <div class="history-highlight">
+
+            <div>
+                <span>FOUNDED</span>
+                <strong>1886</strong>
+            </div>
+
+            <div>
+                <span>FOUNDERS</span>
+                <strong>4 FAs</strong>
+            </div>
+
+            <div>
+                <span>FIFA JOINS</span>
+                <strong>1913</strong>
+            </div>
+
+            <div>
+                <span>ROLE</span>
+                <strong>Laws of the Game</strong>
+            </div>
+
         </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">2000s–Present</div>
-            <h3>The Data & Technology Era</h3>
-            <p>
-                Advanced analytics, goal-line technology,
-                VAR, global broadcasting and digital media
-                transformed how football is played and followed.
-            </p>
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1888
+        </div>
+
+        <h3>League football.</h3>
+
+        <p>
+            The Football League was founded in England in 1888.
+            Regular scheduled league competition became an important
+            part of professional football's structure.
+        </p>
+
+        <p>
+            League systems subsequently became one of the defining
+            organizational structures of club football around the world.
+        </p>
+
+    </div>
+
+
+    <div class="history-block major" id="history-fifa">
+
+        <div class="history-date">
+            21 MAY 1904
+        </div>
+
+        <h3>FIFA is founded in Paris.</h3>
+
+        <p>
+            FIFA, the Fédération Internationale de Football
+            Association, was founded in Paris on 21 May 1904.
+        </p>
+
+        <p>
+            The organization eventually became central to the
+            administration of international association football and
+            the organization of the FIFA World Cup.
+        </p>
+
+        <div class="history-highlight">
+
+            <div>
+                <span>YEAR</span>
+                <strong>1904</strong>
+            </div>
+
+            <div>
+                <span>PLACE</span>
+                <strong>Paris</strong>
+            </div>
+
+            <div>
+                <span>ORGANIZATION</span>
+                <strong>FIFA</strong>
+            </div>
+
+            <div>
+                <span>FOCUS</span>
+                <strong>International football</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1913
+        </div>
+
+        <h3>FIFA joins IFAB.</h3>
+
+        <p>
+            FIFA joined IFAB in 1913, connecting the international
+            football organization with the body responsible for the
+            Laws of the Game.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1920s
+        </div>
+
+        <h3>The idea of a dedicated world championship.</h3>
+
+        <p>
+            International football continued expanding, creating
+            pressure for a global championship separate from the
+            Olympic football tournament.
+        </p>
+
+        <p>
+            FIFA approved the launch of the World Cup in 1928.
+        </p>
+
+    </div>
+
+
+    <div class="history-block major" id="history-worldcup">
+
+        <div class="history-date">
+            1930
+        </div>
+
+        <h3>The first FIFA World Cup.</h3>
+
+        <p>
+            Uruguay hosted the first FIFA World Cup in 1930.
+            The hosts won the tournament, establishing the World Cup
+            as a recurring global championship for men's national teams.
+        </p>
+
+        <div class="history-highlight">
+
+            <div>
+                <span>YEAR</span>
+                <strong>1930</strong>
+            </div>
+
+            <div>
+                <span>HOST</span>
+                <strong>Uruguay</strong>
+            </div>
+
+            <div>
+                <span>WINNER</span>
+                <strong>Uruguay</strong>
+            </div>
+
+            <div>
+                <span>TEAMS</span>
+                <strong>13</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1939–1945
+        </div>
+
+        <h3>Football during the Second World War.</h3>
+
+        <p>
+            The Second World War disrupted international football.
+            The FIFA World Cup was not held in 1942 or 1946.
+        </p>
+
+    </div>
+
+
+    <div class="history-block" id="history-global">
+
+        <div class="history-date">
+            1950s–1980s
+        </div>
+
+        <h3>Football becomes increasingly global.</h3>
+
+        <p>
+            Postwar football expanded through national leagues,
+            continental competitions, international tournaments and
+            television broadcasting.
+        </p>
+
+        <p>
+            Football cultures developed across Europe, South America,
+            Africa, Asia, North America and Oceania.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1955/56
+        </div>
+
+        <h3>The European Cup begins.</h3>
+
+        <p>
+            UEFA's European Champion Clubs' Cup began in 1955/56.
+            Real Madrid won the inaugural competition.
+        </p>
+
+        <p>
+            The competition later became the UEFA Champions League,
+            which was relaunched under that name in 1992/93.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1991
+        </div>
+
+        <h3>The first FIFA Women's World Cup.</h3>
+
+        <p>
+            FIFA organized the first Women's World Cup in 1991,
+            creating a dedicated global championship for women's
+            national teams.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            1990s–2000s
+        </div>
+
+        <h3>Global broadcasting and commercialization.</h3>
+
+        <p>
+            Football became increasingly international through
+            television, sponsorship, player transfers, global
+            supporter communities and expanding professional
+            competitions.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            2000s–2010s
+        </div>
+
+        <h3>The data revolution.</h3>
+
+        <p>
+            Professional football increasingly adopted detailed
+            statistical analysis, video analysis, player tracking,
+            sports science and performance data.
+        </p>
+
+    </div>
+
+
+    <div class="history-block">
+
+        <div class="history-date">
+            2010s
+        </div>
+
+        <h3>Technology enters officiating.</h3>
+
+        <p>
+            Goal-line technology and later video review systems
+            became part of the modern football environment.
+        </p>
+
+    </div>
+
+
+    <div class="history-block major" id="history-modern">
+
+        <div class="history-date">
+            2010s–2020s
+        </div>
+
+        <h3>VAR and the modern football era.</h3>
+
+        <p>
+            Video Assistant Referee technology became part of
+            top-level football following trials and changes to the
+            Laws of the Game.
+        </p>
+
+        <p>
+            Modern football now combines traditional competition
+            with global broadcasting, analytics, technology,
+            professional academies and digital media.
+        </p>
+
+    </div>
+
+
+    <div class="timeline-grid">
+
+        <div class="timeline-card">
+            <strong>1863</strong>
+            <h4>The FA</h4>
+            <p>Modern association football begins its codification era.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>1886</strong>
+            <h4>IFAB</h4>
+            <p>International guardianship of the Laws begins.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>1888</strong>
+            <h4>Football League</h4>
+            <p>Regular league football becomes established.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>1904</strong>
+            <h4>FIFA</h4>
+            <p>International football receives a global governing organization.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>1930</strong>
+            <h4>World Cup</h4>
+            <p>The first FIFA World Cup is played in Uruguay.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>1955/56</strong>
+            <h4>European Cup</h4>
+            <p>European elite club competition begins.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>1991</strong>
+            <h4>Women's World Cup</h4>
+            <p>First FIFA Women's World Cup is held.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>2010s</strong>
+            <h4>Technology</h4>
+            <p>Goal-line technology and VAR reshape officiating.</p>
+        </div>
+
+        <div class="timeline-card">
+            <strong>2020s</strong>
+            <h4>Digital Football</h4>
+            <p>Analytics, tracking and global digital media dominate the modern environment.</p>
         </div>
 
     </div>
@@ -1336,178 +2734,41 @@ footer{
 </section>
 
 
-<!-- =======================================================
-     WORLD CUP
-======================================================= -->
 
-<section class="section" id="worldcup">
+<!-- =========================================================
+     WORLD CUP
+========================================================= -->
+
+<section class="section" id="world-cup">
 
     <div class="section-header">
 
         <div class="section-label">
-            02 / World Cup Archive
+            02 / World Cup
         </div>
 
         <h2 class="section-title">
-            FIFA World Cup history.
+            FIFA World Cup archive.
         </h2>
 
         <p class="section-description">
-            A tournament-by-tournament archive. The database
-            can be expanded with every match, squad, scorer,
-            stadium and historical event.
+            A permanent tournament index. Detailed tournament pages
+            can be expanded from this structure without changing the
+            website architecture.
         </p>
 
     </div>
 
-    <div class="cup-grid">
 
-        <div class="cup-card">
-            <div class="cup-year">1930</div>
-            <div class="cup-host">Uruguay</div>
-            <div class="cup-winner">Uruguay</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1934</div>
-            <div class="cup-host">Italy</div>
-            <div class="cup-winner">Italy</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1938</div>
-            <div class="cup-host">France</div>
-            <div class="cup-winner">Italy</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1950</div>
-            <div class="cup-host">Brazil</div>
-            <div class="cup-winner">Uruguay</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1954</div>
-            <div class="cup-host">Switzerland</div>
-            <div class="cup-winner">West Germany</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1958</div>
-            <div class="cup-host">Sweden</div>
-            <div class="cup-winner">Brazil</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1962</div>
-            <div class="cup-host">Chile</div>
-            <div class="cup-winner">Brazil</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1966</div>
-            <div class="cup-host">England</div>
-            <div class="cup-winner">England</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1970</div>
-            <div class="cup-host">Mexico</div>
-            <div class="cup-winner">Brazil</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1974</div>
-            <div class="cup-host">West Germany</div>
-            <div class="cup-winner">West Germany</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1978</div>
-            <div class="cup-host">Argentina</div>
-            <div class="cup-winner">Argentina</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1982</div>
-            <div class="cup-host">Spain</div>
-            <div class="cup-winner">Italy</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1986</div>
-            <div class="cup-host">Mexico</div>
-            <div class="cup-winner">Argentina</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1990</div>
-            <div class="cup-host">Italy</div>
-            <div class="cup-winner">West Germany</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1994</div>
-            <div class="cup-host">United States</div>
-            <div class="cup-winner">Brazil</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">1998</div>
-            <div class="cup-host">France</div>
-            <div class="cup-winner">France</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2002</div>
-            <div class="cup-host">South Korea / Japan</div>
-            <div class="cup-winner">Brazil</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2006</div>
-            <div class="cup-host">Germany</div>
-            <div class="cup-winner">Italy</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2010</div>
-            <div class="cup-host">South Africa</div>
-            <div class="cup-winner">Spain</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2014</div>
-            <div class="cup-host">Brazil</div>
-            <div class="cup-winner">Germany</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2018</div>
-            <div class="cup-host">Russia</div>
-            <div class="cup-winner">France</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2022</div>
-            <div class="cup-host">Qatar</div>
-            <div class="cup-winner">Argentina</div>
-        </div>
-
-        <div class="cup-card">
-            <div class="cup-year">2026</div>
-            <div class="cup-host">Canada / Mexico / USA</div>
-            <div class="cup-winner">Tournament archive</div>
-        </div>
-
-    </div>
+    <div class="cup-grid" id="worldCupGrid"></div>
 
 </section>
 
 
-<!-- =======================================================
-     CLUB DATABASE
-======================================================= -->
+
+<!-- =========================================================
+     CLUBS
+========================================================= -->
 
 <section class="section" id="clubs">
 
@@ -1518,324 +2779,65 @@ footer{
         </div>
 
         <h2 class="section-title">
-            Clubs. Seasons. Honours. History.
+            Clubs that shaped football.
         </h2>
 
         <p class="section-description">
-            Every major club profile will contain its foundation,
-            historical timeline, competitions, trophies and
-            important milestones.
+            Club history, foundation, country, stadiums and major
+            documented achievements.
         </p>
 
     </div>
 
-    <div class="club-controls">
 
-        <button class="filter-btn active">All Clubs</button>
-        <button class="filter-btn">England</button>
-        <button class="filter-btn">Spain</button>
-        <button class="filter-btn">Italy</button>
-        <button class="filter-btn">Germany</button>
-        <button class="filter-btn">France</button>
-        <button class="filter-btn">Brazil</button>
-        <button class="filter-btn">Argentina</button>
+    <div class="database-toolbar">
 
-    </div>
+        <input
+            id="clubSearch"
+            type="search"
+            placeholder="Search clubs..."
+        >
 
-    <div class="club-grid">
+        <select id="clubCountry">
 
-        <div class="club-card">
-            <div class="club-top">
-                <div class="club-badge">⚪</div>
-                <div>
-                    <h3>Real Madrid</h3>
-                    <small>Spain · Founded 1902</small>
-                </div>
-            </div>
+            <option value="all">
+                All countries
+            </option>
 
-            <div class="club-achievements">
-                <div class="achievement">
-                    <span>European Cup / UCL</span>
-                    <span>15</span>
-                </div>
+            <option value="Spain">
+                Spain
+            </option>
 
-                <div class="achievement">
-                    <span>La Liga</span>
-                    <span>36</span>
-                </div>
+            <option value="England">
+                England
+            </option>
 
-                <div class="achievement">
-                    <span>Club World Cup</span>
-                    <span>9</span>
-                </div>
-            </div>
-        </div>
+            <option value="Italy">
+                Italy
+            </option>
 
+            <option value="Germany">
+                Germany
+            </option>
 
-        <div class="club-card">
-            <div class="club-top">
-                <div class="club-badge">🔴</div>
-                <div>
-                    <h3>Liverpool</h3>
-                    <small>England · Founded 1892</small>
-                </div>
-            </div>
+            <option value="France">
+                France
+            </option>
 
-            <div class="club-achievements">
-                <div class="achievement">
-                    <span>European Cup / UCL</span>
-                    <span>6</span>
-                </div>
-
-                <div class="achievement">
-                    <span>English League Titles</span>
-                    <span>20</span>
-                </div>
-
-                <div class="achievement">
-                    <span>FA Cup</span>
-                    <span>8</span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="club-card">
-            <div class="club-top">
-                <div class="club-badge">🔴</div>
-                <div>
-                    <h3>Manchester United</h3>
-                    <small>England · Founded 1878</small>
-                </div>
-            </div>
-
-            <div class="club-achievements">
-                <div class="achievement">
-                    <span>English League Titles</span>
-                    <span>20</span>
-                </div>
-
-                <div class="achievement">
-                    <span>European Cup / UCL</span>
-                    <span>3</span>
-                </div>
-
-                <div class="achievement">
-                    <span>FA Cup</span>
-                    <span>13</span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="club-card">
-            <div class="club-top">
-                <div class="club-badge">🔴⚫</div>
-                <div>
-                    <h3>AC Milan</h3>
-                    <small>Italy · Founded 1899</small>
-                </div>
-            </div>
-
-            <div class="club-achievements">
-                <div class="achievement">
-                    <span>European Cup / UCL</span>
-                    <span>7</span>
-                </div>
-
-                <div class="achievement">
-                    <span>Serie A</span>
-                    <span>19</span>
-                </div>
-
-                <div class="achievement">
-                    <span>European Super Cup</span>
-                    <span>5</span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="club-card">
-            <div class="club-top">
-                <div class="club-badge">🔴</div>
-                <div>
-                    <h3>Bayern Munich</h3>
-                    <small>Germany · Founded 1900</small>
-                </div>
-            </div>
-
-            <div class="club-achievements">
-                <div class="achievement">
-                    <span>European Cup / UCL</span>
-                    <span>6</span>
-                </div>
-
-                <div class="achievement">
-                    <span>Bundesliga</span>
-                    <span>33</span>
-                </div>
-
-                <div class="achievement">
-                    <span>DFB-Pokal</span>
-                    <span>20</span>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="club-card">
-            <div class="club-top">
-                <div class="club-badge">🔵🔴</div>
-                <div>
-                    <h3>Barcelona</h3>
-                    <small>Spain · Founded 1899</small>
-                </div>
-            </div>
-
-            <div class="club-achievements">
-                <div class="achievement">
-                    <span>European Cup / UCL</span>
-                    <span>5</span>
-                </div>
-
-                <div class="achievement">
-                    <span>La Liga</span>
-                    <span>28</span>
-                </div>
-
-                <div class="achievement">
-                    <span>Copa del Rey</span>
-                    <span>32</span>
-                </div>
-            </div>
-        </div>
+        </select>
 
     </div>
+
+
+    <div class="club-grid" id="clubGrid"></div>
 
 </section>
 
 
-<!-- =======================================================
-     CLUB HISTORY DETAILS
-======================================================= -->
 
-<section class="section">
-
-    <div class="section-header">
-
-        <div class="section-label">
-            Club Records
-        </div>
-
-        <h2 class="section-title">
-            What every club page will contain.
-        </h2>
-
-    </div>
-
-    <div class="accordion">
-
-        <div class="accordion-item">
-
-            <button class="accordion-button">
-                Foundation & Identity
-                <span>+</span>
-            </button>
-
-            <div class="accordion-content">
-                <div class="accordion-content-inner">
-                    Official name, previous names, foundation date,
-                    city, country, stadium, capacity, colours,
-                    nicknames, crest history and ownership history
-                    where reliably documented.
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="accordion-item">
-
-            <button class="accordion-button">
-                Complete Season Timeline
-                <span>+</span>
-            </button>
-
-            <div class="accordion-content">
-                <div class="accordion-content-inner">
-                    Each season can contain league position,
-                    domestic competitions, continental competitions,
-                    managers, important matches, goalscorers,
-                    transfers and trophies.
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="accordion-item">
-
-            <button class="accordion-button">
-                Every Major Trophy
-                <span>+</span>
-            </button>
-
-            <div class="accordion-content">
-                <div class="accordion-content-inner">
-                    League championships, domestic cups, continental
-                    trophies, super cups, world competitions and
-                    other officially recognized honours will be
-                    listed by competition and year.
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="accordion-item">
-
-            <button class="accordion-button">
-                Club Legends
-                <span>+</span>
-            </button>
-
-            <div class="accordion-content">
-                <div class="accordion-content-inner">
-                    Important players, managers and personalities
-                    connected with the club, together with their
-                    documented achievements and periods at the club.
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="accordion-item">
-
-            <button class="accordion-button">
-                Rivalries & Important Matches
-                <span>+</span>
-            </button>
-
-            <div class="accordion-content">
-                <div class="accordion-content-inner">
-                    Major derbies, historic finals, title-deciding
-                    matches, European nights and other historically
-                    significant fixtures.
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
+<!-- =========================================================
      PLAYERS
-======================================================= -->
+========================================================= -->
 
 <section class="section" id="players">
 
@@ -1846,135 +2848,33 @@ footer{
         </div>
 
         <h2 class="section-title">
-            The people who shaped the game.
+            The people of the game.
         </h2>
 
         <p class="section-description">
-            Player profiles will connect club careers,
-            international careers, tournaments, trophies
-            and statistical records.
+            A historical player index covering different generations,
+            positions and football cultures.
         </p>
 
     </div>
 
-    <div class="panel-grid">
 
-        <div class="panel">
-
-            <div class="panel-head">
-                <h3>Player Profile</h3>
-                <span>IDENTITY</span>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="info-row">
-                    <span>Full name</span>
-                    <span>Biography</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Nationality</span>
-                    <span>Country</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Position</span>
-                    <span>Playing role</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Birth</span>
-                    <span>Date / place</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-head">
-                <h3>Career</h3>
-                <span>CLUBS</span>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="info-row">
-                    <span>Youth career</span>
-                    <span>Timeline</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Senior clubs</span>
-                    <span>Seasons</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Appearances</span>
-                    <span>Statistics</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Goals</span>
-                    <span>Statistics</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-head">
-                <h3>International</h3>
-                <span>NATIONAL TEAM</span>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="info-row">
-                    <span>Debut</span>
-                    <span>Year</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Caps</span>
-                    <span>International</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Goals</span>
-                    <span>International</span>
-                </div>
-
-                <div class="info-row">
-                    <span>Tournaments</span>
-                    <span>World Cup / Continental</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+    <div class="player-grid" id="playerGrid"></div>
 
 </section>
 
 
-<!-- =======================================================
+
+<!-- =========================================================
      COUNTRIES
-======================================================= -->
+========================================================= -->
 
 <section class="section" id="countries">
 
     <div class="section-header">
 
         <div class="section-label">
-            05 / Nations
+            05 / Countries
         </div>
 
         <h2 class="section-title">
@@ -1982,72 +2882,22 @@ footer{
         </h2>
 
         <p class="section-description">
-            National football histories, competitions,
-            World Cup appearances, major players and records.
+            National football histories and the development of the
+            sport across different regions.
         </p>
 
     </div>
 
-    <div class="culture-grid">
 
-        <div class="culture-card">
-            <h3>🇪🇺 Europe</h3>
-            <p>
-                England, Spain, Germany, Italy, France, Portugal,
-                Netherlands, Belgium and the wider European football
-                ecosystem.
-            </p>
-        </div>
-
-        <div class="culture-card">
-            <h3>🌎 South America</h3>
-            <p>
-                Brazil, Argentina, Uruguay, Chile, Colombia and
-                the history of CONMEBOL football.
-            </p>
-        </div>
-
-        <div class="culture-card">
-            <h3>🌍 Africa</h3>
-            <p>
-                African national teams, AFCON history,
-                domestic football and continental development.
-            </p>
-        </div>
-
-        <div class="culture-card">
-            <h3>🌏 Asia</h3>
-            <p>
-                Asian football history, AFC competitions,
-                national teams and the development of football
-                across the continent.
-            </p>
-        </div>
-
-        <div class="culture-card">
-            <h3>🌎 North & Central America</h3>
-            <p>
-                CONCACAF football, Gold Cup history,
-                clubs, national teams and major tournaments.
-            </p>
-        </div>
-
-        <div class="culture-card">
-            <h3>🌊 Oceania</h3>
-            <p>
-                Australia, New Zealand, Pacific football and
-                the development of the sport across Oceania.
-            </p>
-        </div>
-
-    </div>
+    <div class="country-grid" id="countryGrid"></div>
 
 </section>
 
 
-<!-- =======================================================
+
+<!-- =========================================================
      COMPETITIONS
-======================================================= -->
+========================================================= -->
 
 <section class="section" id="competitions">
 
@@ -2058,69 +2908,25 @@ footer{
         </div>
 
         <h2 class="section-title">
-            Every major competition has a story.
+            Football's great tournaments.
         </h2>
 
-    </div>
-
-    <div class="category-grid">
-
-        <div class="category-card">
-            <div class="category-icon">🏆</div>
-            <h3>UEFA Champions League</h3>
-            <p>European club championship history.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🏆</div>
-            <h3>UEFA Europa League</h3>
-            <p>European second-tier club competition.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🌎</div>
-            <h3>Copa Libertadores</h3>
-            <p>South American club championship.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🌍</div>
-            <h3>AFCON</h3>
-            <p>African international championship.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🌏</div>
-            <h3>AFC Asian Cup</h3>
-            <p>Asian international championship.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🌎</div>
-            <h3>Copa América</h3>
-            <p>South American international championship.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🇪🇺</div>
-            <h3>UEFA EURO</h3>
-            <p>European national-team championship.</p>
-        </div>
-
-        <div class="category-card">
-            <div class="category-icon">🏟️</div>
-            <h3>Domestic Leagues</h3>
-            <p>Premier League, La Liga, Serie A, Bundesliga and more.</p>
-        </div>
+        <p class="section-description">
+            Major international, continental and club competitions.
+        </p>
 
     </div>
+
+
+    <div class="competition-grid" id="competitionGrid"></div>
 
 </section>
 
 
-<!-- =======================================================
+
+<!-- =========================================================
      RECORDS
-======================================================= -->
+========================================================= -->
 
 <section class="section" id="records">
 
@@ -2131,44 +2937,150 @@ footer{
         </div>
 
         <h2 class="section-title">
-            Football records.
+            Numbers that became history.
         </h2>
 
         <p class="section-description">
-            Statistical records will be organized by category,
-            competition and period, with sources and definitions.
+            Selected documented milestones. The record database can
+            continue expanding without changing the site structure.
         </p>
 
     </div>
 
-    <div class="record-grid">
 
-        <div class="record-card">
-            <div class="section-label">World Cup</div>
-            <div class="record-value">1930</div>
-            <div class="record-label">First FIFA World Cup</div>
-            <div class="record-note">Tournament history archive</div>
+    <div class="record-grid" id="recordGrid"></div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTBALL ORGANIZATIONS
+========================================================= -->
+
+<section class="section" id="organizations">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            08 / Organizations
         </div>
 
-        <div class="record-card">
-            <div class="section-label">Organization</div>
-            <div class="record-value">1904</div>
-            <div class="record-label">FIFA founded</div>
-            <div class="record-note">International football governance</div>
+        <h2 class="section-title">
+            The architecture of football.
+        </h2>
+
+        <p class="section-description">
+            The organizations that administer football at global,
+            continental and national levels.
+        </p>
+
+    </div>
+
+
+    <div class="org-grid" id="orgGrid"></div>
+
+</section>
+
+
+
+<!-- =========================================================
+     EVOLUTION
+========================================================= -->
+
+<section class="section" id="evolution">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            09 / Evolution
         </div>
 
-        <div class="record-card">
-            <div class="section-label">Rules</div>
-            <div class="record-value">1863</div>
-            <div class="record-label">FA football laws era</div>
-            <div class="record-note">Association football standardization</div>
+        <h2 class="section-title">
+            How the game changed.
+        </h2>
+
+        <p class="section-description">
+            Football is not static. Its laws, tactics, equipment,
+            officiating and professional environment have evolved
+            continuously.
+        </p>
+
+    </div>
+
+
+    <div class="evolution-grid">
+
+        <div class="evolution-card">
+            <span>📜</span>
+            <h3>Laws</h3>
+            <p>
+                The Laws of the Game have been amended repeatedly
+                since their nineteenth-century codification.
+            </p>
         </div>
 
-        <div class="record-card">
-            <div class="section-label">Database</div>
-            <div class="record-value">∞</div>
-            <div class="record-label">Stories to document</div>
-            <div class="record-note">Continuously expandable archive</div>
+        <div class="evolution-card">
+            <span>⚽</span>
+            <h3>The Ball</h3>
+            <p>
+                Footballs evolved from early leather constructions
+                into standardized modern balls.
+            </p>
+        </div>
+
+        <div class="evolution-card">
+            <span>🥅</span>
+            <h3>Goalkeeping</h3>
+            <p>
+                Goalkeeper responsibilities, equipment and tactical
+                roles have changed substantially.
+            </p>
+        </div>
+
+        <div class="evolution-card">
+            <span>🧠</span>
+            <h3>Tactics</h3>
+            <p>
+                Formations developed from early systems into highly
+                specialized modern tactical structures.
+            </p>
+        </div>
+
+        <div class="evolution-card">
+            <span>🟨</span>
+            <h3>Discipline</h3>
+            <p>
+                Cards and disciplinary systems created standardized
+                methods for communicating sanctions.
+            </p>
+        </div>
+
+        <div class="evolution-card">
+            <span>📺</span>
+            <h3>Broadcasting</h3>
+            <p>
+                Television transformed football into a worldwide
+                spectator and media phenomenon.
+            </p>
+        </div>
+
+        <div class="evolution-card">
+            <span>📊</span>
+            <h3>Analytics</h3>
+            <p>
+                Statistical and tracking technologies transformed
+                performance analysis.
+            </p>
+        </div>
+
+        <div class="evolution-card">
+            <span>🎥</span>
+            <h3>VAR</h3>
+            <p>
+                Video technology introduced a new layer of support
+                for match officials.
+            </p>
         </div>
 
     </div>
@@ -2176,74 +3088,86 @@ footer{
 </section>
 
 
-<!-- =======================================================
+
+<!-- =========================================================
      FOOTBALL CULTURE
-======================================================= -->
+========================================================= -->
 
 <section class="section" id="culture">
 
     <div class="section-header">
 
         <div class="section-label">
-            08 / Culture
+            10 / Culture
         </div>
 
         <h2 class="section-title">
             More than ninety minutes.
         </h2>
 
+        <p class="section-description">
+            Football became a cultural language shared across cities,
+            countries and generations.
+        </p>
+
     </div>
+
 
     <div class="culture-grid">
 
         <div class="culture-card">
-            <h3>Derbies & Rivalries</h3>
-            <p>
-                Historical rivalries, derby origins, important
-                meetings and the cultural context surrounding them.
-            </p>
-        </div>
 
-        <div class="culture-card">
-            <h3>Tactics</h3>
-            <p>
-                Formations, tactical systems, pressing,
-                possession, counter-attacking football and
-                major tactical developments.
-            </p>
-        </div>
+            <div>🏟️</div>
 
-        <div class="culture-card">
             <h3>Stadiums</h3>
+
             <p>
-                Stadium history, construction, capacity,
-                major matches and cultural significance.
+                Stadiums became symbols of clubs, cities and football
+                communities.
             </p>
+
         </div>
 
-        <div class="culture-card">
-            <h3>Football Laws</h3>
-            <p>
-                The Laws of the Game, positions, fouls,
-                set pieces, substitutions and technological
-                changes.
-            </p>
-        </div>
 
         <div class="culture-card">
-            <h3>Kits & Identity</h3>
+
+            <div>🎺</div>
+
+            <h3>Supporters</h3>
+
             <p>
-                Historic kits, club colours, national identities
-                and important changes through football history.
+                Fan cultures created chants, traditions, rivalries
+                and identities around clubs and national teams.
             </p>
+
         </div>
 
+
         <div class="culture-card">
-            <h3>Managers</h3>
+
+            <div>👕</div>
+
+            <h3>Kits</h3>
+
             <p>
-                Coaching careers, tactical philosophies,
-                trophies, influential systems and historical eras.
+                Football shirts developed from simple uniforms into
+                major symbols of sporting identity.
             </p>
+
+        </div>
+
+
+        <div class="culture-card">
+
+            <div>🌍</div>
+
+            <h3>Global Community</h3>
+
+            <p>
+                Football connects communities across borders through
+                shared competitions and traditions.
+            </p>
+
         </div>
 
     </div>
@@ -2251,74 +3175,188 @@ footer{
 </section>
 
 
-<!-- =======================================================
-     DATABASE PRINCIPLES
-======================================================= -->
 
-<section class="section">
+<!-- =========================================================
+     FAQ
+========================================================= -->
+
+<section class="section" id="faq">
 
     <div class="section-header">
 
         <div class="section-label">
-            Atlas Principles
+            Atlas Guide
         </div>
 
         <h2 class="section-title">
-            Information first.
+            Frequently asked questions.
         </h2>
 
     </div>
 
-    <div class="panel-grid">
 
-        <div class="panel">
+    <div class="accordion">
 
-            <div class="panel-head">
-                <h3>Historical</h3>
-                <span>ARCHIVE</span>
-            </div>
 
-            <div class="panel-body">
-                <p style="color:#8191a2;font-size:13px;">
-                    Historical information is organized
-                    chronologically so users can understand
-                    how football developed.
-                </p>
-            </div>
+        <div class="accordion-item">
 
-        </div>
+            <button class="accordion-button">
+                What is Football Atlas?
+                <span>+</span>
+            </button>
 
-        <div class="panel">
+            <div class="accordion-content">
 
-            <div class="panel-head">
-                <h3>Structured</h3>
-                <span>DATABASE</span>
-            </div>
+                Football Atlas is a football encyclopedia designed
+                to organize historical and reference information
+                about the world's game.
 
-            <div class="panel-body">
-                <p style="color:#8191a2;font-size:13px;">
-                    Clubs, players, countries and competitions
-                    are designed to become connected records
-                    instead of isolated articles.
-                </p>
             </div>
 
         </div>
 
-        <div class="panel">
 
-            <div class="panel-head">
-                <h3>Documented</h3>
-                <span>SOURCES</span>
+        <div class="accordion-item">
+
+            <button class="accordion-button">
+                Does Football Atlas provide live scores?
+                <span>+</span>
+            </button>
+
+            <div class="accordion-content">
+
+                No. The project is intentionally information-first.
+                It focuses on football history, clubs, players,
+                competitions, countries and records rather than
+                pretending to provide live match data.
+
             </div>
 
-            <div class="panel-body">
-                <p style="color:#8191a2;font-size:13px;">
-                    Data should be verified against reliable
-                    football organizations, official archives
-                    and reputable historical sources.
-                </p>
+        </div>
+
+
+        <div class="accordion-item">
+
+            <button class="accordion-button">
+                Can more clubs be added?
+                <span>+</span>
+            </button>
+
+            <div class="accordion-content">
+
+                Yes. Club entries are stored in a JavaScript database
+                array inside this single file. New entries can be
+                added without rebuilding the website architecture.
+
             </div>
+
+        </div>
+
+
+        <div class="accordion-item">
+
+            <button class="accordion-button">
+                Can every World Cup be expanded later?
+                <span>+</span>
+            </button>
+
+            <div class="accordion-content">
+
+                Yes. The World Cup database is intentionally
+                structured so individual tournaments can later
+                contain host, winner, final, stadiums, teams,
+                matches, scorers and other historical information.
+
+            </div>
+
+        </div>
+
+
+        <div class="accordion-item">
+
+            <button class="accordion-button">
+                Where should historical information come from?
+                <span>+</span>
+            </button>
+
+            <div class="accordion-content">
+
+                Primary organizations and official archives should
+                be preferred where available, including FIFA, IFAB,
+                UEFA, continental confederations and national
+                football associations.
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SOURCES
+========================================================= -->
+
+<section class="section">
+
+    <div class="sources">
+
+        <div class="section-label">
+            Reference Framework
+        </div>
+
+        <h3 style="font-family:'Space Grotesk',sans-serif;margin-top:7px;font-size:24px;">
+            Build the archive from documented football history.
+        </h3>
+
+        <p style="margin-top:10px;">
+            Football Atlas is designed as an information project.
+            Historical facts should be checked against authoritative
+            football organizations and official competition archives
+            before being added to the database.
+        </p>
+
+
+        <div class="source-buttons">
+
+            <a
+                href="https://www.thefa.com/about-football-association/who-we-are/history"
+                target="_blank"
+                rel="noopener">
+                The FA History
+            </a>
+
+            <a
+                href="https://theifab.com/background/"
+                target="_blank"
+                rel="noopener">
+                IFAB Background
+            </a>
+
+            <a
+                href="https://theifab.com/documents/"
+                target="_blank"
+                rel="noopener">
+                IFAB Documents
+            </a>
+
+            <a
+                href="https://inside.fifa.com/organisation"
+                target="_blank"
+                rel="noopener">
+                FIFA
+            </a>
+
+            <a
+                href="https://www.uefa.com/"
+                target="_blank"
+                rel="noopener">
+                UEFA
+            </a>
 
         </div>
 
@@ -2326,141 +3364,1148 @@ footer{
 
 </section>
 
-</main>
 
 
-<!-- =======================================================
+<!-- =========================================================
      FOOTER
-======================================================= -->
+========================================================= -->
 
 <footer>
 
-    <div class="footer-main">
+    <div>
 
         <div class="footer-brand">
-
-            <h2>⚽ FOOTBALL ATLAS</h2>
-
-            <p>
-                A student-built football encyclopedia designed
-                to organize the history, people, clubs,
-                competitions and records of the world's game.
-            </p>
-
+            Football <span>Atlas</span>
         </div>
 
-        <div class="footer-links">
-
-            <div class="footer-column">
-
-                <h4>Explore</h4>
-
-                <a href="#history">History</a>
-                <a href="#worldcup">World Cup</a>
-                <a href="#clubs">Clubs</a>
-                <a href="#players">Players</a>
-
-            </div>
-
-            <div class="footer-column">
-
-                <h4>Database</h4>
-
-                <a href="#countries">Countries</a>
-                <a href="#competitions">Competitions</a>
-                <a href="#records">Records</a>
-                <a href="#culture">Culture</a>
-
-            </div>
-
+        <div style="margin-top:5px;">
+            The encyclopedia of football.
         </div>
 
     </div>
 
-    <div class="footer-bottom">
 
-        <span>
-            © 2026 Football Atlas
-        </span>
+    <div class="footer-note">
 
-        <span>
-            Football knowledge archive · Information only
-        </span>
+        Football Atlas is an independent educational information
+        project. It is not affiliated with or endorsed by FIFA,
+        UEFA, The FA, IFAB, or any football club or competition
+        listed on the website.
 
     </div>
 
 </footer>
 
 
-<!-- =======================================================
-     JAVASCRIPT
-======================================================= -->
 
 <script>
 
 /* =========================================================
-   MOBILE MENU
+   FOOTBALL ATLAS DATABASE
 ========================================================= */
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
 
-menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
+/* =========================================================
+   WORLD CUP DATABASE
+========================================================= */
 
-document.querySelectorAll(".nav-links a").forEach(link => {
+const worldCups = [
 
-    link.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-    });
+    {
+        year:"1930",
+        host:"Uruguay",
+        winner:"Uruguay",
+        note:"First FIFA World Cup"
+    },
+
+    {
+        year:"1934",
+        host:"Italy",
+        winner:"Italy",
+        note:"Italy win on home soil"
+    },
+
+    {
+        year:"1938",
+        host:"France",
+        winner:"Italy",
+        note:"Italy retain the title"
+    },
+
+    {
+        year:"1942",
+        host:"—",
+        winner:"—",
+        note:"Not held"
+    },
+
+    {
+        year:"1946",
+        host:"—",
+        winner:"—",
+        note:"Not held"
+    },
+
+    {
+        year:"1950",
+        host:"Brazil",
+        winner:"Uruguay",
+        note:"Uruguay return to the summit"
+    },
+
+    {
+        year:"1954",
+        host:"Switzerland",
+        winner:"West Germany",
+        note:"West Germany win"
+    },
+
+    {
+        year:"1958",
+        host:"Sweden",
+        winner:"Brazil",
+        note:"Brazil's first World Cup"
+    },
+
+    {
+        year:"1962",
+        host:"Chile",
+        winner:"Brazil",
+        note:"Brazil retain the title"
+    },
+
+    {
+        year:"1966",
+        host:"England",
+        winner:"England",
+        note:"England win their first World Cup"
+    },
+
+    {
+        year:"1970",
+        host:"Mexico",
+        winner:"Brazil",
+        note:"Brazil win a third title"
+    },
+
+    {
+        year:"1974",
+        host:"West Germany",
+        winner:"West Germany",
+        note:"Home victory"
+    },
+
+    {
+        year:"1978",
+        host:"Argentina",
+        winner:"Argentina",
+        note:"Argentina win their first World Cup"
+    },
+
+    {
+        year:"1982",
+        host:"Spain",
+        winner:"Italy",
+        note:"Italy's third title"
+    },
+
+    {
+        year:"1986",
+        host:"Mexico",
+        winner:"Argentina",
+        note:"Argentina's second title"
+    },
+
+    {
+        year:"1990",
+        host:"Italy",
+        winner:"West Germany",
+        note:"West Germany's third title"
+    },
+
+    {
+        year:"1994",
+        host:"United States",
+        winner:"Brazil",
+        note:"Brazil's fourth title"
+    },
+
+    {
+        year:"1998",
+        host:"France",
+        winner:"France",
+        note:"France win on home soil"
+    },
+
+    {
+        year:"2002",
+        host:"South Korea & Japan",
+        winner:"Brazil",
+        note:"Brazil's fifth title"
+    },
+
+    {
+        year:"2006",
+        host:"Germany",
+        winner:"Italy",
+        note:"Italy win their fourth title"
+    },
+
+    {
+        year:"2010",
+        host:"South Africa",
+        winner:"Spain",
+        note:"Spain win their first World Cup"
+    },
+
+    {
+        year:"2014",
+        host:"Brazil",
+        winner:"Germany",
+        note:"Germany win their fourth title"
+    },
+
+    {
+        year:"2018",
+        host:"Russia",
+        winner:"France",
+        note:"France win their second title"
+    },
+
+    {
+        year:"2022",
+        host:"Qatar",
+        winner:"Argentina",
+        note:"Argentina win their third title"
+    },
+
+    {
+        year:"2026",
+        host:"Canada, Mexico & United States",
+        winner:"To be added",
+        note:"48-team era"
+    }
+
+];
+
+
+/* =========================================================
+   CLUB DATABASE
+========================================================= */
+
+const clubs = [
+
+    {
+        name:"Real Madrid",
+        country:"Spain",
+        founded:"1902",
+        stadium:"Santiago Bernabéu",
+        type:"European giant",
+        achievement:"15 European Cups / Champions Leagues"
+    },
+
+    {
+        name:"FC Barcelona",
+        country:"Spain",
+        founded:"1899",
+        stadium:"Camp Nou",
+        type:"Historic Spanish club",
+        achievement:"European and domestic titles"
+    },
+
+    {
+        name:"Manchester United",
+        country:"England",
+        founded:"1878",
+        stadium:"Old Trafford",
+        type:"English giant",
+        achievement:"European and domestic titles"
+    },
+
+    {
+        name:"Liverpool",
+        country:"England",
+        founded:"1892",
+        stadium:"Anfield",
+        type:"English giant",
+        achievement:"European and domestic titles"
+    },
+
+    {
+        name:"Arsenal",
+        country:"England",
+        founded:"1886",
+        stadium:"Emirates Stadium",
+        type:"English club",
+        achievement:"Major domestic honours"
+    },
+
+    {
+        name:"Chelsea",
+        country:"England",
+        founded:"1905",
+        stadium:"Stamford Bridge",
+        type:"English club",
+        achievement:"European and domestic honours"
+    },
+
+    {
+        name:"Manchester City",
+        country:"England",
+        founded:"1880",
+        stadium:"Etihad Stadium",
+        type:"English club",
+        achievement:"European and domestic honours"
+    },
+
+    {
+        name:"AC Milan",
+        country:"Italy",
+        founded:"1899",
+        stadium:"San Siro",
+        type:"Italian giant",
+        achievement:"Multiple European Cups / Champions Leagues"
+    },
+
+    {
+        name:"Inter",
+        country:"Italy",
+        founded:"1908",
+        stadium:"San Siro",
+        type:"Italian giant",
+        achievement:"European and domestic honours"
+    },
+
+    {
+        name:"Juventus",
+        country:"Italy",
+        founded:"1897",
+        stadium:"Allianz Stadium",
+        type:"Italian giant",
+        achievement:"Major domestic honours"
+    },
+
+    {
+        name:"Bayern Munich",
+        country:"Germany",
+        founded:"1900",
+        stadium:"Allianz Arena",
+        type:"German giant",
+        achievement:"European and domestic honours"
+    },
+
+    {
+        name:"Borussia Dortmund",
+        country:"Germany",
+        founded:"1909",
+        stadium:"Signal Iduna Park",
+        type:"German club",
+        achievement:"European and domestic honours"
+    },
+
+    {
+        name:"Paris Saint-Germain",
+        country:"France",
+        founded:"1970",
+        stadium:"Parc des Princes",
+        type:"French club",
+        achievement:"Major domestic honours"
+    },
+
+    {
+        name:"Marseille",
+        country:"France",
+        founded:"1899",
+        stadium:"Stade Vélodrome",
+        type:"French club",
+        achievement:"European and domestic honours"
+    }
+
+];
+
+
+/* =========================================================
+   PLAYER DATABASE
+========================================================= */
+
+const players = [
+
+    {
+        name:"Pelé",
+        era:"1950s–1970s",
+        role:"Forward",
+        country:"Brazil",
+        tags:["Brazil","World Cup","Legend"]
+    },
+
+    {
+        name:"Diego Maradona",
+        era:"1970s–1990s",
+        role:"Attacking midfielder",
+        country:"Argentina",
+        tags:["Argentina","1986","Legend"]
+    },
+
+    {
+        name:"Johan Cruyff",
+        era:"1960s–1980s",
+        role:"Forward / Midfielder",
+        country:"Netherlands",
+        tags:["Netherlands","Total Football","Legend"]
+    },
+
+    {
+        name:"Franz Beckenbauer",
+        era:"1960s–1980s",
+        role:"Defender / Libero",
+        country:"Germany",
+        tags:["Germany","Defender","Legend"]
+    },
+
+    {
+        name:"Zinedine Zidane",
+        era:"1980s–2000s",
+        role:"Midfielder",
+        country:"France",
+        tags:["France","Midfielder","World Cup"]
+    },
+
+    {
+        name:"Ronaldo Nazário",
+        era:"1990s–2000s",
+        role:"Forward",
+        country:"Brazil",
+        tags:["Brazil","Forward","World Cup"]
+    },
+
+    {
+        name:"Ronaldinho",
+        era:"1990s–2010s",
+        role:"Attacking midfielder",
+        country:"Brazil",
+        tags:["Brazil","Barcelona","Skills"]
+    },
+
+    {
+        name:"Lionel Messi",
+        era:"2000s–2020s",
+        role:"Forward",
+        country:"Argentina",
+        tags:["Argentina","Barcelona","World Cup"]
+    },
+
+    {
+        name:"Cristiano Ronaldo",
+        era:"2000s–2020s",
+        role:"Forward",
+        country:"Portugal",
+        tags:["Portugal","Real Madrid","Goals"]
+    },
+
+    {
+        name:"Xavi",
+        era:"2000s–2010s",
+        role:"Midfielder",
+        country:"Spain",
+        tags:["Spain","Barcelona","Passing"]
+    },
+
+    {
+        name:"Andrés Iniesta",
+        era:"2000s–2010s",
+        role:"Midfielder",
+        country:"Spain",
+        tags:["Spain","Barcelona","World Cup"]
+    },
+
+    {
+        name:"Luka Modrić",
+        era:"2000s–2020s",
+        role:"Midfielder",
+        country:"Croatia",
+        tags:["Croatia","Real Madrid","Midfielder"]
+    }
+
+];
+
+
+/* =========================================================
+   COUNTRY DATABASE
+========================================================= */
+
+const countries = [
+
+    {
+        code:"BRA",
+        name:"Brazil",
+        description:"One of the most historically successful national teams."
+    },
+
+    {
+        code:"ARG",
+        name:"Argentina",
+        description:"Major South American football nation."
+    },
+
+    {
+        code:"URU",
+        name:"Uruguay",
+        description:"Historic World Cup and South American football nation."
+    },
+
+    {
+        code:"GER",
+        name:"Germany",
+        description:"Major European national football tradition."
+    },
+
+    {
+        code:"ITA",
+        name:"Italy",
+        description:"Historic European football power."
+    },
+
+    {
+        code:"FRA",
+        name:"France",
+        description:"Major modern European football nation."
+    },
+
+    {
+        code:"ESP",
+        name:"Spain",
+        description:"Known for a highly influential possession-based football era."
+    },
+
+    {
+        code:"ENG",
+        name:"England",
+        description:"Birthplace of the modern Football Association code."
+    },
+
+    {
+        code:"NED",
+        name:"Netherlands",
+        description:"Historically influential in tactical and technical football."
+    },
+
+    {
+        code:"POR",
+        name:"Portugal",
+        description:"Major European football nation."
+    },
+
+    {
+        code:"CRO",
+        name:"Croatia",
+        description:"Highly competitive modern European national team."
+    },
+
+    {
+        code:"JPN",
+        name:"Japan",
+        description:"Major Asian football nation."
+    }
+
+];
+
+
+/* =========================================================
+   COMPETITION DATABASE
+========================================================= */
+
+const competitions = [
+
+    {
+        icon:"🏆",
+        name:"FIFA World Cup",
+        region:"Global",
+        description:"International championship for men's national teams.",
+        meta:"First edition: 1930"
+    },
+
+    {
+        icon:"🌍",
+        name:"FIFA Women's World Cup",
+        region:"Global",
+        description:"Global championship for women's national teams.",
+        meta:"First edition: 1991"
+    },
+
+    {
+        icon:"⭐",
+        name:"UEFA Champions League",
+        region:"Europe",
+        description:"Europe's premier continental club competition.",
+        meta:"European Cup began: 1955/56"
+    },
+
+    {
+        icon:"🌎",
+        name:"Copa Libertadores",
+        region:"South America",
+        description:"Major South American club competition.",
+        meta:"Continental club competition"
+    },
+
+    {
+        icon:"🇪🇺",
+        name:"UEFA European Championship",
+        region:"Europe",
+        description:"Major European men's national-team championship.",
+        meta:"National teams"
+    },
+
+    {
+        icon:"🌏",
+        name:"AFC Asian Cup",
+        region:"Asia",
+        description:"Major Asian men's national-team championship.",
+        meta:"AFC competition"
+    },
+
+    {
+        icon:"🌍",
+        name:"Africa Cup of Nations",
+        region:"Africa",
+        description:"Major African men's national-team championship.",
+        meta:"CAF competition"
+    },
+
+    {
+        icon:"🌎",
+        name:"CONCACAF Gold Cup",
+        region:"North & Central America",
+        description:"Major CONCACAF men's national-team championship.",
+        meta:"CONCACAF competition"
+    },
+
+    {
+        icon:"🏟️",
+        name:"Copa América",
+        region:"South America",
+        description:"Historic South American national-team championship.",
+        meta:"CONMEBOL competition"
+    }
+
+];
+
+
+/* =========================================================
+   RECORD DATABASE
+========================================================= */
+
+const records = [
+
+    {
+        category:"World Cup",
+        title:"Most World Cup titles by a nation",
+        text:"Brazil have won the FIFA World Cup five times."
+    },
+
+    {
+        category:"World Cup",
+        title:"First World Cup",
+        text:"The first FIFA World Cup was held in Uruguay in 1930."
+    },
+
+    {
+        category:"European Cup",
+        title:"Most European Cups / Champions Leagues",
+        text:"Real Madrid have won the competition 15 times through the 2025/26 season."
+    },
+
+    {
+        category:"European Cup",
+        title:"First European Cup winner",
+        text:"Real Madrid won the inaugural European Cup in 1955/56."
+    },
+
+    {
+        category:"History",
+        title:"Football Association",
+        text:"The Football Association was founded in 1863."
+    },
+
+    {
+        category:"Laws",
+        title:"IFAB",
+        text:"The International Football Association Board was founded in 1886."
+    },
+
+    {
+        category:"International",
+        title:"FIFA",
+        text:"FIFA was founded in Paris in 1904."
+    },
+
+    {
+        category:"Women's Football",
+        title:"First FIFA Women's World Cup",
+        text:"The first FIFA Women's World Cup was held in 1991."
+    },
+
+    {
+        category:"Technology",
+        title:"Modern officiating",
+        text:"Football has increasingly incorporated technology such as goal-line technology and VAR."
+    }
+
+];
+
+
+/* =========================================================
+   ORGANIZATIONS
+========================================================= */
+
+const organizations = [
+
+    {
+        code:"FIFA",
+        name:"FIFA",
+        description:"Global governing organization for association football."
+    },
+
+    {
+        code:"IFAB",
+        name:"The IFAB",
+        description:"International guardian of the Laws of the Game."
+    },
+
+    {
+        code:"UEFA",
+        name:"UEFA",
+        description:"European football governing organization."
+    },
+
+    {
+        code:"CONMEBOL",
+        name:"CONMEBOL",
+        description:"South American football confederation."
+    },
+
+    {
+        code:"AFC",
+        name:"AFC",
+        description:"Asian Football Confederation."
+    },
+
+    {
+        code:"CAF",
+        name:"CAF",
+        description:"Confederation of African Football."
+    },
+
+    {
+        code:"CONCACAF",
+        name:"CONCACAF",
+        description:"Football confederation covering North America, Central America and the Caribbean."
+    },
+
+    {
+        code:"OFC",
+        name:"OFC",
+        description:"Oceania Football Confederation."
+    },
+
+    {
+        code:"The FA",
+        name:"The Football Association",
+        description:"England's football association, founded in 1863."
+    }
+
+];
+
+
+/* =========================================================
+   RENDER WORLD CUPS
+========================================================= */
+
+const worldCupGrid =
+    document.getElementById("worldCupGrid");
+
+worldCups.forEach(cup => {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "cup-card reveal";
+
+    card.innerHTML = `
+
+        <div class="cup-year">
+            ${cup.year}
+        </div>
+
+        <h3>
+            ${cup.host}
+        </h3>
+
+        <p>
+            Winner: ${cup.winner}
+        </p>
+
+        <span class="cup-status">
+            ${cup.note}
+        </span>
+
+    `;
+
+    worldCupGrid.appendChild(card);
 
 });
 
 
 /* =========================================================
-   ACCORDION
+   RENDER CLUBS
 ========================================================= */
 
-document.querySelectorAll(".accordion-button").forEach(button => {
+const clubGrid =
+    document.getElementById("clubGrid");
 
-    button.addEventListener("click", () => {
+function renderClubs(){
 
-        const item = button.parentElement;
+    const search =
+        document.getElementById("clubSearch")
+        .value
+        .toLowerCase()
+        .trim();
 
-        item.classList.toggle("open");
+    const country =
+        document.getElementById("clubCountry")
+        .value;
+
+    const filtered =
+        clubs.filter(club => {
+
+            const matchesSearch =
+                club.name.toLowerCase().includes(search) ||
+                club.country.toLowerCase().includes(search);
+
+            const matchesCountry =
+                country === "all" ||
+                club.country === country;
+
+            return matchesSearch && matchesCountry;
+
+        });
+
+
+    clubGrid.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        clubGrid.innerHTML = `
+            <div class="empty">
+                No club found in the current database.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    filtered.forEach(club => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "club-card reveal";
+
+        card.innerHTML = `
+
+            <div class="club-top">
+
+                <div class="club-badge">
+                    ⚽
+                </div>
+
+                <div class="club-country">
+                    ${club.country}
+                </div>
+
+            </div>
+
+            <h3>
+                ${club.name}
+            </h3>
+
+            <p>
+                ${club.type}
+            </p>
+
+            <div class="club-info">
+
+                <div>
+                    <span>Founded</span>
+                    <strong>${club.founded}</strong>
+                </div>
+
+                <div>
+                    <span>Stadium</span>
+                    <strong>${club.stadium}</strong>
+                </div>
+
+                <div style="grid-column:1/-1">
+                    <span>Major achievement</span>
+                    <strong>${club.achievement}</strong>
+                </div>
+
+            </div>
+
+        `;
+
+        clubGrid.appendChild(card);
 
     });
+
+}
+
+
+document
+    .getElementById("clubSearch")
+    .addEventListener(
+        "input",
+        renderClubs
+    );
+
+document
+    .getElementById("clubCountry")
+    .addEventListener(
+        "change",
+        renderClubs
+    );
+
+renderClubs();
+
+
+/* =========================================================
+   RENDER PLAYERS
+========================================================= */
+
+const playerGrid =
+    document.getElementById("playerGrid");
+
+players.forEach((player,index) => {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "player-card reveal";
+
+    card.innerHTML = `
+
+        <div class="player-number">
+            ${String(index + 1).padStart(2,"0")}
+        </div>
+
+        <h3>
+            ${player.name}
+        </h3>
+
+        <p>
+            ${player.role} · ${player.country}
+        </p>
+
+        <p>
+            ${player.era}
+        </p>
+
+        <div class="player-tags">
+
+            ${player.tags
+                .map(tag => `<span>${tag}</span>`)
+                .join("")}
+
+        </div>
+
+    `;
+
+    playerGrid.appendChild(card);
 
 });
 
 
 /* =========================================================
-   CLUB FILTER VISUAL STATE
+   RENDER COUNTRIES
 ========================================================= */
 
-document.querySelectorAll(".filter-btn").forEach(button => {
+const countryGrid =
+    document.getElementById("countryGrid");
 
-    button.addEventListener("click", () => {
+countries.forEach(country => {
 
-        document.querySelectorAll(".filter-btn")
-            .forEach(btn => btn.classList.remove("active"));
+    const card =
+        document.createElement("div");
 
-        button.classList.add("active");
+    card.className = "country-card reveal";
 
-    });
+    card.innerHTML = `
+
+        <div class="country-code">
+            ${country.code}
+        </div>
+
+        <h3>
+            ${country.name}
+        </h3>
+
+        <p>
+            ${country.description}
+        </p>
+
+    `;
+
+    countryGrid.appendChild(card);
 
 });
 
 
 /* =========================================================
-   GLOBAL SEARCH
+   RENDER COMPETITIONS
 ========================================================= */
 
-const searchInput = document.getElementById("globalSearch");
-const searchResults = document.getElementById("searchResults");
+const competitionGrid =
+    document.getElementById("competitionGrid");
 
-const searchableData = [
+competitions.forEach(comp => {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "competition-card reveal";
+
+    card.innerHTML = `
+
+        <div class="competition-icon">
+            ${comp.icon}
+        </div>
+
+        <h3>
+            ${comp.name}
+        </h3>
+
+        <p>
+            ${comp.description}
+        </p>
+
+        <div class="competition-meta">
+            ${comp.region} · ${comp.meta}
+        </div>
+
+    `;
+
+    competitionGrid.appendChild(card);
+
+});
+
+
+/* =========================================================
+   RENDER RECORDS
+========================================================= */
+
+const recordGrid =
+    document.getElementById("recordGrid");
+
+records.forEach(record => {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "record-card reveal";
+
+    card.innerHTML = `
+
+        <div class="record-category">
+            ${record.category}
+        </div>
+
+        <h3>
+            ${record.title}
+        </h3>
+
+        <p>
+            ${record.text}
+        </p>
+
+    `;
+
+    recordGrid.appendChild(card);
+
+});
+
+
+/* =========================================================
+   RENDER ORGANIZATIONS
+========================================================= */
+
+const orgGrid =
+    document.getElementById("orgGrid");
+
+organizations.forEach(org => {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "org-card reveal";
+
+    card.innerHTML = `
+
+        <strong>
+            ${org.code}
+        </strong>
+
+        <h3>
+            ${org.name}
+        </h3>
+
+        <p>
+            ${org.description}
+        </p>
+
+    `;
+
+    orgGrid.appendChild(card);
+
+});
+
+
+/* =========================================================
+   GLOBAL SEARCH DATABASE
+========================================================= */
+
+const searchDatabase = [
+
+    ...clubs.map(item => ({
+        name:item.name,
+        type:"Club",
+        target:"#clubs"
+    })),
+
+    ...players.map(item => ({
+        name:item.name,
+        type:"Player",
+        target:"#players"
+    })),
+
+    ...countries.map(item => ({
+        name:item.name,
+        type:"Country",
+        target:"#countries"
+    })),
+
+    ...competitions.map(item => ({
+        name:item.name,
+        type:"Competition",
+        target:"#competitions"
+    })),
+
+    ...worldCups.map(item => ({
+        name:`World Cup ${item.year}`,
+        type:"World Cup",
+        target:"#world-cup"
+    })),
 
     {
         name:"Football History",
@@ -2469,218 +4514,273 @@ const searchableData = [
     },
 
     {
-        name:"FIFA World Cup",
-        type:"Competition",
-        target:"#worldcup"
+        name:"IFAB",
+        type:"Organization",
+        target:"#organizations"
     },
 
     {
-        name:"Real Madrid",
-        type:"Club",
-        target:"#clubs"
-    },
-
-    {
-        name:"Barcelona",
-        type:"Club",
-        target:"#clubs"
-    },
-
-    {
-        name:"Liverpool",
-        type:"Club",
-        target:"#clubs"
-    },
-
-    {
-        name:"Manchester United",
-        type:"Club",
-        target:"#clubs"
-    },
-
-    {
-        name:"AC Milan",
-        type:"Club",
-        target:"#clubs"
-    },
-
-    {
-        name:"Bayern Munich",
-        type:"Club",
-        target:"#clubs"
-    },
-
-    {
-        name:"Players",
-        type:"Database",
-        target:"#players"
-    },
-
-    {
-        name:"Countries",
-        type:"Database",
-        target:"#countries"
-    },
-
-    {
-        name:"Competitions",
-        type:"Database",
-        target:"#competitions"
-    },
-
-    {
-        name:"Football Records",
-        type:"Database",
-        target:"#records"
-    },
-
-    {
-        name:"Football Culture",
-        type:"Database",
-        target:"#culture"
-    },
-
-    {
-        name:"1930 World Cup",
-        type:"World Cup",
-        target:"#worldcup"
-    },
-
-    {
-        name:"2022 World Cup",
-        type:"World Cup",
-        target:"#worldcup"
+        name:"FIFA",
+        type:"Organization",
+        target:"#organizations"
     }
 
 ];
 
 
-searchInput.addEventListener("input", () => {
+const searchInput =
+    document.getElementById("searchInput");
 
-    const query = searchInput.value
-        .trim()
-        .toLowerCase();
+const searchResults =
+    document.getElementById("searchResults");
+
+
+function runSearch(){
+
+    const query =
+        searchInput.value
+        .toLowerCase()
+        .trim();
+
+
+    searchResults.innerHTML = "";
+
 
     if(!query){
 
-        searchResults.classList.remove("show");
-        searchResults.innerHTML = "";
+        searchResults.style.display =
+            "none";
 
         return;
-
     }
 
-    const matches = searchableData.filter(item =>
-        item.name.toLowerCase().includes(query)
-    );
 
-    if(matches.length === 0){
+    const results =
+        searchDatabase
+        .filter(item =>
+            item.name
+            .toLowerCase()
+            .includes(query)
+        )
+        .slice(0,10);
+
+
+    searchResults.style.display =
+        "block";
+
+
+    if(results.length === 0){
 
         searchResults.innerHTML = `
-            <div class="search-result-item">
+            <div class="search-result">
                 <strong>No result found</strong>
-                <small>
-                    This database will expand as more football
-                    information is added.
-                </small>
+                <span>Atlas</span>
             </div>
         `;
 
-        searchResults.classList.add("show");
-
         return;
     }
 
-    searchResults.innerHTML = matches
-        .slice(0,8)
-        .map(item => `
-            <div class="search-result-item"
-                 onclick="goToResult('${item.target}')">
 
-                <strong>${item.name}</strong>
+    results.forEach(item => {
 
-                <small>${item.type}</small>
+        const row =
+            document.createElement("div");
 
-            </div>
-        `)
-        .join("");
+        row.className =
+            "search-result";
 
-    searchResults.classList.add("show");
+        row.innerHTML = `
 
-});
+            <strong>
+                ${item.name}
+            </strong>
+
+            <span>
+                ${item.type}
+            </span>
+
+        `;
 
 
-function goToResult(target){
+        row.addEventListener(
+            "click",
+            () => {
 
-    searchResults.classList.remove("show");
+                window.location.hash =
+                    item.target.replace("#","");
 
-    searchInput.value = "";
+                searchResults.style.display =
+                    "none";
 
-    document.querySelector(target)
-        ?.scrollIntoView({
-            behavior:"smooth"
-        });
+                searchInput.value = "";
+
+            }
+        );
+
+
+        searchResults.appendChild(row);
+
+    });
 
 }
 
 
-/* =========================================================
-   CLOSE SEARCH WHEN CLICKING OUTSIDE
-========================================================= */
-
-document.addEventListener("click", event => {
-
-    if(
-        !event.target.closest(".search-box")
-    ){
-
-        searchResults.classList.remove("show");
-
-    }
-
-});
-
-
-/* =========================================================
-   SIMPLE CARD REVEAL
-========================================================= */
-
-const revealItems = document.querySelectorAll(
-    ".category-card, .club-card, .panel, .record-card, .culture-card"
+searchInput.addEventListener(
+    "input",
+    runSearch
 );
 
-const observer = new IntersectionObserver(
-    entries => {
+document
+    .getElementById("searchButton")
+    .addEventListener(
+        "click",
+        runSearch
+    );
 
-        entries.forEach(entry => {
 
-            if(entry.isIntersecting){
+/* =========================================================
+   MOBILE NAV
+========================================================= */
 
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
+const menuBtn =
+    document.getElementById("menuBtn");
 
-                observer.unobserve(entry.target);
+const navLinks =
+    document.getElementById("navLinks");
+
+menuBtn.addEventListener(
+    "click",
+    () => {
+
+        navLinks.classList.toggle("open");
+
+    }
+);
+
+
+navLinks
+    .querySelectorAll("a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.remove("open");
 
             }
+        );
 
-        });
+    });
 
-    },
-    {
-        threshold:.08
-    }
+
+/* =========================================================
+   ACCORDION
+========================================================= */
+
+document
+    .querySelectorAll(".accordion-button")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const item =
+                    button.parentElement;
+
+                const wasOpen =
+                    item.classList.contains("open");
+
+
+                document
+                    .querySelectorAll(".accordion-item")
+                    .forEach(other => {
+
+                        other.classList.remove("open");
+
+                        const sign =
+                            other.querySelector(
+                                ".accordion-button span"
+                            );
+
+                        if(sign){
+                            sign.textContent = "+";
+                        }
+
+                    });
+
+
+                if(!wasOpen){
+
+                    item.classList.add("open");
+
+                    const sign =
+                        button.querySelector("span");
+
+                    if(sign){
+                        sign.textContent = "−";
+                    }
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting){
+
+                    entry.target
+                        .classList
+                        .add("visible");
+
+                    observer
+                        .unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.08
+        }
+    );
+
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(element => {
+
+        observer.observe(element);
+
+    });
+
+
+/* =========================================================
+   CURRENT YEAR / FUTURE READY
+========================================================= */
+
+console.log(
+    "Football Atlas loaded successfully."
 );
 
-
-revealItems.forEach(item => {
-
-    item.style.opacity = "0";
-    item.style.transform = "translateY(18px)";
-    item.style.transition = "opacity .6s ease, transform .6s ease";
-
-    observer.observe(item);
-
-});
+console.log(
+    "Information-first football encyclopedia."
+);
 
 </script>
 
